@@ -16,9 +16,27 @@ output <-
 "other" = "stuff"
 }'
 
-in_list <- as_list(read_xml(input))
+## tests
+in_list <- xml2::as_list(read_xml(input))
+json <- toJSON(group_repeated_key(in_list), auto_unbox = TRUE)
 
-group_repeated_key <- function(){}
+group_repeated_key <- function(out){
+  ## Note: does not preserve ordering of keys
+  property <- names(out)
+  duplicate <- duplicated(property)
+  if(sum(duplicate) > 0){
+    for(p in unique(property[duplicate])){
+      orig <- out
+      i <- names(out) == p
+      out <- out[!i]
+      out <- c(out, setNames(list(unname(orig[i])), p))
+    }
+  }
+out
+}
+
+
+
 ungroup_repeated_key <- function(){}
 
 
