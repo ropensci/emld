@@ -5,6 +5,7 @@
 ## override xml2 method
 #' @importFrom xml2 xml_contents xml_name xml_attrs xml_type xml_text
 as_list.xml_node <- function(x, ns = character(), embed_attr=TRUE, ...) {
+  key <- xml_name(x)
   contents <- xml2::xml_contents(x)
   if (length(contents) == 0) {
     # Base case - contents
@@ -22,8 +23,11 @@ as_list.xml_node <- function(x, ns = character(), embed_attr=TRUE, ...) {
 
   # Add xml attributes as #attribute keys
   node_attr <- special_jsonld_attrs(xml2::xml_attrs(x, ns = ns), prefix = "#")
-  out <- c(node_attr, out)
-
+  if(length(node_attr) > 0){
+    ## If attributes become properties, need a property for node content (can't be a value)
+    if(is.null(names(out))) names(out) <- "@value"
+    out <- c(node_attr, out)
+  }
   group_repeated_key(out)
 }
 
@@ -54,7 +58,7 @@ special_jsonld_attrs <- function(x, prefix = "") {
   names(x)[special] <- paste0("@", names(x)[special])
   # prefix other attributes
 
-  names(x)[!special] <- ifelse(names(x)[!special] =="", "@value", paste0(prefix, names(x)[!special]))
+  names(x)[!special] <-  paste0(prefix, names(x)[!special])
   r_attrs_to_xml(as.list(x))
 }
 

@@ -4,7 +4,7 @@
 \alias{parse_eml}
 \title{parse_eml}
 \usage{
-parse_eml(x)
+parse_eml(x, drop_comment = TRUE, add_context = FALSE)
 }
 \arguments{
 \item{x}{path to an EML file}

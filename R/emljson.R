@@ -13,7 +13,7 @@
 #' xml_to_json(ex)
 #'
 xml_to_json <- function(x, out = NULL){
-  json <- parse_eml(x)
+  json <- parse_eml(x, drop_comment = TRUE, add_context = TRUE)
   if(is.null(out)){
     jsonlite::toJSON(json, pretty = TRUE, auto_unbox = TRUE)
   } else {
@@ -28,20 +28,22 @@ xml_to_json <- function(x, out = NULL){
 #' @importFrom xml2 read_xml xml_find_all xml_remove as_list
 #'
 #' @export
-parse_eml <- function(x){
+parse_eml <- function(x, drop_comment = TRUE, add_context = FALSE){
   xml <- xml2::read_xml(x)
 
   ## Drop comment nodes.
-  xml2::xml_remove(xml2::xml_find_all(xml, "//comment()"))
+  if(drop_comment)
+    xml2::xml_remove(xml2::xml_find_all(xml, "//comment()"))
 
   ## Main transform, map XML to list using a modification of the xml2::as_list convention
   ## See as_list.R
   json <- as_list(xml)
 
   ## Set up the JSON-LD context
-  json <- c(list("@context" = list("@vocab" = "http://ecoinformatics.org/")), json)
-  xmlns <- grepl("^xmlns", names(json))
-  json <- json[!xmlns]   # just drop namespaces for now, should be appended to context
-
-  list(nexml = json)
+  if(add_context){
+    json <- c(list("@context" = list("@vocab" = "http://ecoinformatics.org/")), json)
+    xmlns <- grepl("^xmlns", names(json))
+    json <- json[!xmlns]   # just drop namespaces for now, should be appended to context
+  }
+  setNames(list(json), xml_name(xml))
 }

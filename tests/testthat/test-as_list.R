@@ -1,9 +1,21 @@
 library(magrittr)
 library(xml2)
 library(jsonlite)
+library(emljson)
+system.file("extdata/hf205.xml", package="emljson") %>%
+  xml_to_json("ex.json")
 
-ex <- system.file("extdata/hf205.xml", package="emljson")
-xml <- xml2::read_xml(ex)
+xml_to_json(
+'<url name="Ecophysiology">http://harvardforest.fas.harvard.edu:8080/exist/xquery/data.xq?id=hf168</url>'
+)
 
-as_list(xml) %>%
-  jsonlite::write_json("ex.json", pretty=TRUE, auto_unbox = TRUE)
+emljson::parse_eml(
+  '<url name="Ecophysiology">http://harvardforest.fas.harvard.edu:8080/exist/xquery/data.xq?id=hf168</url>'
+)
+
+
+'<additionalLinks>
+  <url name="Ecophysiology">http://harvardforest.fas.harvard.edu:8080/exist/xquery/data.xq?id=hf168</url>
+  <url name="Effects of Prey">http://harvardforest.fas.harvard.edu:8080/exist/xquery/data.xq?id=hf109</url>
+</additionalLinks>' %>% xml_to_json()
+
