@@ -25,7 +25,7 @@ xml_to_json <- function(x, out = NULL){
 #'
 #' Parse an EML file into an R list object
 #' @inheritParams xml_to_json
-#' @importFrom xml2 read_xml xml_find_all xml_remove as_list
+#' @importFrom xml2 read_xml xml_find_all xml_remove
 #'
 #' @export
 parse_eml <- function(x, drop_comment = TRUE, add_context = FALSE){
@@ -37,7 +37,7 @@ parse_eml <- function(x, drop_comment = TRUE, add_context = FALSE){
 
   ## Main transform, map XML to list using a modification of the xml2::as_list convention
   ## See as_list.R
-  json <- as_list(xml)
+  json <- as_jsonlist(xml)
 
   ## Set up the JSON-LD context
   if(add_context){
