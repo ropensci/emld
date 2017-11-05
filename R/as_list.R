@@ -25,7 +25,7 @@ as_list.xml_node <- function(x, ns = character(), embed_attr=TRUE, ...) {
   node_attr <- special_jsonld_attrs(xml2::xml_attrs(x, ns = ns), prefix = "#")
   if(length(node_attr) > 0){
     ## If attributes become properties, need a property for node content (can't be a value)
-    if(is.null(names(out))) names(out) <- "@value"
+    if(is.null(names(out))) names(out) <- "content"
     out <- c(node_attr, out)
   }
   group_repeated_key(out)
