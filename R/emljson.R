@@ -39,11 +39,13 @@ parse_eml <- function(x, drop_comment = TRUE, add_context = FALSE){
   ## See as_list.R
   json <- as_jsonlist(xml)
 
+
+  json <- setNames(list(json), xml_name(xml))
+
   ## Set up the JSON-LD context
   if(add_context){
     json <- c(list("@context" = list("@vocab" = "http://ecoinformatics.org/")), json)
-    xmlns <- grepl("^xmlns", names(json))
-    json <- json[!xmlns]   # just drop namespaces for now, should be appended to context
+  #  xmlns <- grepl("^xmlns", names(json))
+  #  json <- json[!xmlns]   # just drop namespaces for now, should be appended to context
   }
-  setNames(list(json), xml_name(xml))
 }
