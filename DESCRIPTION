@@ -1,14 +1,21 @@
 Package: emljson
-Title: What the Package Does (one line, title case)
+Title: Ecological Metadata Language Object Notation for Linked Data
 Version: 0.0.0.9000
-Authors@R: person("First", "Last", email = "first.last@example.com", role = c("aut", "cre"))
+Authors@R: person("Carl", "Boettiger", 
+                  email = "cboettig@gmail.com", 
+                  role = c("aut", "cre", "cph"),
+                  comment=c(ORCID = "http://orcid.org/0000-0002-1642-628X"))
 Description: What the package does (one paragraph).
 Depends: R (>= 3.4.2)
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.0.1
-Suggests: testthat
+Suggests: 
+    testthat,
+    magrittr,
+    rmarkdown,
+    EML
 Imports: xml2,
     jsonlite,
     jsonld
