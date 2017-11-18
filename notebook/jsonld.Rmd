@@ -1,0 +1,103 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+
+```{r}
+library(jsonld)
+library(magrittr)
+library(jsonlite)
+```
+
+
+```{r}
+is.url <- function(x){ 
+  if(!is.character(x))
+    return(FALSE)
+  grepl("^http[s]?://.*", x)
+}
+
+jsonld_set_context <- function(json, context = NULL){
+  if(is.character(json)){
+    json <- jsonlite::fromJSON(json, simplifyVector = FALSE)
+  }
+  if(is.url(context)){
+     json[["@context"]] <- context[["@context"]]
+  } else { 
+    if(is.character(context))
+      context <- jsonlite::fromJSON(context, simplifyVector = FALSE)
+    json[["@context"]] <- context[["@context"]]
+  }
+  jsonlite::toJSON(json, pretty=TRUE, auto_unbox = TRUE)
+}
+
+```
+
+## Switching Contexts: Expansion & Compaction
+
+- Good: homonyms (same word has different meanings), synonyms (different word has ~ same meaning)
+- Fails: Mapping isn't 1:1
+
+
+
+```{r}
+ex1 <- 
+ '{
+      "date": "1993-10-01",
+      "site": "N654",
+      "species": "PIRU",
+      "density": 1.3
+ }'
+
+ex2 <- 
+ '{ 
+      "date": "1993-10-02",
+      "site": "N654",
+      "scientificName": "Picea rubens",
+      "area": 2,
+      "count": 26
+ }'
+
+map <- 
+'{ 
+  "@context": {
+    "@vocab": "http://example.com/",
+    "scientificName": "http://example.com/species"
+  }
+}'
+jsonld_set_context(ex2, map) %>% 
+  jsonld_compact('{"@context": {"@vocab": "http://example.com/"}}')
+
+```
+
+## Integration: Flattening shares id
+
+```{r}
+context <- '{   "@context": { "@vocab": "http://example.com/" } }'
+
+ex <- '{
+  "@context": { "@vocab": "http://example.com/" },
+  "datasets": [
+    {
+      "@id": "http://global_unique_id",
+      "@type": "dataset",
+      "image": "http://image_uri",
+      "name": "stuff"
+    },
+  
+    {
+      "@type": "dataset",
+      "@id": "http://global_unique_id",
+      "name": "Species name"
+    }
+  ]
+}'
+
+jsonld_flatten(ex, context)
+
+```
+
+
+
+hdf5: column data, with units, metadata
