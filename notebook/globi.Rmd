@@ -1,0 +1,86 @@
+---
+title: "globi"
+author: "Carl Boettiger"
+date: "11/28/2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+```
+
+```{r}
+globi <- read_tsv("~/Desktop/interactions.tsv")
+dim(globi)
+names(globi)
+```
+
+
+
+```{r}
+length(unique(globi$localityName))
+sum(is.na(globi$localityName))
+sum(is.na(globi$decimalLongitude))
+```
+
+Some questions on semantics of interactions.  e.g. eats -> eatenBy
+
+```{r}
+sort(table(globi$interactionTypeName))
+```
+
+```{r}
+sort(table(globi$interactionTypeId))
+
+```
+
+
+```{r}
+
+globi %>% 
+  select(sourceTaxonName, sourceTaxonId) %>%
+  add_count(sourceTaxonId) %>% 
+  distinct() %>%
+  arrange(desc(n))
+
+
+```
+
+The data on what the North Atlantic Cod eats comes from a lot of different studies:
+
+```{r}
+globi %>% 
+  filter(sourceTaxonId == "EOL:206692") %>% 
+  select(referenceDoi) %>% 
+  count(referenceDoi) %>%
+  arrange(desc(n))
+
+
+```
+
+
+
+
+How many interactions have *Gadus morhua* as the target?
+
+```{r}
+globi %>% 
+  filter(targetTaxonId == "EOL:206692") %>% tally()
+```
+
+
+```{r}
+globi %>% 
+  filter(targetTaxonId == "EOL:206692" | sourceTaxonId == "EOL:206692") %>% tally()
+```
+
+Can we make a trophic web of all interactions that include  *Gadus morhua*?  
+Note we need to do this recursively, we do not just want *Gadus* as the target
+or source, but also all the targets or sources of that.  
+
+Would this be easier in Cypher or SQL?  
+
+```{r}
+globi %>% 
+  filter(targetTaxonId == "EOL:206692" | sourceTaxonId == "EOL:206692") %>% tally()
+```
