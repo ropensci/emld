@@ -78,6 +78,8 @@ Can we make a trophic web of all interactions that include  *Gadus morhua*?
 Note we need to do this recursively, we do not just want *Gadus* as the target
 or source, but also all the targets or sources of that.  
 
+What about subsetting that network by connection types?
+
 Would this be easier in Cypher or SQL?  
 
 ```{r}
