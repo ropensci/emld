@@ -1,21 +1,38 @@
+context("xml_to_json")
+
 library(magrittr)
 library(xml2)
 library(jsonlite)
-library(emljson)
-system.file("extdata/hf205.xml", package="emljson") %>%
+
+
+system.file("extdata/hf205.xml", package="emld") %>%
   xml_to_json("ex.json")
 
-xml_to_json(
-'<url name="Ecophysiology">http://harvardforest.fas.harvard.edu:8080/exist/xquery/data.xq?id=hf168</url>'
-)
+test_that(
+  "We can parse an EML <url> element with an attribute into JSON",
+  {
+    x <- xml_to_json(
+'<url name="Ecophysiology">http://harvardforest.fas.harvard.edu:8080/exist/xquery/data.xq?id=hf168</url>')
 
-emljson::parse_eml(
+    expect_is(x, "json")
+  })
+
+test_that(
+  "We can parse EML node into R list", {
+  x <- parse_eml(
   '<url name="Ecophysiology">http://harvardforest.fas.harvard.edu:8080/exist/xquery/data.xq?id=hf168</url>'
 )
+  expect_is(x, "list")
 
+  })
 
-'<additionalLinks>
-  <url name="Ecophysiology">http://harvardforest.fas.harvard.edu:8080/exist/xquery/data.xq?id=hf168</url>
-  <url name="Effects of Prey">http://harvardforest.fas.harvard.edu:8080/exist/xquery/data.xq?id=hf109</url>
-</additionalLinks>' %>% xml_to_json()
+test_that("we can parse repeated name elements", {
+  x <- xml_to_json(
+  '<additionalLinks>
+    <url name="Ecophysiology">http://harvardforest.fas.harvard.edu:8080/exist/xquery/data.xq?id=hf168</url>
+    <url name="Effects of Prey">http://harvardforest.fas.harvard.edu:8080/exist/xquery/data.xq?id=hf109</url>
+  </additionalLinks>')
+
+  expect_is(x, "json")
+  })
 

@@ -5,7 +5,7 @@ library(magrittr)
 library(xml2)
 
 context <- '{"@context": {"@vocab": "http://ecoinformatics.org/"}}'
-ex <- system.file("extdata/hf205.json", package = "emljson")
+ex <- system.file("extdata/hf205.json", package = "emld")
 
 
 roundtrip <-
@@ -18,7 +18,7 @@ testthat::expect_equivalent(length(read_json(ex)),
 
 
 ### Validate after Round-trip via xml2::as_list, as_xml_doc,
-xml <- system.file("extdata/hf205.xml", package = "emljson")
+xml <- system.file("extdata/hf205.xml", package = "emld")
 xml %>%
   xml2::read_xml() %>%
   xml2::as_list() %>%
@@ -33,7 +33,7 @@ xml %>%
 
 
 
-#system.file("extdata/hf205.json", package = "emljson") %>%
+#system.file("extdata/hf205.json", package = "emld") %>%
 #  jsonld_expand() %>%
 #  jsonld_compact(context) %>%
 #  fromJSON() %>%

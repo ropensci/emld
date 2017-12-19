@@ -1,4 +1,4 @@
 library(testthat)
-library(emljson)
+library(emld)
 
-test_check("emljson")
+test_check("emld")

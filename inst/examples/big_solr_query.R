@@ -2,7 +2,7 @@ library("httr")
 library("jsonlite")
 library("jsonld")
 library("tidyverse")
-source(system.file("examples/solr_functions.R", package="emljson"))
+source(system.file("examples/solr_functions.R", package="emld"))
 
 ## See: https://cn.dataone.org/cn/v2/query/solr
 

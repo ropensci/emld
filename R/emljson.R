@@ -9,7 +9,7 @@
 #' @importFrom jsonlite toJSON write_json
 #' @examples
 #'
-#' ex <- system.file("extdata/example.xml", package = "emljson")
+#' ex <- system.file("extdata/example.xml", package = "emld")
 #' xml_to_json(ex)
 #'
 xml_to_json <- function(x, out = NULL){
