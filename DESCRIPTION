@@ -1,11 +1,11 @@
-Package: emljson
-Title: Ecological Metadata Language Object Notation for Linked Data
+Package: emld
+Title: Ecological Metadata as Linked Data
 Version: 0.0.0.9000
 Authors@R: person("Carl", "Boettiger", 
                   email = "cboettig@gmail.com", 
                   role = c("aut", "cre", "cph"),
                   comment=c(ORCID = "http://orcid.org/0000-0002-1642-628X"))
-Description: What the package does (one paragraph).
+Description: Ecological Metadata Language, 'EML' in 'JSON-LD'
 Depends: R (>= 3.4.2)
 License: MIT + file LICENSE
 Encoding: UTF-8
