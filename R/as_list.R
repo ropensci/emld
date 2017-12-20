@@ -19,11 +19,12 @@ as_jsonlist.xml_node <- function(x, ns = character(), embed_attr=TRUE, ...) {
       return(paste("[", type, "]"))
     out <- list()
 
-  } else if(length(contents) == 1){
-    out <- as_jsonlist(contents[[1]], ns) # unbox length-1 cases
-  } else {
-    out <- lapply_nodes(contents, as_jsonlist, ns = ns)
-  }
+   }  else if(length(contents) == 1 & xml_type(contents[[1]]) == "text"){
+       out <- as_jsonlist(contents[[1]], ns)
+   } else {
+      out <- as_jsonlist(contents, ns)
+   }
+
 
   # Add xml attributes as #attribute keys
   node_attr <- special_jsonld_attrs(xml2::xml_attrs(x, ns = ns), prefix = "#")

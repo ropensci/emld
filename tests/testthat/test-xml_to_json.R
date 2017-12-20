@@ -1,5 +1,27 @@
 context("xml_to_json")
+library(magrittr)
+library(xml2)
+library(jsonlite)
 
+devtools::load_all()
+
+hf205 <- system.file("extdata/hf205.xml", package="emld")
+ex <- system.file("extdata/example.xml", package="emld")
+
+hf205 %>%
+  xml_to_json() %>%
+  fromJSON(simplifyVector = FALSE) %>%
+  write_json("hf205.json", auto_unbox = TRUE, pretty = TRUE)
+
+hf205 %>%
+  xml_to_json() %>%
+  json_to_xml("hf205.xml")
+
+  fromJSON(simplifyVector = FALSE) -> H
+
+
+f <- system.file("extdata/example.xml", package="emld")
+as_jsonlist.xml_node(xml)
 
 ## FIXME we're missing elements here!
 test_that("we can convert example.xml into complete JSON-LD", {

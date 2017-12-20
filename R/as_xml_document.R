@@ -30,16 +30,16 @@ json_to_xml.json <- function(x, file = NULL, ...){
 json_to_xml.list <- function(x, file = NULL, ...){
 
   ## Frame/compact into original context for a standardized structure
-  eml_list <- frame.list(x)
+  # eml_list <- frame.list(x)
 
   ## Sort S3/list elements according to eml ordering requirements
   # eml <- sort_eml(eml_list)
 
   ## Step 3: Serialize S3/list into XML
-  xml <- as_eml_document(list(eml = eml))
+  xml <- as_eml_document(x)
 
   ## Step 4: Add namespaces from the original context as xmlns:prefix=""
-  xml <- context_namespaces(eml_list[["@context"]], xml)
+  #xml <- context_namespaces(eml[["@context"]], xml)
 
   ## Serialize to file if desired
   if(!is.null(file))
