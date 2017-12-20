@@ -1,10 +1,5 @@
 context("xml_to_json")
 
-library(magrittr)
-library(xml2)
-library(jsonlite)
-
-
 system.file("extdata/hf205.xml", package="emld") %>%
   xml_to_json("ex.json")
 
@@ -17,14 +12,6 @@ test_that(
     expect_is(x, "json")
   })
 
-test_that(
-  "We can parse EML node into R list", {
-  x <- parse_eml(
-  '<url name="Ecophysiology">http://harvardforest.fas.harvard.edu:8080/exist/xquery/data.xq?id=hf168</url>'
-)
-  expect_is(x, "list")
-
-  })
 
 test_that("we can parse repeated name elements", {
   x <- xml_to_json(

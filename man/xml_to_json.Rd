@@ -19,7 +19,7 @@ Convert an EML file into a json file/string
 }
 \examples{
 
-ex <- system.file("extdata/example.xml", package = "emljson")
+ex <- system.file("extdata/example.xml", package = "emld")
 xml_to_json(ex)
 
 }

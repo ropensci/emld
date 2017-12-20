@@ -1,8 +1,9 @@
 library(jsonld)
 library(jsonlite)
-library(emld)
 library(magrittr)
 library(xml2)
+library(testthat)
+library(emld)
 
 
 test_that("we can roundtrip JSON-LD expansion and compaction", {
