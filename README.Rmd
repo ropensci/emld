@@ -2,6 +2,9 @@
 output: github_document
 ---
 
+[![Travis-CI Build Status](https://travis-ci.org/cboettig/emld.svg?branch=master)](https://travis-ci.org/cboettig/emld) 
+[![Coverage Status](https://img.shields.io/codecov/c/github/cboettig/emld/master.svg)](https://codecov.io/github/cboettig/emld?branch=master)
+
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 ```{r, echo = FALSE}
@@ -14,7 +17,7 @@ knitr::opts_chunk$set(
 
 # emld
 
-The goal of emld is to ...
+The goal of emld is to provide a way to work with EML metadata in the JSON-LD format.  
 
 ## Installation
 
