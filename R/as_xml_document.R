@@ -158,8 +158,12 @@ add_node <- function(x, parent, tag = NULL) {
       key <- gsub("^(@|#)(\\w+)", "\\2", names(attr)[[i]]) # drop json-ld `@`
       if(length(key) > 0){
         if(!is_attr){
-          textType <- xml2::xml_add_child(parent, key)
-          xml2::xml_set_text(textType, attr[[i]])
+          if(key == tag) ## special case where we use node name instead of content
+            xml2::xml_set_text(parent, attr[[i]])
+          else {
+            textType <- xml2::xml_add_child(parent, key)
+            xml2::xml_set_text(textType, attr[[i]])
+          }
         } else {
           xml2::xml_set_attr(parent, key, attr[[i]])
         }
