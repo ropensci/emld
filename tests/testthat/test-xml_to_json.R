@@ -1,5 +1,24 @@
 context("xml_to_json")
 
+
+## FIXME we're missing elements here!
+test_that("we can convert example.xml into complete JSON-LD", {
+
+  f <- system.file("extdata/example.xml", package="emld")
+  json <- xml_to_json(f)
+
+  X <- jsonlite::fromJSON(json, simplifyVector = FALSE)
+  expect_named(X, c("@context", "eml"))
+
+  expect_true("dataset" %in% names(X[["eml"]]))
+
+  ## count elements
+  unlist(X)
+})
+
+
+
+
 test_that("we can convert hf205.xml into JSON-LD", {
 
   f <- system.file("extdata/hf205.xml", package="emld")

@@ -1,5 +1,6 @@
 context("json_to_xml")
 
+## FIXME xml_to_json does not parse everything correctly!
 
 
 library(xml2)
