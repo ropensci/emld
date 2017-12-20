@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<eml:eml xmlns:eml="eml://ecoinformatics.org/eml-2.1.0" xmlns:ds="eml://ecoinformatics.org/dataset-2.1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.1" xsi:schemaLocation="eml://ecoinformatics.org/eml-2.1.0 http://nis.lternet.edu/schemas/EML/eml-2.1.0/eml.xsd" system="hfr" scope="system" packageId="knb-lter-hfr.205.4">
+<eml:eml xmlns:eml="eml://ecoinformatics.org/eml-2.1.0"
+         xmlns:ds="eml://ecoinformatics.org/dataset-2.1.0"
+         xmlns:xs="http://www.w3.org/2001/XMLSchema"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.1"
+         xsi:schemaLocation="eml://ecoinformatics.org/eml-2.1.0 http://nis.lternet.edu/schemas/EML/eml-2.1.0/eml.xsd"
+         system="hfr"
+         scope="system"
+         packageId="knb-lter-hfr.205.4">
    <access authSystem="knb" order="allowFirst" scope="document">
       <allow>
          <principal>uid=HFR,o=lter,dc=ecoinformatics,dc=org</principal>
