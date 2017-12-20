@@ -36,7 +36,7 @@
       "intellectualRights": "This dataset is released to the public and may be freely downloaded. Please keep the designated Contact person informed of any plans to use the dataset. Consultation or collaboration with the original investigators is strongly encouraged. Publications and data products that make use of the dataset must include proper acknowledgement. For more information on LTER Network data access and use policies, please see: http://www.lternet.edu/data/netpolicy.html.",
       "distribution": {
         "#function": "information",
-        "content": "http://harvardforest.fas.harvard.edu:8080/exist/xquery/data.xq?id=hf205"
+        "url": "http://harvardforest.fas.harvard.edu:8080/exist/xquery/data.xq?id=hf205"
       },
       "coverage": {
         "geographicCoverage": {
@@ -81,7 +81,7 @@
         },
         "phone": {
           "#phonetype": "voice",
-          "content": "(978) 724-3302"
+          "phone": "(978) 724-3302"
         },
         "electronicMailAddress": "aellison@fas.harvard.edu"
       },
@@ -98,11 +98,11 @@
         "phone": [
           {
             "#phonetype": "voice",
-            "content": "(978) 724-3302"
+            "phone": "(978) 724-3302"
           },
           {
             "#phonetype": "fax",
-            "content": "(978) 724-3595"
+            "phone": "(978) 724-3595"
           }
         ]
       },
@@ -144,7 +144,7 @@
           },
           "distribution": {
             "#function": "download",
-            "content": "http://harvardforest.fas.harvard.edu/data/p20/hf205/hf205-01-TPexp1.csv"
+            "url": "http://harvardforest.fas.harvard.edu/data/p20/hf205/hf205-01-TPexp1.csv"
           }
         },
         "attributeList": {
@@ -344,7 +344,7 @@
             "dataFormat": "Mathematica notebook",
             "distribution": {
               "#function": "download",
-              "content": "http://harvardforest.fas.harvard.edu/data/p20/hf205/hf205-02-mathematica-oxygen.nb"
+              "url": "http://harvardforest.fas.harvard.edu/data/p20/hf205/hf205-02-mathematica-oxygen.nb"
             }
           },
           "entityType": "Mathematica code"
@@ -358,7 +358,7 @@
             "dataFormat": "pdf",
             "distribution": {
               "#function": "download",
-              "content": "http://harvardforest.fas.harvard.edu/data/p20/hf205/hf205-03-mathematica-oxygen.pdf"
+              "url": "http://harvardforest.fas.harvard.edu/data/p20/hf205/hf205-03-mathematica-oxygen.pdf"
             }
           },
           "entityType": "Mathematica code"
@@ -378,39 +378,39 @@
         "url": [
           {
             "#name": "Ecophysiology of Carnivorous Plants Worldwide 1980-2011",
-            "content": "http://harvardforest.fas.harvard.edu:8080/exist/xquery/data.xq?id=hf168"
+            "url": "http://harvardforest.fas.harvard.edu:8080/exist/xquery/data.xq?id=hf168"
           },
           {
             "#name": "Effects of Prey Availability on Sarracenia Physiology at Harvard Forest 2005",
-            "content": "http://harvardforest.fas.harvard.edu:8080/exist/xquery/data.xq?id=hf109"
+            "url": "http://harvardforest.fas.harvard.edu:8080/exist/xquery/data.xq?id=hf109"
           },
           {
             "#name": "Food Web of Sarracenia Purpurea in United States and Canada since 1999",
-            "content": "http://harvardforest.fas.harvard.edu:8080/exist/xquery/data.xq?id=hf193"
+            "url": "http://harvardforest.fas.harvard.edu:8080/exist/xquery/data.xq?id=hf193"
           },
           {
             "#name": "Thresholds and Regime Shifts at Four LTER Sites (CCE, JRN, PAL, SBC) 1951-2009",
-            "content": "http://harvardforest.fas.harvard.edu:8080/exist/xquery/data.xq?id=hf170"
+            "url": "http://harvardforest.fas.harvard.edu:8080/exist/xquery/data.xq?id=hf170"
           },
           {
             "#name": "Nitrogen Cycling Dynamics in Sarracenia Purpurea at Harvard Forest 2004-2005",
-            "content": "http://harvardforest.fas.harvard.edu:8080/exist/xquery/data.xq?id=hf096"
+            "url": "http://harvardforest.fas.harvard.edu:8080/exist/xquery/data.xq?id=hf096"
           },
           {
             "#name": "Organic and Inorganic Nitrogen Uptake by Sarracenia Purpurea at Harvard Forest and Fort Albany ON 2007",
-            "content": "http://harvardforest.fas.harvard.edu:8080/exist/xquery/data.xq?id=hf146"
+            "url": "http://harvardforest.fas.harvard.edu:8080/exist/xquery/data.xq?id=hf146"
           },
           {
             "#name": "Prey Capture by Carnivorous Plants Worldwide 1923-2007",
-            "content": "http://harvardforest.fas.harvard.edu:8080/exist/xquery/data.xq?id=hf111"
+            "url": "http://harvardforest.fas.harvard.edu:8080/exist/xquery/data.xq?id=hf111"
           },
           {
             "#name": "Sarracenia Purpurea Prey Capture at Harvard Forest 2008",
-            "content": "http://harvardforest.fas.harvard.edu:8080/exist/xquery/data.xq?id=hf114"
+            "url": "http://harvardforest.fas.harvard.edu:8080/exist/xquery/data.xq?id=hf114"
           },
           {
             "#name": "Allochthonous Nutrients in the Sarracenia Microecosystem at Harvard Forest 2005-2007",
-            "content": "http://harvardforest.fas.harvard.edu:8080/exist/xquery/data.xq?id=hf098"
+            "url": "http://harvardforest.fas.harvard.edu:8080/exist/xquery/data.xq?id=hf098"
           }
         ]
       }
