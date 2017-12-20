@@ -16,9 +16,12 @@ hf205 %>%
 hf205 %>%
   xml_to_json() %>%
   json_to_xml("hf205.xml")
+EML::eml_validate(hf205)
 
-  fromJSON(simplifyVector = FALSE) -> H
-
+ex %>%
+  xml_to_json() %>%
+  json_to_xml("ex.xml")
+EML::eml_validate("ex.xml")
 
 f <- system.file("extdata/example.xml", package="emld")
 as_jsonlist.xml_node(xml)

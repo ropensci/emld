@@ -48,6 +48,18 @@ json_to_xml.list <- function(x, file = NULL, ...){
     xml
 }
 
+
+rename_attr <- function(x, old, new){
+  attr(x, new) <- attr(x, old)
+  attr(x, old) <- NULL
+  x
+}
+rename_root <- function(xml, n){
+  root <- xml_root(xml)
+  xml_name(root) <- n
+  xml
+}
+
 context_namespaces <- function(context, xml){
   ## unpack list-contexts
   context <- unlist(lapply(context, function(y){
@@ -121,7 +133,12 @@ as_eml_document.list <- function(x, ...) {
   }
   doc <- xml2::xml_new_document()
   add_node(x, doc)
-  xml2::xml_root(doc)
+
+  root <- xml2::xml_root(doc)
+
+  rename_root(root, "eml:eml")
+
+
 }
 ## Identical to as_xml_document methods
 #' @importFrom xml2 xml_new_root
@@ -156,6 +173,8 @@ add_node <- function(x, parent, tag = NULL) {
       ## Handle special attributes
       is_attr <- grepl("^(@|#)(\\w+)", names(attr)[[i]])
       key <- gsub("^(@|#)(\\w+)", "\\2", names(attr)[[i]]) # drop json-ld `@`
+
+      key <- gsub("^schemaLocation$", "xsi:schemaLocation", key)
       if(length(key) > 0){
         if(!is_attr){
           if(key == tag) ## special case where we use node name instead of content
