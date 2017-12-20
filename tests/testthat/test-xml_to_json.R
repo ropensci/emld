@@ -1,7 +1,12 @@
 context("xml_to_json")
 
-system.file("extdata/hf205.xml", package="emld") %>%
-  xml_to_json("ex.json")
+test_that("we can convert hf205.xml into JSON-LD", {
+
+  f <- system.file("extdata/hf205.xml", package="emld")
+  xml_to_json(f, "ex.json")
+  expect_true(file.exists("ex.json"))
+  unlink("ex.json")
+})
 
 test_that(
   "We can parse an EML <url> element with an attribute into JSON",

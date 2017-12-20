@@ -49,23 +49,28 @@ test_that("We can validate after roundtrip with default xml2 methods", {
     xml2::as_xml_document() %>%
     rename_root("eml:eml") %>%
     xml2::write_xml("test.xml")
+
   testthat::expect_true(EML::eml_validate("test.xml"))
+  unlink("test.xml")
 })
 
-test_that("We can go from emld into valid EML", {
+#test_that("We can go from emld into valid EML", {
 ## NOT WORKING -- NEED TO WRITE CUSTOM as_xml_document METHOD STILL
-context <- '{"@context": {"@vocab": "http://ecoinformatics.org/"}}'
-system.file("extdata/hf205.json", package = "emld") %>%
-  jsonld_expand() %>%
-  jsonld_compact(context) %>%
-  fromJSON(simplifyVector = FALSE) %>%
-  getElement("eml") %>%
-  list("eml" = .) %>%
-  xml2::as_xml_document() %>%
-  rename_root("eml:eml") %>%
-  xml2::write_xml("test.xml", options = "format")
+#context <- '{"@context": {"@vocab": "http://ecoinformatics.org/"}}'
+#system.file("extdata/hf205.json", package = "emld") %>%
+#  jsonld_expand() %>%
+#  jsonld_compact(context) %>%
+#  fromJSON(simplifyVector = FALSE) %>%
+#  getElement("eml") %>%
+#  list("eml" = .) %>%
+#  xml2::as_xml_document() %>%
+#  rename_root("eml:eml") %>%
+#  xml2::write_xml("test.xml", options = "format")
+
+ # unlink("test.xml")
+
 #EML::eml_validate("test.xml")
 #testthat::expect_true(EML::eml_validate("test.xml"))
-})
+#})
 
 
