@@ -5,7 +5,16 @@ Authors@R: person("Carl", "Boettiger",
                   email = "cboettig@gmail.com", 
                   role = c("aut", "cre", "cph"),
                   comment=c(ORCID = "http://orcid.org/0000-0002-1642-628X"))
-Description: Ecological Metadata Language, 'EML' in 'JSON-LD'
+Description: Transform Ecological Metadata Language ('EML') files into 'JSON-LD'
+             and back into 'EML'.  This allows us to treat all 'EML' fields as 
+             linked data that can easily be serialized to 'RDF' and queried with
+             'SPARQL'.  Further, the 'JSON-LD' format is both simpler and more
+             flexible than the 'XML' based 'EML' format, corresponding naturally
+             to nested list objects in R. These lists can be flattened, compacted,
+             and re-framed with the standard 'JSON-LD' operations, making them 
+             easier to work with for users and developers while maintaining a 1:1
+             mapping into the original 'EML' schema. Several vignettes illustrate the
+             utility of these approaches. 
 Depends: R (>= 3.4.2)
 License: MIT + file LICENSE
 Encoding: UTF-8

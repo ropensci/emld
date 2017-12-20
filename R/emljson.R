@@ -13,7 +13,7 @@
 #' xml_to_json(ex)
 #'
 xml_to_json <- function(x, out = NULL){
-  json <- parse_eml(x, drop_comment = TRUE, add_context = TRUE)
+  json <- parse_eml(x, add_context = TRUE)
   if(is.null(out)){
     jsonlite::toJSON(json, pretty = TRUE, auto_unbox = TRUE)
   } else {
@@ -25,21 +25,19 @@ xml_to_json <- function(x, out = NULL){
 #'
 #' Parse an EML file into an R list object
 #' @inheritParams xml_to_json
+#' @param add_context should we add a default context element?
 #' @importFrom xml2 read_xml xml_find_all xml_remove
 #'
 #' @export
-parse_eml <- function(x, drop_comment = TRUE, add_context = FALSE){
+parse_eml <- function(x, add_context = FALSE){
   xml <- xml2::read_xml(x)
 
   ## Drop comment nodes.
-  if(drop_comment)
-    xml2::xml_remove(xml2::xml_find_all(xml, "//comment()"))
+  xml2::xml_remove(xml2::xml_find_all(xml, "//comment()"))
 
   ## Main transform, map XML to list using a modification of the xml2::as_list convention
   ## See as_list.R
   json <- as_jsonlist(xml)
-
-
   json <- setNames(list(json), xml_name(xml))
 
   ## Set up the JSON-LD context
@@ -48,4 +46,5 @@ parse_eml <- function(x, drop_comment = TRUE, add_context = FALSE){
   #  xmlns <- grepl("^xmlns", names(json))
   #  json <- json[!xmlns]   # just drop namespaces for now, should be appended to context
   }
+  json
 }

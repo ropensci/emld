@@ -4,10 +4,12 @@
 \alias{parse_eml}
 \title{parse_eml}
 \usage{
-parse_eml(x, drop_comment = TRUE, add_context = FALSE)
+parse_eml(x, add_context = FALSE)
 }
 \arguments{
 \item{x}{path to an EML file}
+
+\item{add_context}{should we add a default context element?}
 }
 \description{
 Parse an EML file into an R list object
