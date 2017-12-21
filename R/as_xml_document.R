@@ -140,16 +140,14 @@ as_eml_document.xml_document <- function(x, ...) {
 }
 
 
-add_node <- function(x, parent, tag = NULL) {
-  if (is.atomic(x)) {
-    return() ## bc we call add_node after already eval on is.atomic
-  }
-
-  if (!is.null(tag)) {
+add_node <- function(x, parent, tag) {
+    if (is.atomic(x)) {
+      return() ## bc we call add_node after already eval on is.atomic
+    }
     x <- sort_properties(x, tag)
-
-    if(!is.null(names(x)) & length(x) > 0)
+    if(!is.null(names(x)) & length(x) > 0){
       parent <- xml2::xml_add_child(parent, tag)
+    }
     update_tag <- !is.null(names(x))
     for(i in seq_along(x)){
       if(is.atomic(x[[i]])){
@@ -160,86 +158,35 @@ add_node <- function(x, parent, tag = NULL) {
       }
       add_node(x[[i]], parent, tag)
     }
-
-  } else {
-    for (i in seq_along(x)) {
-      if(!is.null(names(x))){
-        tag <- names(x)[[i]]
-      }
-      add_node(x[[i]], parent, tag)
-    }
-  }
 }
 
 
 serialize_atomics <- function(x, parent, tag, i){
 
-  ## FIXME the logic here may be somewhat redundant at parts, the if-else could be streamlined too
   if(is.null(names(x)[[i]])){
     textType <- xml2::xml_add_child(parent, tag)
     return(xml2::xml_set_text(textType, x[[i]]))
   }
 
-  ## Handle special attributes
+  ## Identify properties that should become xml attributes instead of text values
   is_attr <- grepl("^(@|#)(\\w+)", names(x)[[i]])
   key <- gsub("^(@|#)(\\w+)", "\\2", names(x)[[i]]) # drop json-ld `@`
   key <- gsub("^schemaLocation$", "xsi:schemaLocation", key)
 
-  if(length(key) > 0){ if(!is.na(key)){
+  if(length(key) > 0){
+    ## Text-type atomics ##
     if(!is_attr){
-      if(grepl("^#\\w+", tag)){ ## special case where we use node name instead of content
+      if(grepl("^#\\w+", tag)){
+        ## special case where JSON-LD repeats node name (for grouped nodes with attributes, e.g. url)
         xml2::xml_set_text(parent, x[[i]])
       } else {
         textType <- xml2::xml_add_child(parent, key)
         xml2::xml_set_text(textType, x[[i]])
       }
+    ## Attribute atomics ##
     } else {
       xml2::xml_set_attr(parent, key, x[[i]])
     }
-  }}
-
-}
-
-
-
-
-
-
-old_add_node <- function(x, parent, tag = NULL) {
-  is_attr <- grep("^(@|#).*", names(x))
-  attr <- x[ is_attr ]
-  if(length(attr) > 0 )
-    child_nodes <- x[ - is_attr ]
-  else
-    child_nodes <- x
-
-  if(is.atomic(x) & is.null(tag)){
-    return(xml2::xml_set_text(parent, as.character(x)))
   }
 
-  if(is.atomic(x) & !is.null(tag)){
-    parent <- xml2::xml_add_child(parent, tag)
-    return(xml2::xml_set_text(parent, as.character(x)))
-  }
-
-  if(!is.null(tag)){
-    if(!is.null(names(x)) & length(x) > 0){
-      parent <- xml2::xml_add_child(parent, tag)
-    }
-
-    for (i in seq_along(attr)) {
-      key <- gsub("^(@|#)(\\w+)", "\\2", names(attr)[[i]]) # drop json-ld `@`
-      if(length(key) > 0 & key != "type"){
-        xml2::xml_set_attr(parent, key, attr[[i]])
-      }
-    }
-  }
-  for (i in seq_along(child_nodes)) {
-    if(!is.null(names(child_nodes))){
-      tag <- names(child_nodes)[[i]]
-    } else {
-      tag <- NULL #xml_name(parent)
-    }
-    add_node(child_nodes[[i]], parent, tag)
-  }
 }
