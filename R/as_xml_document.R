@@ -49,10 +49,10 @@ json_to_xml.list <- function(x, file = NULL, ...){
 }
 
 
-
+#' @importFrom xml2 xml_root xml_name
 rename_root <- function(xml, n){
   root <- xml2::xml_root(xml)
-  xml_name(root) <- n
+  xml2::xml_name(root) <- n
   xml
 }
 
@@ -161,17 +161,20 @@ add_node <- function(x, parent, tag = NULL) {
   }
 
   if (!is.null(tag)) {
+
+    x <- sort_properties(x, tag)
+
     if(!is.null(names(x)) & length(x) > 0)
       parent <- xml2::xml_add_child(parent, tag)
 
+    ## FIXME Having this vectorized breaks order, since atomic nodes come first!
     attr <- x[vapply(x, is.atomic, logical(1))]
     for (i in seq_along(attr)) {
       ## Handle special attributes
       is_attr <- grepl("^(@|#)(\\w+)", names(attr)[[i]])
       key <- gsub("^(@|#)(\\w+)", "\\2", names(attr)[[i]]) # drop json-ld `@`
-
       key <- gsub("^schemaLocation$", "xsi:schemaLocation", key)
-      if(length(key) > 0){
+      if(length(key) > 0){ if(!is.na(key)){
         if(!is_attr){
           if(key == tag) ## special case where we use node name instead of content
             xml2::xml_set_text(parent, attr[[i]])
@@ -182,7 +185,7 @@ add_node <- function(x, parent, tag = NULL) {
         } else {
           xml2::xml_set_attr(parent, key, attr[[i]])
         }
-      }
+      }}
     }
   }
   for (i in seq_along(x)) {
