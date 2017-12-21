@@ -1,10 +1,10 @@
 
-# FIXME create db of all slotNames for all classes
+# FIXME create db of all slotNames for all classes, then we can get rid of the hard EML dependency
 
 sort_properties <- function(x, tag){
 
   n <- names(x)
-  require("EML")
+  requireNamespace("EML")
   order <- methods::slotNames(tag)
   drop <- grep("(.Data|schemaLocation|lang|slot_order|id|scope|system|authSystem)", order)
   if(length(drop) > 0)
