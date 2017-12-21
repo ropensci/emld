@@ -10,8 +10,6 @@ test_that("we can round trip and validate hf205", {
     xml_to_json() %>%
     json_to_xml("hf205.xml")
 
-  EML::eml_validate("hf205.xml")
-
   expect_true(EML::eml_validate("hf205.xml"))
   unlink("hf205.xml")
 
