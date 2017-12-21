@@ -1,9 +1,13 @@
+context("base methods")
+
+## These tests show round trips with base jsonld and xml2 methods
+## independent of the methods built into this package. The tests show
+## that even these require a little care to work successfully
+
 library(jsonld)
 library(jsonlite)
 library(magrittr)
 library(xml2)
-library(testthat)
-library(emld)
 
 
 test_that("we can roundtrip JSON-LD expansion and compaction", {
@@ -53,24 +57,3 @@ test_that("We can validate after roundtrip with default xml2 methods", {
   testthat::expect_true(EML::eml_validate("test.xml"))
   unlink("test.xml")
 })
-
-#test_that("We can go from emld into valid EML", {
-## NOT WORKING -- NEED TO WRITE CUSTOM as_xml_document METHOD STILL
-#context <- '{"@context": {"@vocab": "http://ecoinformatics.org/"}}'
-#system.file("extdata/hf205.json", package = "emld") %>%
-#  jsonld_expand() %>%
-#  jsonld_compact(context) %>%
-#  fromJSON(simplifyVector = FALSE) %>%
-#  getElement("eml") %>%
-#  list("eml" = .) %>%
-#  xml2::as_xml_document() %>%
-#  rename_root("eml:eml") %>%
-#  xml2::write_xml("test.xml", options = "format")
-
- # unlink("test.xml")
-
-#EML::eml_validate("test.xml")
-#testthat::expect_true(EML::eml_validate("test.xml"))
-#})
-
-

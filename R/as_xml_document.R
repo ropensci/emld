@@ -49,13 +49,9 @@ json_to_xml.list <- function(x, file = NULL, ...){
 }
 
 
-rename_attr <- function(x, old, new){
-  attr(x, new) <- attr(x, old)
-  attr(x, old) <- NULL
-  x
-}
+
 rename_root <- function(xml, n){
-  root <- xml_root(xml)
+  root <- xml2::xml_root(xml)
   xml_name(root) <- n
   xml
 }

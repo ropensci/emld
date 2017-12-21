@@ -28,4 +28,5 @@ Suggests:
     covr
 Imports: xml2,
     jsonlite,
-    jsonld
+    jsonld,
+    methods

@@ -1,18 +1,30 @@
 context("json_to_xml")
 
-## FIXME xml_to_json does not parse everything correctly!
 
 
-library(xml2)
-devtools::load_all()
-f <- system.file("extdata/hf205.xml", package="emld")
-json <- xml_to_json(f)
-l <- jsonlite::fromJSON(json, simplifyVector = FALSE)
+hf205 <- system.file("extdata/hf205.xml", package="emld")
+ex <- system.file("extdata/example.xml", package="emld")
 
-l <- jsonlite::read_json(system.file("extdata/hf205.json", package = "emld"))
+test_that("we can round trip and validate hf205", {
 
-xml <- as_eml_document(l)
-xml2::write_xml(xml, "test.xml")
+  hf205 %>%
+    xml_to_json() %>%
+    json_to_xml("hf205.xml")
+
+  expect_true(file.exists("hf205.xml"))
+  ## FIXME Fails due to node ordering
+  #expect_true(EML::eml_validate("hf205.xml"))
+  unlink("hf205.xml")
+
+})
+test_that("we can round trip and validate ex", {
+  ex %>%
+    xml_to_json() %>%
+    json_to_xml("ex.xml")
+  expect_true(EML::eml_validate("ex.xml"))
+  unlink("ex.xml")
+})
+
 
 
 

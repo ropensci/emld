@@ -3,34 +3,14 @@ library(magrittr)
 library(xml2)
 library(jsonlite)
 
-devtools::load_all()
 
 hf205 <- system.file("extdata/hf205.xml", package="emld")
 ex <- system.file("extdata/example.xml", package="emld")
 
-hf205 %>%
-  xml_to_json() %>%
-  fromJSON(simplifyVector = FALSE) %>%
-  write_json("hf205.json", auto_unbox = TRUE, pretty = TRUE)
 
-hf205 %>%
-  xml_to_json() %>%
-  json_to_xml("hf205.xml")
-EML::eml_validate(hf205)
-
-ex %>%
-  xml_to_json() %>%
-  json_to_xml("ex.xml")
-EML::eml_validate("ex.xml")
-
-f <- system.file("extdata/example.xml", package="emld")
-as_jsonlist.xml_node(xml)
-
-## FIXME we're missing elements here!
 test_that("we can convert example.xml into complete JSON-LD", {
 
-  f <- system.file("extdata/example.xml", package="emld")
-  json <- xml_to_json(f)
+  json <- xml_to_json(ex)
 
   X <- jsonlite::fromJSON(json, simplifyVector = FALSE)
   expect_named(X, c("@context", "eml"))
@@ -38,7 +18,7 @@ test_that("we can convert example.xml into complete JSON-LD", {
   expect_true("dataset" %in% names(X[["eml"]]))
 
   ## count elements
-  unlist(X)
+  expect_length(unlist(X), 13)
 })
 
 
