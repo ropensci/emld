@@ -49,13 +49,6 @@ json_to_xml.list <- function(x, file = NULL, ...){
 }
 
 
-#' @importFrom xml2 xml_root xml_name
-rename_root <- function(xml, n){
-  root <- xml2::xml_root(xml)
-  xml2::xml_name(root) <- n
-  xml
-}
-
 context_namespaces <- function(context, xml){
   ## unpack list-contexts
   context <- unlist(lapply(context, function(y){
@@ -120,22 +113,16 @@ as_eml_document.json <- function(x, ...){
   as_eml_document(jsonlite::fromJSON(x, simplifyVector = FALSE))
 }
 #' @importFrom xml2 xml_add_child xml_set_attr xml_new_document
+#' xml_set_namespace xml_root xml_find_first
 as_eml_document.list <- function(x, ...) {
-  if (length(x) > 1) {
-    if(!is.null(x$eml))
-      x <- x["eml"]
-    else
-      stop("Root eml node not found", call. = FALSE)
-  }
+
   doc <- xml2::xml_new_document()
-  add_node(x, doc)
+  add_node(x[["eml"]], doc, "eml")
 
-  root <- xml2::xml_root(doc)
-
-  rename_root(root, "eml:eml")
-
-
+  ## Set namespace of <eml> to <eml:eml>
+  xml2::xml_set_namespace(xml2::xml_find_first(xml2::xml_root(doc), "."), "eml")
 }
+
 ## Identical to as_xml_document methods
 #' @importFrom xml2 xml_new_root
 as_eml_document.xml_node <- function(x, ...) {
@@ -186,13 +173,14 @@ add_node <- function(x, parent, tag = NULL) {
 
 
 serialize_atomics <- function(x, parent, tag, i){
-  ## Handle special attributes
 
+  ## FIXME the logic here may be somewhat redundant at parts, the if-else could be streamlined too
   if(is.null(names(x)[[i]])){
     textType <- xml2::xml_add_child(parent, tag)
     return(xml2::xml_set_text(textType, x[[i]]))
   }
 
+  ## Handle special attributes
   is_attr <- grepl("^(@|#)(\\w+)", names(x)[[i]])
   key <- gsub("^(@|#)(\\w+)", "\\2", names(x)[[i]]) # drop json-ld `@`
   key <- gsub("^schemaLocation$", "xsi:schemaLocation", key)
