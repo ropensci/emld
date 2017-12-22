@@ -25,7 +25,8 @@ Suggests:
     magrittr,
     rmarkdown,
     covr,
-    EML
+    EML,
+    yaml
 Imports: xml2,
     jsonlite,
     jsonld,

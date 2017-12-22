@@ -13,13 +13,14 @@ template <- function(object, recursive = FALSE){
   output
 }
 
-
+#' @importFrom jsonlite write_json
 template_file <- function(object, file, type = c("json", "yaml"), recursive = FALSE){
   type <- match.arg(type)
   output <- template(object, recursive = recursive)
   if(type == "json"){
     jsonlite::write_json(output, file, auto_unbox=TRUE, pretty = TRUE)
   } else if(type == "yaml"){
+    ## Somehow this is okay without importFrom and only Suggests yaml
     requireNamespace("yaml")
     yaml::write_yaml(output, file)
   }
