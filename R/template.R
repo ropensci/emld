@@ -1,5 +1,24 @@
 
 ## Warning: do not attempt to request `recursive` on high-level objects
+
+
+#' template
+#'
+#' @param object the name of an eml object to create
+#' @param recursive logical, default FALSE.  Fill in sub-templates recursively?
+#'   WARNING do not attempt to set to TRUE on high level objects like eml, dataset, dataTable, etc
+#' @param attributes logical, default FALSE. Should template include
+#'  properties that are represented as XML attributes in EML? (e.g. system, id. etc)
+#'
+#' @return a list with elements named according to the properties of the object.
+#'         This can be coerced into EML, see vignettes.
+#' @export
+#'
+#' @examples
+#' template("creator")
+#' template("creator", recursive = TRUE)
+#'
+#'
 template <- function(object, recursive = FALSE, attributes = FALSE){
   properties <- eml_db[[object]]
 
@@ -19,6 +38,12 @@ template <- function(object, recursive = FALSE, attributes = FALSE){
 
   output
 }
+
+
+## Fixme consider making template an `emld` S3 class and adding print method as json and optionally as yaml
+
+
+
 
 #' @importFrom jsonlite write_json
 template_file <- function(object, file, type = c("guess", "json", "yaml"),
