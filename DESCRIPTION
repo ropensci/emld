@@ -24,9 +24,9 @@ Suggests:
     testthat,
     magrittr,
     rmarkdown,
-    covr
+    covr,
+    EML
 Imports: xml2,
     jsonlite,
     jsonld,
-    methods,
-    EML
+    methods

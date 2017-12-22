@@ -1,11 +1,15 @@
 
-# FIXME create db of all slotNames for all classes, then we can get rid of the hard EML dependency
+# List of all classes defined by EML and their slot names, in order compatible with schema validation
+# This data is primarily intended for internal use by the sort_properties function
+#
+# @references \url{https://github.com/ropensci/EML}
+#"eml_db"
+
 
 sort_properties <- function(x, tag){
 
   n <- names(x)
-  requireNamespace("EML")
-  order <- methods::slotNames(tag)
+  order <- eml_db[[tag]]
   drop <- grep("(.Data|schemaLocation|lang|slot_order|id|scope|system|authSystem)", order)
   if(length(drop) > 0)
     order <- order[-drop]
@@ -28,6 +32,6 @@ sort_properties <- function(x, tag){
 
 }
 
-ld <- parse_eml(system.file("extdata/hf205.xml", package="emld"))
-names(sort_properties(ld$eml$dataset, "dataset"))
+#ld <- parse_eml(system.file("extdata/hf205.xml", package="emld"))
+#names(sort_properties(ld$eml$dataset, "dataset"))
 #names(sort_properties(ld$eml$access, "access"))
