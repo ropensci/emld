@@ -62,7 +62,7 @@ add_context <- function(json){
     json$base <- NULL
   }
   # closing slash on url only if needed
-  if(!is.null(json$xmlns)){
+  if(!is.null(json$`#xmlns`)){
     con$`@vocab` <- gsub("(\\w)$", "\\1/", json$`#xmlns`)
     json$`#xmlns` <- NULL
   }

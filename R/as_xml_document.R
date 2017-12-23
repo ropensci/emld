@@ -69,7 +69,7 @@ context_namespaces <- function(context, xml){
   root <- xml2::xml_root(xml)
   for(ns in names(context)){
     switch(ns,
-        #   "@vocab" = xml2::xml_set_attr(root, "xmlns", context[[ns]]),
+           "@vocab" = NULL, #xml2::xml_set_attr(root, "xmlns", context[[ns]]),
            "@base" = xml2::xml_set_attr(root, "xml:base", context[[ns]]),
            xml2::xml_set_attr(root, paste("xmlns", ns, sep=":"),
                               gsub("/$", "", context[[ns]])))

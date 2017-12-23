@@ -5,7 +5,11 @@
 emld
 ====
 
-The goal of emld is to provide a way to work with EML metadata in the JSON-LD format.
+The goal of emld is to provide a way to work with EML metadata in the JSON-LD format. At it's heart, the package is simply a way to translate an EML XML document into JSON-LD and be able to reverse this so that any semantically equivalent JSON-LD file can be serialized into EML-schema valid XML.
+
+In contrast to the existing [EML package](https://ropensci.github.io/EML), this package aims to a very light-weight implementation that seeks to provide both an intuitive data format and make maximum use of existing technology to work with that format.
+
+This is very much **work in progress** The outline below illustrates things we can do or will be able to do with this package. The examples below are just a sketch of ideas so far, I hope to replace these with richer examples that will probably be developed more fully as vignettes.
 
 Installation
 ------------
@@ -17,8 +21,6 @@ You can install emld from github with:
 devtools::install_github("cboettig/emld")
 ```
 
-**Work in progress** The outline below illustrates things we can do or will be able to do with this package. More examples forthcoming soon.
-
 ``` r
 library(emld)
 library(jsonlite)
@@ -28,7 +30,7 @@ library(magrittr)
 Reading EML
 -----------
 
-`emld` excels at reading, extracting, and manipulating existing EML files.
+The `EML` package can get particularly cumbersome when it comes to extracting and manipulating existing metadata in highly nested EML files. The `emld` approach can leverage a rich array of tools for reading, extracting, and manipulating existing EML files.
 
 ### Parse & serialize
 
@@ -49,7 +51,7 @@ toJSON(eml, auto_unbox = TRUE) %>%
 json_to_xml("test.xml")
 ```
 
-Prove this is still valid
+We can prove that writing the list back into XML still creates a valid EML file.
 
 ``` r
 EML::eml_validate("test.xml")
@@ -59,20 +61,628 @@ EML::eml_validate("test.xml")
 unlink("test.xml")
 ```
 
-### Flatten and Compact.
-
-We can flatten it, so we don't have to do quite so much subsetting. When we're done editing, we can compact it back into valid EML.
-
 ### Query
 
 We can query it with SPARQL, a rich, semantic way to extract data from one or many EML files.
 
-We can query it with JQ, a simple and powerful query language that gives us a lot of flexibility over the return structure of our results:
+``` r
+library(rdflib)
+```
+
+FIXME replace with an example(s) that makes better use of semantic relationships.
+
+``` r
+f <- system.file("extdata/hf205.xml", package="emld")
+xml_to_json(f, "hf205.json")
+
+sparql <- 
+  'PREFIX eml: <http://ecoinformatics.org/>
+
+  SELECT ?genus ?species ?northLat ?southLat ?eastLong ?westLong 
+
+  WHERE { 
+    ?y eml:taxonRankName "genus" .
+    ?y eml:taxonRankValue ?genus .
+    ?y eml:taxonomicClassification ?s .
+    ?s eml:taxonRankName "species" .
+    ?s eml:taxonRankValue ?species .
+    ?x eml:northBoundingCoordinate ?northLat .
+    ?x eml:southBoundingCoordinate ?southLat .
+    ?x eml:eastBoundingCoordinate ?eastLong .
+    ?x eml:westBoundingCoordinate ?westLong .
+  }
+'
+  
+rdf <- rdf_parse("hf205.json", "jsonld")
+df <- rdf_query(rdf, sparql)
+df
+#>        genus  species northLat southLat eastLong westLong
+#> 1 Sarracenia purpurea   +42.55   +42.42   -72.10   -72.29
+```
+
+We can query it with JQ, a [simple and powerful query language](https://stedolan.github.io/jq/manual/) that also gives us a lot of flexibility over the return structure of our results:
+
+``` r
+library(jqr)
+
+xml_to_json(f) %>% as.character() %>%
+  jq('.dataset.coverage.geographicCoverage.boundingCoordinates | 
+       { northLat: .northBoundingCoordinate, 
+         southLat: .southBoundingCoordinate }')
+#> {
+#>     "northLat": "+42.55",
+#>     "southLat": "+42.42"
+#> }
+```
+
+FIXME not sure how to avoid all the nulls when using recursive desent:
+
+``` r
+
+xml_to_json(f) %>% as.character() %>%
+  jq('..|.boundingCoordinates? | 
+       { northLat: .northBoundingCoordinate, 
+         southLat: .southBoundingCoordinate }')
+#> [
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": "+42.55",
+#>         "southLat": "+42.42"
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     },
+#>     {
+#>         "northLat": null,
+#>         "southLat": null
+#>     }
+#> ]
+```
+
+### Flatten and Compact.
+
+We can flatten it, so we don't have to do quite so much subsetting. When we're done editing, we can compact it back into valid EML.
+
+``` r
+library(jsonld)
+flat <- xml_to_json(f) %>% 
+  jsonld_flatten('{"@vocab": "http://ecoinformatics.org/"}') %>%
+  fromJSON(simplifyVector = FALSE)
+flat <- flat[["@graph"]]
+```
+
+FIXME this would be way more useful if nodes all had `@type` and were named by that type. Then we could do `flat$boundingCoordinates`. Currently flattened objects are unnamed and untyped, so this is less useful.
 
 Writing EML
 -----------
 
-We can also create EML from scratch using lists with help from the `template` function.
+The `EML` package is arguably better suited to this task, where a collection of higher level `set_` functions can facilitate construction of EML. Nevertheless, one of of the main reasons the `EML` package is helpful in construction is simply the ability to a list of the possible slot names for any given object using the low-level approach of creating an object with the `new()` constructor and examining the slots (e.g. with tab completion).
+
+Here we build on that basic insight by providing an elementary helper function, `template()`, which merely returns a list of the possible child elements (aka slots or properties) of the object. We can create EML from scratch using lists with help from the `template` function.
 
 Let's create a minimal EML document
 
@@ -96,10 +706,12 @@ Let's go ahead and get a dataset template as well.
 dataset <- template("dataset")
 ```
 
-I know what you're thinking: surely this could be done recrusively? Yes indeed, but getting all possible options will get out of control (and maybe out of memory too!) Recursive creation is safest for lower-level objects:
+I know what you're thinking: surely this could be done recrusively? Yes indeed, but getting all possible options will get out of control (and maybe out of memory too!) Recursive creation is safest for lower-level objects.
+
+Incidentally, `template` also knows about the EML schema types (always starting with a capital) which are used to type various objects.
 
 ``` r
-contact <- template("contact", recursive = TRUE)
+contact <- template("ResponsibleParty", recursive = TRUE)
 contact
 #> individualName:
 #>   salutation: {}
@@ -119,6 +731,12 @@ contact
 #> userId: {}
 ```
 
+Things stay a bit more tidy without recursion:
+
+``` r
+contact <- template("contact")
+```
+
 Let's start filling out some metadata!
 
 ``` r
@@ -126,82 +744,19 @@ contact$individualName$givenName <- "Carl"
 contact$individualName$surName <- "Boettiger"
 contact$organiziationName <- "UC Berkeley"
 contact$electronicMailAddress <- "cboettig@ropensci.org"
+
+contact <- purrr::compact(contact)
 ```
 
 ``` r
-dataset$title <- "example"
+dataset$title <- "Example Title"
 dataset$creator <- contact
 dataset$contact <- contact
 eml$dataset <- dataset
-
-eml
-#> access: ~
-#> dataset:
-#>   alternateIdentifier: ~
-#>   shortName: ~
-#>   title: example
-#>   creator:
-#>     individualName:
-#>       salutation: {}
-#>       givenName: Carl
-#>       surName: Boettiger
-#>     organizationName: {}
-#>     positionName: {}
-#>     address:
-#>       deliveryPoint: {}
-#>       city: {}
-#>       administrativeArea: {}
-#>       postalCode: {}
-#>       country: {}
-#>     phone: {}
-#>     electronicMailAddress: cboettig@ropensci.org
-#>     onlineUrl: {}
-#>     userId: {}
-#>     organiziationName: UC Berkeley
-#>   metadataProvider: ~
-#>   associatedParty: ~
-#>   pubDate: ~
-#>   series: ~
-#>   abstract: ~
-#>   keywordSet: ~
-#>   additionalInfo: ~
-#>   intellectualRights: ~
-#>   distribution: ~
-#>   coverage: ~
-#>   purpose: ~
-#>   maintenance: ~
-#>   contact:
-#>     individualName:
-#>       salutation: {}
-#>       givenName: Carl
-#>       surName: Boettiger
-#>     organizationName: {}
-#>     positionName: {}
-#>     address:
-#>       deliveryPoint: {}
-#>       city: {}
-#>       administrativeArea: {}
-#>       postalCode: {}
-#>       country: {}
-#>     phone: {}
-#>     electronicMailAddress: cboettig@ropensci.org
-#>     onlineUrl: {}
-#>     userId: {}
-#>     organiziationName: UC Berkeley
-#>   publisher: ~
-#>   pubPlace: ~
-#>   methods: ~
-#>   project: ~
-#>   dataTable: ~
-#>   spatialRaster: ~
-#>   spatialVector: ~
-#>   storedProcedure: ~
-#>   view: ~
-#>   otherEntity: ~
-#> citation: ~
-#> software: ~
-#> protocol: ~
-#> additionalMetadata: ~
-#> packageId: ~
-#json_to_xml(eml, "eml.xml")
 ```
+
+(Still need to add a method to add JSON-LD context. Also need a method to compact out)
+
+### Further ideas
+
+Perhaps a flattened version could create an easier template to fill out that could then be coerced into valid EML. The original nested structure doesn't serve this purpose as well, since many 'keys' do not take values directly but get more nesting, e.g. you see `individualName` but you can't enter a name there. If you just saw the text-valued properties `givenName` and `surName` it might be a bit clearer.

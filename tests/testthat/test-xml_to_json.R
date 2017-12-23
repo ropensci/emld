@@ -17,7 +17,7 @@ test_that("we can convert example.xml into complete JSON-LD", {
   expect_true("dataset" %in% names(X))
 
   ## count elements
-  expect_length(unlist(X), 13)
+  expect_length(unlist(X), 14)
 })
 
 
