@@ -26,10 +26,10 @@ Suggests:
     rmarkdown,
     covr,
     EML,
-    yaml,
     knitr
 Imports: xml2,
     jsonlite,
     jsonld,
-    methods
+    methods,
+    yaml
 VignetteBuilder: knitr

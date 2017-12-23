@@ -45,6 +45,18 @@ library(emld)
 
 We can parse a simple example and manipulate is as a familar list object (S3 object):
 
+```{r}
+f <- system.file("extdata/example.xml", package="emld")
+eml <- parse_eml(f)
+eml$dataset$title
+```
+
+```{r}
+eml$dataset$title <- "A new title"
+json_to_xml(eml['eml'])
+```
+
+
 ### Flatten and Compact.
 
 We can flatten it, so we don't have to do quite so much subsetting.  When we're done editing, we can compact it back into valid EML.  
@@ -64,4 +76,41 @@ We can also create EML from scratch using lists with help from the `template` fu
 Let's create a minimal EML document
 
 ```{r}
+eml <- template("eml")
+eml
 ```
+
+This gives us an idea of the possible elements (unfortunately it does not currently indicate which are required, optional, or mutually exclusive).  We would also see these listed as tab-completion options if we type `eml$` using the usual list indexing mechanism.
+
+Let's go ahead and get a dataset template as well.  
+
+```{r}
+dataset <- template("dataset")
+```
+
+I know what you're thinking: surely this could be done recrusively?  Yes indeed, but getting all possible options will get out of control (and maybe out of memory too!)  Recursive creation is safest for lower-level objects:
+
+```{r}
+contact <- template("contact", recursive = TRUE)
+contact
+```
+
+Let's start filling out some metadata!
+
+```{r}
+contact$individualName$givenName <- "Carl"
+contact$individualName$surName <- "Boettiger"
+contact$organiziationName <- "UC Berkeley"
+contact$electronicMailAddress <- "cboettig@ropensci.org"
+```
+
+```{r}
+dataset$title <- "example"
+dataset$creator <- contact
+dataset$contact <- contact
+eml$dataset <- dataset
+
+eml
+#json_to_xml(eml, "eml.xml")
+```
+

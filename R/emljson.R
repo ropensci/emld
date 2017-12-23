@@ -14,6 +14,7 @@
 #'
 xml_to_json <- function(x, out = NULL){
   json <- parse_eml(x, add_context = TRUE)
+  class(json) <- "list"
   if(is.null(out)){
     jsonlite::toJSON(json, pretty = TRUE, auto_unbox = TRUE)
   } else {
@@ -38,13 +39,50 @@ parse_eml <- function(x, add_context = FALSE){
   ## Main transform, map XML to list using a modification of the xml2::as_list convention
   ## See as_list.R
   json <- as_jsonlist(xml)
-  json <- setNames(list(json), xml_name(xml))
+  #json <- setNames(list(json), xml2::xml_name(xml))
+  json <- c("@type" = "eml", json)
 
   ## Set up the JSON-LD context
   if(add_context){
-    json <- c(list("@context" = list("@vocab" = "http://ecoinformatics.org/")), json)
-  #  xmlns <- grepl("^xmlns", names(json))
-  #  json <- json[!xmlns]   # just drop namespaces for now, should be appended to context
+    json$`#xmlns` <- "http://ecoinformatics.org/"
+    json <- add_context(json)
   }
+
+  class(json) <- c("emld", "list")
   json
 }
+
+
+
+add_context <- function(json){
+  ## Set up the JSON-LD context
+  con <- list()
+  if ("base" %in% names(json)) {
+    con$`@base` <- json$base
+    json$base <- NULL
+  }
+  # closing slash on url only if needed
+  if(!is.null(json$xmlns)){
+    con$`@vocab` <- gsub("(\\w)$", "\\1/", json$`#xmlns`)
+    json$`#xmlns` <- NULL
+  }
+  nss <- json[grepl("#xmlns\\:", names(json))]
+  con <- c(con,
+           stats::setNames(gsub("(\\w)$", "\\1/", nss),
+                           vapply(names(nss),
+                                  function(x)
+                                    strsplit(x, split = ":")[[1]][[2]],
+                                  character(1))
+           )
+  )
+  xmlns <- grepl("^#xmlns", names(json))
+  json <- json[!xmlns]
+  json$`@context` <- con
+
+  # order names so @context shows up first
+  json <- json[order(names(json))]
+
+  ## Add context defining @id types
+  json
+}
+

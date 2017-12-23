@@ -35,7 +35,12 @@ template <- function(object, recursive = FALSE, attributes = FALSE){
     output <- lapply(properties, template,
                      recursive = recursive, attributes = attributes)
   }
+  ## Ideally drop lowest recursion or do not recurse.
+  ## So we get NULL instead of list(), which is a better indication
+  ## that the template takes a data value and not further information.
 
+
+  class(output) <- c("emld", "list")
   output
 }
 

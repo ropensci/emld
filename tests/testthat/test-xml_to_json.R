@@ -13,9 +13,8 @@ test_that("we can convert example.xml into complete JSON-LD", {
   json <- xml_to_json(ex)
 
   X <- jsonlite::fromJSON(json, simplifyVector = FALSE)
-  expect_named(X, c("@context", "eml"))
 
-  expect_true("dataset" %in% names(X[["eml"]]))
+  expect_true("dataset" %in% names(X))
 
   ## count elements
   expect_length(unlist(X), 13)

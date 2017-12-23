@@ -27,6 +27,11 @@ json_to_xml.json <- function(x, file = NULL, ...){
 }
 
 #' @export
+json_to_xml.emld <- function(x, file = NULL, ...){
+  json_to_xml(as.list(x), file, ...)
+}
+
+#' @export
 json_to_xml.list <- function(x, file = NULL, ...){
 
   ## Frame/compact into original context for a standardized structure
@@ -36,11 +41,14 @@ json_to_xml.list <- function(x, file = NULL, ...){
   # eml <- sort_eml(eml_list)
 
   ## Step 3: Serialize S3/list into XML
-  xml <- as_eml_document(x)
-
+  y <- x
+  y[["@context"]] <- NULL
+  xml <- as_eml_document(y)
   ## Step 4: Add namespaces from the original context as xmlns:prefix=""
-  #xml <- context_namespaces(eml[["@context"]], xml)
+  xml <- context_namespaces(x[["@context"]], xml)
 
+  xml2::xml_set_namespace(xml2::xml_find_first(xml2::xml_root(xml), "."), "eml")
+  xml <- xml2::as_xml_document(xml)
   ## Serialize to file if desired
   if(!is.null(file))
     xml2::write_xml(xml, file, ...)
@@ -51,32 +59,25 @@ json_to_xml.list <- function(x, file = NULL, ...){
 
 context_namespaces <- function(context, xml){
   ## unpack list-contexts
+  if(is.null(names(context))){
   context <- unlist(lapply(context, function(y){
-    if(is.null(names(y)))
-      return(NULL)
-    else
-      y
-  }))
+    if(is.null(names(y))) return(NULL) else y
+  }))}
   ## Drop terms that aren't namespaces (don't end in / or #); e.g. drop
   context <- as.list(context[grepl(".*(#$|/$)",context)])
   ## add to the xml
   root <- xml2::xml_root(xml)
   for(ns in names(context)){
     switch(ns,
-           "@vocab" = xml2::xml_set_attr(root, "xmlns", context[[ns]]),
+        #   "@vocab" = xml2::xml_set_attr(root, "xmlns", context[[ns]]),
            "@base" = xml2::xml_set_attr(root, "xml:base", context[[ns]]),
-           xml2::xml_set_attr(root, paste("xmlns", ns, sep=":"), context[[ns]]))
+           xml2::xml_set_attr(root, paste("xmlns", ns, sep=":"),
+                              gsub("/$", "", context[[ns]])))
   }
-  xml
+  xml2::as_xml_document(xml)
 }
 
 
-
-## use this instead
-sort_eml <- function(eml_list){
-  who <- names(eml_list)
-  eml_list
-}
 
 
 ## Convert list to XML
@@ -117,7 +118,9 @@ as_eml_document.json <- function(x, ...){
 as_eml_document.list <- function(x, ...) {
 
   doc <- xml2::xml_new_document()
-  add_node(x[["eml"]], doc, "eml")
+  type <- x[["@type"]]
+  x[["@type"]] <- NULL
+  add_node(x, doc, type)
 
   ## Set namespace of <eml> to <eml:eml>
   xml2::xml_set_namespace(xml2::xml_find_first(xml2::xml_root(doc), "."), "eml")
