@@ -127,8 +127,7 @@ xml_to_json(f) %>% as.character() %>%
 FIXME not sure how to avoid all the nulls when using recursive desent: 
 
 ```{r}
-
-xml_to_json(f) %>% as.character() %>%
+out <- xml_to_json(f) %>% as.character() %>%
   jq('..|.boundingCoordinates? | 
        { northLat: .northBoundingCoordinate, 
          southLat: .southBoundingCoordinate }')
