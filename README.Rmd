@@ -35,7 +35,10 @@ devtools::install_github("cboettig/emld")
 
 ```{r}
 library(emld)
+library(jsonlite)
+library(magrittr)
 ```
+
 
 ## Reading EML
 
@@ -53,7 +56,17 @@ eml$dataset$title
 
 ```{r}
 eml$dataset$title <- "A new title"
-json_to_xml(eml['eml'])
+
+## fixme replace with a simpler serialize function(?)
+toJSON(eml, auto_unbox = TRUE) %>%
+json_to_xml("test.xml")
+```
+
+Prove this is still valid
+
+```{r}
+EML::eml_validate("test.xml")
+unlink("test.xml")
 ```
 
 
