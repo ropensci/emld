@@ -10,7 +10,7 @@
 #'
 #' @return a list with elements named according to the properties of the object.
 #'         This can be coerced into EML, see vignettes. NULL-valued elements (~)
-#'         can take a data entry directly, while empty list()-valued elements ([])
+#'         can take a data entry directly, while empty list()-valued elements ({})
 #'         indicate properties that take other eml objects as values.
 #' @details Note: while this function can be called in recursions, doing so may be a bad idea.
 #' @export
@@ -46,7 +46,7 @@ template <- function(object, attributes = FALSE){
 
 
   for(n in names(which(children > 0)))
-    output[[n]] <- vector("list", 0)
+    output[[n]] <- setNames(list(), character(0))
   class(output) <- c("emld", "list")
   output
 }

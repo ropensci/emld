@@ -170,7 +170,7 @@ eml <- template("eml")
 eml
 ```
 
-This gives us an idea of the possible elements (unfortunately it does not currently indicate which are required, optional, or mutually exclusive).  We would also see these listed as tab-completion options if we type `eml$` using the usual list indexing mechanism.
+Note that nodes which take data values are indicated by `~` while those where additional nodes are needed as arguments are indicated by `{}`. This gives us an idea of the possible elements (unfortunately it does not currently indicate which are required, optional, or mutually exclusive).  We would also see these listed as tab-completion options if we type `eml$` using the usual list indexing mechanism.
 
 Let's go ahead and get a dataset template as well.  
 
@@ -178,7 +178,7 @@ Let's go ahead and get a dataset template as well.
 dataset <- template("dataset")
 ```
 
-Incidentally, `template` also knows about the EML schema types (always starting with a capital) which are used to type various objects.  Note that nodes which take data values are indicated by `~` while those where additional nodes are needed as arguments are indicated by `[]`.
+Incidentally, `template` also knows about the EML schema types (always starting with a capital) which are used to type various objects.
 
 ```{r}
 contact <- template("ResponsibleParty")
