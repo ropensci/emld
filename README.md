@@ -147,7 +147,9 @@ FIXME this would be way more useful if nodes all had `@type` and were named by t
 Writing EML
 -----------
 
-The `EML` package is arguably better suited to this task, where a collection of higher level `set_` functions can facilitate construction of EML. Nevertheless, one of of the main reasons the `EML` package is helpful in construction is simply the ability to a list of the possible slot names for any given object using the low-level approach of creating an object with the `new()` constructor and examining the slots (e.g. with tab completion).
+This section is even more experimental currently, and may not be a good direction for development. Nevertheless, it can illustrate some of the convenience (and risk) of a simple S3 class.
+
+The `EML` package is arguably better suited to this task, where a collection of higher level `set_` functions can facilitate construction of EML. Still, working on the simple `list`-based classes can be convenient, particularly for developers. (For end-users, the simplicity of the `list` type also means that it is easy to define things that will create invalid EML, e.g. by mispelling a slot or providing a text value to a node-valued element). Nevertheless, one of of the main reasons the `EML` package is helpful in construction is simply the ability to a list of the possible slot names for any given object using the low-level approach of creating an object with the `new()` constructor and examining the slots (e.g. with tab completion).
 
 Here we build on that basic insight by providing an elementary helper function, `template()`, which merely returns a list of the possible child elements (aka slots or properties) of the object. We can create EML from scratch using lists with help from the `template` function.
 
@@ -156,12 +158,12 @@ Let's create a minimal EML document
 ``` r
 eml <- template("eml")
 eml
-#> access: []
-#> dataset: []
-#> citation: []
-#> software: []
-#> protocol: []
-#> additionalMetadata: []
+#> access: {}
+#> dataset: {}
+#> citation: {}
+#> software: {}
+#> protocol: {}
+#> additionalMetadata: {}
 #> packageId: ~
 ```
 
@@ -178,10 +180,10 @@ Incidentally, `template` also knows about the EML schema types (always starting 
 ``` r
 contact <- template("ResponsibleParty")
 contact
-#> individualName: []
+#> individualName: {}
 #> organizationName: ~
 #> positionName: ~
-#> address: []
+#> address: {}
 #> phone: ~
 #> electronicMailAddress: ~
 #> onlineUrl: ~
@@ -204,6 +206,8 @@ contact$electronicMailAddress <- "cboettig@ropensci.org"
 
 contact <- purrr::compact(contact)
 ```
+
+Note that repeated element types should be given as `list` types and not character vectors. This helps developers avoid unpredictable types. `purrr::compact()` is a convenient way to drop any fields we are not using once we're done.
 
 ``` r
 dataset$title <- "Example Title"
