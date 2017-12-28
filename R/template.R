@@ -5,21 +5,20 @@
 #' template
 #'
 #' @param object the name of an eml object to create
-#' @param recursive logical, default FALSE.  Fill in sub-templates recursively?
-#'   WARNING do not attempt to set to TRUE on high level objects like eml, dataset, dataTable, etc
 #' @param attributes logical, default FALSE. Should template include
 #'  properties that are represented as XML attributes in EML? (e.g. system, id. etc)
 #'
 #' @return a list with elements named according to the properties of the object.
-#'         This can be coerced into EML, see vignettes.
+#'         This can be coerced into EML, see vignettes. NULL-valued elements (~)
+#'         can take a data entry directly, while empty list()-valued elements ([])
+#'         indicate properties that take other eml objects as values.
+#' @details Note: while this function can be called in recursions, doing so may be a bad idea.
 #' @export
 #'
 #' @examples
 #' template("creator")
-#' template("creator", recursive = TRUE)
 #'
-#'
-template <- function(object, recursive = FALSE, attributes = FALSE){
+template <- function(object, attributes = FALSE){
   properties <- eml_db[[object]]
 
   if(!attributes){
@@ -30,16 +29,13 @@ template <- function(object, recursive = FALSE, attributes = FALSE){
   output <- vector("list", length(properties))
   names(output) <- properties
 
-  if(recursive){
-    names(properties) <- properties
-    output <- lapply(properties, template,
-                     recursive = recursive, attributes = attributes)
-  }
-  ## Ideally drop lowest recursion or do not recurse.
-  ## So we get NULL instead of list(), which is a better indication
-  ## that the template takes a data value and not further information.
+  names(properties) <- properties
+  children <- vapply(properties, function(x)
+    length(template(x, attributes = attributes)),
+    integer(1))
 
-
+  for(n in names(which(children > 0)))
+    output[[n]] <- vector("list", 0)
   class(output) <- c("emld", "list")
   output
 }
@@ -52,7 +48,7 @@ template <- function(object, recursive = FALSE, attributes = FALSE){
 
 #' @importFrom jsonlite write_json
 template_file <- function(object, file, type = c("guess", "json", "yaml"),
-                          recursive = FALSE, attributes = FALSE){
+                          attributes = FALSE){
   type <- match.arg(type)
   if(type == "guess")
     type <- switch(sub("^\\w+\\.(\\w+)$", "\\1", basename(file)),
@@ -61,7 +57,7 @@ template_file <- function(object, file, type = c("guess", "json", "yaml"),
            "json" = "json",
            "json")
 
-  output <- template(object, recursive = recursive, attributes = attributes)
+  output <- template(object, attributes = attributes)
   if(type == "json"){
     jsonlite::write_json(output, file, auto_unbox=TRUE, pretty = TRUE)
   } else if(type == "yaml"){
@@ -71,17 +67,3 @@ template_file <- function(object, file, type = c("guess", "json", "yaml"),
   }
 }
 
-
-# template("creator")
-# template("creator", recursive = TRUE)
-
-## template knows about internal classes too
-#template("ResponsibleParty")
-
-
-# template_file("creator", "creator.yml", recursive = TRUE)
-
-
-
-# this is a terribly bad idea:
-#template_file("eml", "eml.yaml", "yaml", recursive = TRUE)

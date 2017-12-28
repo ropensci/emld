@@ -11,11 +11,3 @@ print.emld <- function(x, ...){
   )
 }
 
-compact.emld <- function(x, ...){
-  if(is.list(x) && length(x) > 1){
-    keep <- vapply(x, length, integer(1)) > 0
-    lapply(x[keep], compact.emld)
-  } else {
-    x
-  }
-}

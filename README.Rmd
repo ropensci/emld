@@ -172,12 +172,10 @@ Let's go ahead and get a dataset template as well.
 dataset <- template("dataset")
 ```
 
-I know what you're thinking: surely this could be done recrusively?  Yes indeed, but getting all possible options will get out of control (and maybe out of memory too!)  Recursive creation is safest for lower-level objects.  
-
-Incidentally, `template` also knows about the EML schema types (always starting with a capital) which are used to type various objects.
+Incidentally, `template` also knows about the EML schema types (always starting with a capital) which are used to type various objects.  Note that nodes which take data values are indicated by `~` while those where additional nodes are needed as arguments are indicated by `[]`.
 
 ```{r}
-contact <- template("ResponsibleParty", recursive = TRUE)
+contact <- template("ResponsibleParty")
 contact
 ```
 

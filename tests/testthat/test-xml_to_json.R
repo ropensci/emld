@@ -10,22 +10,16 @@ ex <- system.file("extdata/example.xml", package="emld")
 
 
 test_that("we can convert example.xml into complete JSON-LD", {
-
   json <- xml_to_json(ex)
-
   X <- jsonlite::fromJSON(json, simplifyVector = FALSE)
-
   expect_true("dataset" %in% names(X))
-
   ## count elements
   expect_length(unlist(X), 15)
 })
 
 
 
-
 test_that("we can convert hf205.xml into JSON-LD", {
-
   f <- system.file("extdata/hf205.xml", package="emld")
   xml_to_json(f, "ex.json")
   expect_true(file.exists("ex.json"))
@@ -37,7 +31,6 @@ test_that(
   {
     x <- xml_to_json(
 '<url name="Ecophysiology">http://harvardforest.fas.harvard.edu:8080/exist/xquery/data.xq?id=hf168</url>')
-
     expect_is(x, "json")
   })
 
@@ -48,7 +41,6 @@ test_that("we can parse repeated name elements", {
     <url name="Ecophysiology">http://harvardforest.fas.harvard.edu:8080/exist/xquery/data.xq?id=hf168</url>
     <url name="Effects of Prey">http://harvardforest.fas.harvard.edu:8080/exist/xquery/data.xq?id=hf109</url>
   </additionalLinks>')
-
   expect_is(x, "json")
   })
 

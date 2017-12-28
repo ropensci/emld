@@ -4,27 +4,24 @@
 \alias{template}
 \title{template}
 \usage{
-template(object, recursive = FALSE, attributes = FALSE)
+template(object, attributes = FALSE)
 }
 \arguments{
 \item{object}{the name of an eml object to create}
-
-\item{recursive}{logical, default FALSE.  Fill in sub-templates recursively?
-WARNING do not attempt to set to TRUE on high level objects like eml, dataset, dataTable, etc}
 
 \item{attributes}{logical, default FALSE. Should template include
 properties that are represented as XML attributes in EML? (e.g. system, id. etc)}
 }
 \value{
 a list with elements named according to the properties of the object.
-        This can be coerced into EML, see vignettes.
+        This can be coerced into EML, see vignettes. NULL-valued elements (~)
+        can take a data entry directly, while empty list()-valued elements ([])
+        indicate properties that take other eml objects as values.
 }
 \description{
 template
 }
 \examples{
 template("creator")
-template("creator", recursive = TRUE)
-
 
 }
