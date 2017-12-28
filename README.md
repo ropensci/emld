@@ -38,7 +38,7 @@ We can parse a simple example and manipulate is as a familar list object (S3 obj
 
 ``` r
 f <- system.file("extdata/example.xml", package="emld")
-eml <- parse_eml(f)
+eml <- as_emld(f)
 eml$dataset$title
 #> [1] "Data from Cedar Creek LTER on productivity and species richness\n  for use in a workshop titled \"An Analysis of the Relationship between\n  Productivity and Diversity using Experimental Results from the Long-Term\n  Ecological Research Network\" held at NCEAS in September 1996."
 ```
@@ -46,9 +46,7 @@ eml$dataset$title
 ``` r
 eml$dataset$title <- "A new title"
 
-## fixme replace with a simpler serialize function(?)
-toJSON(eml, auto_unbox = TRUE) %>%
-json_to_xml("test.xml")
+as_xml(eml, "test.xml")
 ```
 
 We can prove that writing the list back into XML still creates a valid EML file.
@@ -73,7 +71,9 @@ FIXME replace with an example(s) that makes better use of semantic relationships
 
 ``` r
 f <- system.file("extdata/hf205.xml", package="emld")
-xml_to_json(f, "hf205.json")
+
+as_emld(f) %>%
+as_json("hf205.json")
 
 sparql <- 
   'PREFIX eml: <http://ecoinformatics.org/>
@@ -105,7 +105,9 @@ We can query it with JQ, a [simple and powerful query language](https://stedolan
 ``` r
 library(jqr)
 
-xml_to_json(f) %>% as.character() %>%
+as_emld(f) %>%
+  as_json() %>% 
+  as.character() %>%
   jq('.dataset.coverage.geographicCoverage.boundingCoordinates | 
        { northLat: .northBoundingCoordinate, 
          southLat: .southBoundingCoordinate }')
@@ -118,7 +120,10 @@ xml_to_json(f) %>% as.character() %>%
 FIXME not sure how to avoid all the nulls when using recursive desent:
 
 ``` r
-out <- xml_to_json(f) %>% as.character() %>%
+out <- 
+  as_emld(f) %>%
+  as_json() %>% 
+  as.character() %>%
   jq('..|.boundingCoordinates? | 
        { northLat: .northBoundingCoordinate, 
          southLat: .southBoundingCoordinate }')
@@ -130,7 +135,8 @@ We can flatten it, so we don't have to do quite so much subsetting. When we're d
 
 ``` r
 library(jsonld)
-flat <- xml_to_json(f) %>% 
+flat <- as_emld(f) %>%
+  as_json() %>% 
   jsonld_flatten('{"@vocab": "http://ecoinformatics.org/"}') %>%
   fromJSON(simplifyVector = FALSE)
 flat <- flat[["@graph"]]
@@ -150,12 +156,12 @@ Let's create a minimal EML document
 ``` r
 eml <- template("eml")
 eml
-#> access: ~
-#> dataset: ~
-#> citation: ~
-#> software: ~
-#> protocol: ~
-#> additionalMetadata: ~
+#> access: []
+#> dataset: []
+#> citation: []
+#> software: []
+#> protocol: []
+#> additionalMetadata: []
 #> packageId: ~
 ```
 
@@ -167,29 +173,19 @@ Let's go ahead and get a dataset template as well.
 dataset <- template("dataset")
 ```
 
-I know what you're thinking: surely this could be done recrusively? Yes indeed, but getting all possible options will get out of control (and maybe out of memory too!) Recursive creation is safest for lower-level objects.
-
-Incidentally, `template` also knows about the EML schema types (always starting with a capital) which are used to type various objects.
+Incidentally, `template` also knows about the EML schema types (always starting with a capital) which are used to type various objects. Note that nodes which take data values are indicated by `~` while those where additional nodes are needed as arguments are indicated by `[]`.
 
 ``` r
-contact <- template("ResponsibleParty", recursive = TRUE)
+contact <- template("ResponsibleParty")
 contact
-#> individualName:
-#>   salutation: {}
-#>   givenName: {}
-#>   surName: {}
-#> organizationName: {}
-#> positionName: {}
-#> address:
-#>   deliveryPoint: {}
-#>   city: {}
-#>   administrativeArea: {}
-#>   postalCode: {}
-#>   country: {}
-#> phone: {}
-#> electronicMailAddress: {}
-#> onlineUrl: {}
-#> userId: {}
+#> individualName: []
+#> organizationName: ~
+#> positionName: ~
+#> address: []
+#> phone: ~
+#> electronicMailAddress: ~
+#> onlineUrl: ~
+#> userId: ~
 ```
 
 Things stay a bit more tidy without recursion:
@@ -201,7 +197,7 @@ contact <- template("contact")
 Let's start filling out some metadata!
 
 ``` r
-contact$individualName$givenName <- "Carl"
+contact$individualName$givenName <- list("Carl", "David")
 contact$individualName$surName <- "Boettiger"
 contact$organiziationName <- "UC Berkeley"
 contact$electronicMailAddress <- "cboettig@ropensci.org"

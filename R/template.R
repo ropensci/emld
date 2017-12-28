@@ -25,14 +25,25 @@ template <- function(object, attributes = FALSE){
     drop <- grep("^(@|#)\\w+",  properties)
     if(length(drop) > 0 ) properties <- properties[-drop]
   }
-
   output <- vector("list", length(properties))
   names(output) <- properties
 
+
+  ##  Recursive call is trouble, just single depth
   names(properties) <- properties
-  children <- vapply(properties, function(x)
-    length(template(x, attributes = attributes)),
-    integer(1))
+  children <-
+    vapply(properties,
+           function(x){
+             properties <- eml_db[[x]]
+             if(!attributes){
+               drop <- grep("^(@|#)\\w+",  properties)
+               if(length(drop) > 0 )
+                 properties <- properties[-drop]
+             }
+             length(properties)
+           },
+           integer(1))
+
 
   for(n in names(which(children > 0)))
     output[[n]] <- vector("list", 0)
