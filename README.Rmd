@@ -53,16 +53,14 @@ We can parse a simple example and manipulate is as a familar list object (S3 obj
 
 ```{r}
 f <- system.file("extdata/example.xml", package="emld")
-eml <- parse_eml(f)
+eml <- as_emld(f)
 eml$dataset$title
 ```
 
 ```{r}
 eml$dataset$title <- "A new title"
 
-## fixme replace with a simpler serialize function(?)
-toJSON(eml, auto_unbox = TRUE) %>%
-json_to_xml("test.xml")
+as_xml(eml, "test.xml")
 ```
 
 We can prove that writing the list back into XML still creates a valid EML file. 
@@ -87,7 +85,9 @@ FIXME replace with an example(s) that makes better use of semantic relationships
 
 ```{r}
 f <- system.file("extdata/hf205.xml", package="emld")
-xml_to_json(f, "hf205.json")
+
+as_emld(f) %>%
+as_json("hf205.json")
 
 sparql <- 
   'PREFIX eml: <http://ecoinformatics.org/>
@@ -118,7 +118,9 @@ We can query it with JQ, a [simple and powerful query language](https://stedolan
 ```{r}
 library(jqr)
 
-xml_to_json(f) %>% as.character() %>%
+as_emld(f) %>%
+  as_json() %>% 
+  as.character() %>%
   jq('.dataset.coverage.geographicCoverage.boundingCoordinates | 
        { northLat: .northBoundingCoordinate, 
          southLat: .southBoundingCoordinate }')
@@ -127,7 +129,10 @@ xml_to_json(f) %>% as.character() %>%
 FIXME not sure how to avoid all the nulls when using recursive desent: 
 
 ```{r}
-out <- xml_to_json(f) %>% as.character() %>%
+out <- 
+  as_emld(f) %>%
+  as_json() %>% 
+  as.character() %>%
   jq('..|.boundingCoordinates? | 
        { northLat: .northBoundingCoordinate, 
          southLat: .southBoundingCoordinate }')
@@ -142,7 +147,8 @@ We can flatten it, so we don't have to do quite so much subsetting.  When we're 
 
 ```{r}
 library(jsonld)
-flat <- xml_to_json(f) %>% 
+flat <- as_emld(f) %>%
+  as_json() %>% 
   jsonld_flatten('{"@vocab": "http://ecoinformatics.org/"}') %>%
   fromJSON(simplifyVector = FALSE)
 flat <- flat[["@graph"]]

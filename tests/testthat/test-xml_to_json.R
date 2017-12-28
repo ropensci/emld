@@ -29,18 +29,19 @@ test_that("we can convert hf205.xml into JSON-LD", {
 test_that(
   "We can parse an EML <url> element with an attribute into JSON",
   {
-    x <- xml_to_json(
-'<url name="Ecophysiology">http://harvardforest.fas.harvard.edu:8080/exist/xquery/data.xq?id=hf168</url>')
+    x <- xml_to_json(xml2::read_xml(
+'<url name="Ecophysiology">http://harvardforest.fas.harvard.edu:8080/exist/xquery/data.xq?id=hf168</url>'))
     expect_is(x, "json")
   })
 
 
 test_that("we can parse repeated name elements", {
   x <- xml_to_json(
+    xml2::read_xml(
   '<additionalLinks>
     <url name="Ecophysiology">http://harvardforest.fas.harvard.edu:8080/exist/xquery/data.xq?id=hf168</url>
     <url name="Effects of Prey">http://harvardforest.fas.harvard.edu:8080/exist/xquery/data.xq?id=hf109</url>
-  </additionalLinks>')
+  </additionalLinks>'))
   expect_is(x, "json")
   })
 

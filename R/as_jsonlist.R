@@ -3,7 +3,6 @@ as_jsonlist <- function(x, ns = character(), ...) {
   UseMethod("as_jsonlist")
 }
 
-
 ## override xml2 method
 #' @importFrom xml2 xml_contents xml_name xml_attrs xml_type xml_text
 as_jsonlist.xml_node <- function(x, ns = character(), embed_attr=TRUE, ...) {
@@ -83,5 +82,21 @@ r_attrs_to_xml <- function(x) {
   x
 }
 
+
+#' @importFrom stats setNames
+group_repeated_key <- function(out){
+  ## Note: does not preserve ordering of keys
+  property <- names(out)
+  duplicate <- duplicated(property)
+  if(sum(duplicate) > 0){
+    for(p in unique(property[duplicate])){
+      orig <- out
+      i <- names(out) == p
+      out <- out[!i]
+      out <- c(out, setNames(list(unname(orig[i])), p))
+    }
+  }
+  out
+}
 
 

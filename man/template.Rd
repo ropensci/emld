@@ -21,6 +21,9 @@ a list with elements named according to the properties of the object.
 \description{
 template
 }
+\details{
+Note: while this function can be called in recursions, doing so may be a bad idea.
+}
 \examples{
 template("creator")
 
