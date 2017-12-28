@@ -190,7 +190,7 @@ contact <- template("contact")
 Let's start filling out some metadata!
 
 ```{r}
-contact$individualName$givenName <- "Carl"
+contact$individualName$givenName <- list("Carl", "David")
 contact$individualName$surName <- "Boettiger"
 contact$organiziationName <- "UC Berkeley"
 contact$electronicMailAddress <- "cboettig@ropensci.org"

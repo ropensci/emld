@@ -1,8 +1,9 @@
-context("xml_to_json")
 library(magrittr)
 library(xml2)
 library(jsonlite)
+library(testthat)
 
+context("xml_to_json")
 
 hf205 <- system.file("extdata/hf205.xml", package="emld")
 ex <- system.file("extdata/example.xml", package="emld")
@@ -17,7 +18,7 @@ test_that("we can convert example.xml into complete JSON-LD", {
   expect_true("dataset" %in% names(X))
 
   ## count elements
-  expect_length(unlist(X), 14)
+  expect_length(unlist(X), 15)
 })
 
 
