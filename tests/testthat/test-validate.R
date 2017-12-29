@@ -7,9 +7,16 @@ test_roundtrip <- function(f){
     "testing that", basename(f), "can roundtrip & validate"),
   {
   out <- basename(f)
-  json <- xml_to_json(f)
-  json_to_xml(json, out)
+  emld <- as_emld(f)
+  elements_at_start <- length(unlist(emld, recursive = TRUE))
+  as_xml(emld, out)
+
+  ## Make sure output xml is still valid
   testthat::expect_true(EML::eml_validate(out))
+
+  ## Make sure we have the same number of elements as we started with
+  elements_at_end <- length(unlist(as_emld(out), recursive = TRUE))
+  testthat::expect_equal(elements_at_start, elements_at_end)
   unlink(out)
   })
 }
