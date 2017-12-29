@@ -15,7 +15,7 @@ properties that are represented as XML attributes in EML? (e.g. system, id. etc)
 \value{
 a list with elements named according to the properties of the object.
         This can be coerced into EML, see vignettes. NULL-valued elements (~)
-        can take a data entry directly, while empty list()-valued elements ([])
+        can take a data entry directly, while empty list()-valued elements ({})
         indicate properties that take other eml objects as values.
 }
 \description{

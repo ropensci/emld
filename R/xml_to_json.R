@@ -1,3 +1,6 @@
+## Consider depricating, easy enough to do these two steps manually!
+
+
 #' xml_to_json
 #'
 #' Convert an EML file into a json file/string
