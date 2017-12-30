@@ -1,0 +1,104 @@
+
+```{r}
+library(jqr)
+```
+
+
+```{r}
+eml <- 
+'
+{
+  "id": "https://doi.org/10.data",
+  "type": "Dataset",
+  "coverage": {
+    "temporalCoverage": {
+      "beginDate": "2012-06-01",
+      "endDate": "2013-12-31"
+    }
+  }
+}
+  '
+
+
+schema <- 
+  '
+{
+  "id": "https://doi.org/10.data",
+  "type": "Dataset",
+  "temporalCoverage":"2012-06-01/2013-12-31"
+}
+  '
+```
+
+
+
+```{r}
+jq(eml, '. | {id: .id, 
+              type: .type,
+              temporalCoverage: .coverage.temporalCoverage | 
+                                [.beginDate, .endDate] | 
+                                join("/")}')
+```
+
+
+
+```{r}
+jq(schema, '. | 
+            {
+               id: .id, 
+               type: .type,
+               coverage: {
+                 temporalCoverage: {
+                   beginDate : .temporalCoverage | split("/") |.[0],
+                   endDate : .temporalCoverage | split("/") |.[1]
+                 }
+               }
+             }')
+```
+
+```{r}
+eml <- readr::read_file("https://raw.githubusercontent.com/cboettig/emld/master/inst/extdata/hf205.json")
+```
+
+
+```{r}
+eml_to_schema <- 
+'. | {id: .id, 
+      type: .type,
+      temporalCoverage: .coverage.temporalCoverage | 
+                        [.beginDate, .endDate] | 
+                        join("/")}'
+```
+
+
+
+Shows mapping from `schema:geo` `schema:box`, could be a `schema:circle` or other shape as well
+```{r}
+schema_to_eml <-  '. | 
+            {
+               "@id": .["@id"], 
+               "@type": .["@type"],
+               coverage: {
+                 temporalCoverage: {
+                   beginDate : .temporalCoverage | split("/") |.[0],
+                   endDate : .temporalCoverage | split("/") |.[1]
+                 },
+                 geographicCoverage: .spatialCoverage | {
+                   geographicDescription: .description,
+                   boundingCoordinates: {
+                     westBoundingCoordinate: .geo.box | split(" ") | .[1],
+                     eastBoundingCoordinate: .geo.box | split(" ") | .[3],
+                     northBoundingCoordinate: .geo.box | split(" ") | .[2],
+                     southBoundingCoordinate: .geo.box | split(" ") | .[0]
+                   }
+                 }
+               }
+             }'
+```
+
+```{r}
+schema <- readr::read_file("../inst/extdata/schema-org-dataset.json")
+jq(schema, schema_to_eml)
+```
+
+
