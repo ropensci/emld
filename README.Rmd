@@ -18,14 +18,14 @@ knitr::opts_chunk$set(
 
 # emld
 
-The goal of emld is to provide a way to work with EML metadata in the JSON-LD format. At it's heart, the package is simply a way to translate an EML XML document into JSON-LD and be able to reverse this so that any semantically equivalent JSON-LD file can be serialized into EML-schema valid XML.
+The goal of emld is to provide a way to work with EML metadata in the JSON-LD format. At it's heart, the package is simply a way to translate an EML XML document into JSON-LD and be able to reverse this so that any semantically equivalent JSON-LD file can be serialized into EML-schema valid XML.  The package has only three core functions:
 
-In contrast to the existing [EML package](https://ropensci.github.io/EML), this package aims to a very light-weight implementation that seeks to provide both an intuitive data format and make maximum use of existing technology to work with that format.  
+- `as_emld()` Convert EML from `xml` (or `json`) into a native R object, `emld` (list / S3 class).  
+- `as_xml()` Convert the native R format, `emld`, back into XML-schema valid EML.
+- `as_json()` Convert the native R format, `emld`, into `json`(LD).
 
 
 This is very much **work in progress** The outline below illustrates things we can do or will be able to do with this package.  The examples below are just a sketch of ideas so far, I hope to replace these with richer examples that will probably be developed more fully as vignettes.  
-
-
 ## Installation
 
 You can install emld from github with:
@@ -34,6 +34,18 @@ You can install emld from github with:
 # install.packages("devtools")
 devtools::install_github("cboettig/emld")
 ```
+
+
+
+## Motivation
+
+
+In contrast to the existing [EML package](https://ropensci.github.io/EML), this package aims to a very light-weight implementation that seeks to provide both an intuitive data format and make maximum use of existing technology to work with that format.  In particular, this package emphasizes tools for working with linked data through the JSON-LD format.
+
+Note that the JSON-LD format is considerably less rigid than the EML schema.  This means that there are many valid, semantically equivalent representations on the JSON-LD side that must all map into the same or nearly the same XML format.  At the extreme end, the JSON-LD format can be serialized into RDF, where everything is flat set of triples (e.g. essentially a tabular representation), which we can query directly with semantic tools like SPARQL, and also automatically coerce back into the rigid nesting and ordering structure required by EML.  This ability to "flatten" EML files can be particularly convenient for applications consuming and parsing large numbers of EML files.  This package may also make it easier for other developers to build on the EML, since the S3/list and JSON formats used here have proven more appealing to many R developers than S4 and XML serializations.
+
+JSON-LD also makes it easier to extend EML with other existing semantic vocabularies.  The standard JSON-LD operations (e.g. framing, compaction) make it easy for developers to specify desired data structures, filter unnecessary terms and provide defaults for needed ones, or even define custom property names, rather than working with the often cumbersome prefixes or URIs of linked data. 
+
 
 
 ```{r}
@@ -49,7 +61,7 @@ The `EML` package can get particularly cumbersome when it comes to extracting an
 
 ### Parse & serialize
 
-We can parse a simple example and manipulate is as a familar list object (S3 object):
+We can parse a simple example and manipulate is as a familiar list object (S3 object):
 
 ```{r}
 f <- system.file("extdata/example.xml", package="emld")
@@ -59,7 +71,6 @@ eml$dataset$title
 
 ```{r}
 eml$dataset$title <- "A new title"
-
 as_xml(eml, "test.xml")
 ```
 
@@ -126,24 +137,12 @@ as_emld(f) %>%
          southLat: .southBoundingCoordinate }')
 ```
 
-FIXME not sure how to avoid all the nulls when using recursive desent: 
-
-```{r}
-out <- 
-  as_emld(f) %>%
-  as_json() %>% 
-  as.character() %>%
-  jq('..|.boundingCoordinates? | 
-       { northLat: .northBoundingCoordinate, 
-         southLat: .southBoundingCoordinate }')
-
-```
-
+Some prototype examples of how we can use this to translate between EML and <http://schema.org/Dataset> representations of the same metadata can be found in <https://github.com/cboettig/emld/blob/master/notebook/jq_maps.md>
 
 
 ### Flatten and Compact.
 
-We can flatten it, so we don't have to do quite so much subsetting.  When we're done editing, we can compact it back into valid EML. 
+We can flatten it, so we don't have to do quite so much sub-setting.  When we're done editing, we can compact it back into valid EML. 
 
 ```{r}
 library(jsonld)
@@ -161,7 +160,7 @@ FIXME this would be way more useful if nodes all had `@type` and were named by t
 
 This section is even more experimental currently, and may not be a good direction for development.  Nevertheless, it can illustrate some of the convenience (and risk) of a simple S3 class.
 
-The `EML` package is arguably better suited to this task, where a collection of higher level `set_` functions can facilitate construction of EML. Still, working on the simple `list`-based classes can be convenient, particularly for developers.  (For end-users, the simplicity of the `list` type also means that it is easy to define things that will create invalid EML, e.g.  by mispelling a slot or providing a text value to a node-valued element).  Nevertheless, one of of the main reasons the `EML` package is helpful in construction is simply the ability to a list of the possible slot names for any given object using the low-level approach of creating an object with the `new()` constructor and examining the slots (e.g. with tab completion).  
+The `EML` package is arguably better suited to this task, where a collection of higher level `set_` functions can facilitate construction of EML. Still, working on the simple `list`-based classes can be convenient, particularly for developers.  (For end-users, the simplicity of the `list` type also means that it is easy to define things that will create invalid EML, e.g.  by misspelling a slot or providing a text value to a node-valued element).  Nevertheless, one of of the main reasons the `EML` package is helpful in construction is simply the ability to a list of the possible slot names for any given object using the low-level approach of creating an object with the `new()` constructor and examining the slots (e.g. with tab completion).  
 
 Here we build on that basic insight by providing an elementary helper function, `template()`, which merely returns a list of the possible child elements (aka slots or properties) of the object.  We can create EML from scratch using lists with help from the `template` function.  
 
@@ -220,9 +219,9 @@ unlink("eml.xml")
 unlink("hf205.json")
 ```
 
-### Further ideas
+### Going deeper
 
-Perhaps a flattened version could create an easier template to fill out that could then be coerced into valid EML.  The original nested structure doesn't serve this purpose as well, since many 'keys' do not take values directly but get more nesting, e.g. you see `individualName` but you can't enter a name there.  If you just saw the text-valued properties `givenName` and `surName` it might be a bit clearer.
+Several basic steps still to do: in particular, haven't yet expanded out `references` or EML's semantic annotations into more native JSON-LD (and vice-versa back into EML).  The latter in particular might be a convenient way to serialize additional semantic annotations onto an EML description. 
 
 
 
