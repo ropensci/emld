@@ -43,3 +43,7 @@ rdf_parse("eml.rdf", "rdfxml") %>%
 #  as_xml("eml.xml")
 #EML::eml_validate("eml.xml")
 
+unlink("eml.rdf")
+unlink("eml.json")
+unlink("eml.xml")
+
