@@ -37,9 +37,9 @@ as_eml_document.json <- function(x, ...){
 as_eml_document.list <- function(x, ...) {
 
   doc <- xml2::xml_new_document()
-  type <- x[["@type"]]
+  #type <- x[["@type"]]
   x[["@type"]] <- NULL
-  add_node(x, doc, type)
+  add_node(x, doc, "eml")
 
   ## Set namespace of <eml> to <eml:eml>
   xml2::xml_set_namespace(xml2::xml_find_first(xml2::xml_root(doc), "."), "eml")
