@@ -1,14 +1,16 @@
 
+
+
 library(emld)
 library(rdflib)
 library(jsonlite)
 library(jsonld)
 library(magrittr)
+library(testthat)
 
 f <- system.file("tests/eml.xml", package="emld")
-## FIXME must declare a @base or local ids get dropped when serializing to RDF
-## Ideally this should be done by jsonld::jsonld_to_rdf; or at least somewhere
-## inside rdf_parse.  Probably not a bad idea to do in as_emld() though
+
+test_that("We can roundtrip into rdf and validate", {
 x <-
   f %>%
   as_emld() %>%
@@ -25,8 +27,8 @@ jsonld_frame("eml.json", frame) %>%
   as_xml("eml.xml")
 
 
-# EML::eml_validate("eml.xml")
-
+  expect_true(EML::eml_validate("eml.xml"))
+})
 
 ## Roundtrip out to RDFXML as well
 x <-
@@ -39,6 +41,8 @@ x <-
 ## Not working
 rdf_parse("eml.rdf", "rdfxml") %>%
   rdf_serialize("eml.json", "jsonld")
+
+## Prove that as_emld frames and compacts as shown manually above
 #as_emld("eml.json") %>%
 #  as_xml("eml.xml")
 #EML::eml_validate("eml.xml")

@@ -82,7 +82,7 @@ add_node <- function(x, parent, tag) {
     }
 }
 
-
+## FIXME should be able to replace x, i to just x[[i]], names(x)[[i]]
 serialize_atomics <- function(x, parent, tag, i){
 
   if(is.null(names(x)[[i]])){
@@ -90,6 +90,12 @@ serialize_atomics <- function(x, parent, tag, i){
     return(xml2::xml_set_text(textType, x[[i]]))
   }
 
+  ## Skip `@id` elements unless explicitly permitted
+  if(grepl("^@*id$", names(x)[[i]])){
+    if(!any(grepl("^@*id$", eml_db[[tag]]))){
+      return()
+    }
+  }
   ## Identify properties that should become xml attributes instead of text values
   is_attr <- grepl("^(@|#)(\\w+)", names(x)[[i]])
   key <- gsub("^(@|#)(\\w+)", "\\2", names(x)[[i]]) # drop json-ld `@`
