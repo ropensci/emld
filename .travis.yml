@@ -5,6 +5,7 @@ sudo: true
 cache: packages
 apt_packages:
     - libv8-dev
+    - librdf0-dev
 
 warnings_are_errors: true
 

@@ -27,10 +27,12 @@ Suggests:
     covr,
     EML,
     knitr,
-    purrr
+    purrr,
+    rdflib
 Imports: xml2,
     jsonlite,
     jsonld,
     methods,
     yaml
 VignetteBuilder: knitr
+Remotes: cboettig/rdflib
