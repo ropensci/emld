@@ -73,7 +73,7 @@ add_node <- function(x, parent, tag) {
     update_tag <- !is.null(names(x))
     for(i in seq_along(x)){
       if(is.atomic(x[[i]])){
-        serialize_atomics(x, parent, tag, i)
+        serialize_atomics(x[[i]], parent, tag, names(x)[[i]])
       }
       if(update_tag){
         tag <- names(x)[[i]]
@@ -82,18 +82,17 @@ add_node <- function(x, parent, tag) {
     }
 }
 
-## FIXME should be able to replace x, i to just x[[i]], names(x)[[i]]
-serialize_atomics <- function(x, parent, tag, i){
+serialize_atomics <- function(x, parent, tag, key){
 
-  if(is.null(names(x)[[i]])){
+  if(is.null(key)){
     textType <- xml2::xml_add_child(parent, tag)
-    return(xml2::xml_set_text(textType, x[[i]]))
+    return(xml2::xml_set_text(textType, x))
   }
 
   ## Skip
-  if(grepl("^@*id$", names(x)[[i]])){
+  if(grepl("^@*id$", key)){
     ## Skip `@id` element if uses a json-ld local id
-    if(grepl("^_:b\\d+", x[[i]])){
+    if(grepl("^_:b\\d+", x)){
       return()
     }
     ## Skip `@id` elements unless explicitly permitted
@@ -102,8 +101,8 @@ serialize_atomics <- function(x, parent, tag, i){
     }
   }
   ## Identify properties that should become xml attributes instead of text values
-  is_attr <- grepl("^(@|#)(\\w+)", names(x)[[i]])
-  key <- gsub("^(@|#)(\\w+)", "\\2", names(x)[[i]]) # drop json-ld `@`
+  is_attr <- grepl("^(@|#)(\\w+)", key)
+  key <- gsub("^(@|#)(\\w+)", "\\2", key) # drop json-ld `@`
   key <- gsub("^schemaLocation$", "xsi:schemaLocation", key)
 
   if(length(key) > 0){
@@ -111,14 +110,14 @@ serialize_atomics <- function(x, parent, tag, i){
     if(!is_attr){
       if(grepl("^#\\w+", tag)){
         ## special case where JSON-LD repeats node name (for grouped nodes with attributes, e.g. url)
-        xml2::xml_set_text(parent, x[[i]])
+        xml2::xml_set_text(parent, x)
       } else {
         textType <- xml2::xml_add_child(parent, key)
-        xml2::xml_set_text(textType, x[[i]])
+        xml2::xml_set_text(textType, x)
       }
     ## Attribute atomics ##
     } else {
-      xml2::xml_set_attr(parent, key, x[[i]])
+      xml2::xml_set_attr(parent, key, x)
     }
   }
 
