@@ -31,7 +31,7 @@ eml_db <- lapply(real_classes, function(tag){
   order <- gsub("^id$", "@id", order)
   attrs <- c("scope","system","authSystem","function",
              "typeSystem","phonetype","keywordType","enforced",
-             "exclusive","directory")
+             "exclusive","directory", "packageId")
   for(attr in attrs){
     order <- gsub(paste0("^(", attr, ")$"), "#\\1", order)
   }
