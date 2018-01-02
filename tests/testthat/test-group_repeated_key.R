@@ -1,4 +1,4 @@
-
+testthat::context("group repeated key")
 
 test_that("we can group repeated xml keys into json", {
   input <-

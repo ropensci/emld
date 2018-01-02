@@ -1,12 +1,9 @@
-
-
-
-library(emld)
 library(rdflib)
 library(jsonlite)
 library(jsonld)
 library(magrittr)
-library(testthat)
+
+testthat::context("test rdf roundtrips")
 
 f <- system.file("tests/eml.xml", package="emld")
 
@@ -18,9 +15,9 @@ x <-
   rdf_parse("jsonld") %>%
   rdf_serialize("eml.json", "jsonld")
 
+## frame & compact explicitly, even though as_emld should now do this on json input
 frame <- system.file("frame/eml-frame.json", package = "emld")
 context <- system.file("context/eml-context.json", package = "emld")
-
 jsonld_frame("eml.json", frame) %>%
   jsonld_compact(context) %>%
   as_emld() %>%
@@ -30,22 +27,27 @@ jsonld_frame("eml.json", frame) %>%
   expect_true(EML::eml_validate("eml.xml"))
 })
 
-## Roundtrip out to RDFXML as well
-x <-
-  f %>%
+test_that("We can roundtrip out to rdf-xml", {
+
+## Into RDF-XML
+f %>%
   as_emld() %>%
   as_json() %>%
   rdf_parse("jsonld") %>%
   rdf_serialize("eml.rdf", "rdfxml")
 
-## Not working
+## Back into jsonld (via rdflib)
 rdf_parse("eml.rdf", "rdfxml") %>%
   rdf_serialize("eml.json", "jsonld")
 
-## Prove that as_emld frames and compacts as shown manually above
-#as_emld("eml.json") %>%
-#  as_xml("eml.xml")
-#EML::eml_validate("eml.xml")
+
+## Prove that as_emld frames and compacts automatically:
+as_emld("eml.json") %>%
+  as_xml("eml.xml")
+expect_true(EML::eml_validate("eml.xml"))
+
+})
+
 
 unlink("eml.rdf")
 unlink("eml.json")

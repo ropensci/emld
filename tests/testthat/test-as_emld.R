@@ -1,9 +1,8 @@
 library(magrittr)
 library(xml2)
 library(jsonlite)
-library(testthat)
 
-context("xml_to_json")
+testthat::context("as_* methods")
 
 hf205 <- system.file("extdata/hf205.xml", package="emld")
 ex <- system.file("extdata/example.xml", package="emld")

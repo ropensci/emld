@@ -90,8 +90,13 @@ serialize_atomics <- function(x, parent, tag, i){
     return(xml2::xml_set_text(textType, x[[i]]))
   }
 
-  ## Skip `@id` elements unless explicitly permitted
+  ## Skip
   if(grepl("^@*id$", names(x)[[i]])){
+    ## Skip `@id` element if uses a json-ld local id
+    if(grepl("^_:b\\d+", x[[i]])){
+      return()
+    }
+    ## Skip `@id` elements unless explicitly permitted
     if(!any(grepl("^@*id$", eml_db[[tag]]))){
       return()
     }

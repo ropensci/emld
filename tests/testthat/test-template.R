@@ -1,13 +1,15 @@
-
-# Show slots for the "creator" object
-template("creator")
+testthat::context("template print method")
 
 
-## template knows about internal classes too
-template("ResponsibleParty")
+test_that("We can show slots for the creator object", {
+  expect_output(print(template("creator")), "individualName: \\{\\}")
+  expect_output(print(template("creator")), "phone: ~")
 
-template_file("creator", "creator.yml")
-unlink("creator.yml")
+})
+
+test_that("template knows about internal classes too", {
+  expect_output(print(template("ResponsibleParty")), "individualName: \\{\\}")
+})
 
 
 ## test serializing to XML fragment doc

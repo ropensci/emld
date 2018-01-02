@@ -51,30 +51,3 @@ template <- function(object, attributes = FALSE){
   output
 }
 
-
-## Fixme consider making template an `emld` S3 class and adding print method as json and optionally as yaml
-
-
-
-
-#' @importFrom jsonlite write_json
-template_file <- function(object, file, type = c("guess", "json", "yaml"),
-                          attributes = FALSE){
-  type <- match.arg(type)
-  if(type == "guess")
-    type <- switch(sub("^\\w+\\.(\\w+)$", "\\1", basename(file)),
-           "yml" = "yaml",
-           "yaml" = "yaml",
-           "json" = "json",
-           "json")
-
-  output <- template(object, attributes = attributes)
-  if(type == "json"){
-    jsonlite::write_json(output, file, auto_unbox=TRUE, pretty = TRUE)
-  } else if(type == "yaml"){
-    ## Somehow this is okay without importFrom and only Suggests yaml
-    requireNamespace("yaml")
-    yaml::write_yaml(output, file)
-  }
-}
-
