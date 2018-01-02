@@ -1,10 +1,17 @@
+---
+output: github_document
+---
+
+# Mapping between Schema.Org and EML via JQ 
+
+
+
+We will use J-Query as XSLT-like stylesheets. These two examples shipping in this package are currently a work in progress:
 
 ```{r}
 library(jqr)
 ```
 
-
-We will use some prebuilt `jq` queries as XSLT-like stylesheets. These two examples shipping in this package are currently a work in progress:
 
 ```{r}
 eml_to_schema <- readr::read_file(system.file("jq/eml_to_schema.jq", package="emld"))
