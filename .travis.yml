@@ -2,8 +2,8 @@
 
 language: R
 sudo: true
-cache: packages
 apt_packages:
+    - r-cran-httr
     - libv8-dev
     - librdf0-dev
 
