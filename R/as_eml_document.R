@@ -1,28 +1,4 @@
 
-## Convert list to XML
-
-# - Frame JSON into predictable format; applying context to achieve de-referencing
-# - Import framed JSON as list
-# - serialize list to XML: Adjust from xml2::as_xml_document
-
-## inside adaptiation of as_xml_document_method?
-# - Unfold list-of-elements, property = [{}, {}] into [property={}, property={}, property={}]
-# - Data values as XML attributes
-
-## Do these in JSON, list, or XML stage?
-# - Replace any non-eml-namespace node with corresponding meta node.
-#   (identify URI properties as ResourceMeta rel/href)
-# - Fix node ordering to conform to schema.
-#   (Sort based on pre-specified order probably best/easiest;
-#    alternately check refs come after defs)
-
-is_URI <- function(x){
-  grepl("\\w+://.+", x)
-}
-#is_URI("http://creativecommons.org/publicdomain/zero/1.0/")
-#is_URI("creativecommons.org/publicdomain/zero/1.0/")
-
-
 as_eml_document <- function(x, ...) {UseMethod("as_eml_document")}
 
 #' @importFrom jsonlite fromJSON
@@ -38,11 +14,14 @@ as_eml_document.emld <- function(x, ...) {
 }
 
 #' @importFrom xml2 xml_add_child xml_set_attr xml_new_document
-#' xml_set_namespace xml_root xml_find_first
+#' @importFrom xml2 xml_set_namespace xml_root xml_find_first
 as_eml_document.list <- function(x, ...) {
 
-  doc <- xml2::xml_new_document()
   x[["@type"]] <- NULL
+  if(is.null(x[["#schemaLocation"]]))
+    x[["#schemaLocation"]] <- "eml://ecoinformatics.org/eml-2.1.1 eml.xsd"
+
+  doc <- xml2::xml_new_document()
   add_node(x, doc, "eml")
 
   ## Set namespace of <eml> to <eml:eml>
@@ -67,11 +46,20 @@ as_eml_document.xml_document <- function(x, ...) {
 }
 
 
+drop_nulls <- function(x){
+  if(is.atomic(x))
+    return(x)
+  i <- vapply(x, length, integer(1)) > 0
+  x <- x[i]
+  lapply(x, drop_nulls)
+}
+
 add_node <- function(x, parent, tag) {
     if (is.atomic(x)) {
       return() ## bc we call add_node after already eval on is.atomic
     }
 
+    #x <- drop_nulls(x)
     x <- sort_properties(x, tag)
 
     if(!is.null(names(x)) & length(x) > 0){

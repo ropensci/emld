@@ -5,7 +5,7 @@
 #' template
 #'
 #' @param object the name of an eml object to create
-#' @param attributes logical, default FALSE. Should template include
+#' @param attributes logical, default TRUE Should template include
 #'  properties that are represented as XML attributes in EML? (e.g. system, id. etc)
 #'
 #' @return a list with elements named according to the properties of the object.
@@ -18,7 +18,7 @@
 #' @examples
 #' template("creator")
 #'
-template <- function(object, attributes = FALSE){
+template <- function(object, attributes = TRUE){
   properties <- eml_db[[object]]
 
   if(!attributes){
@@ -35,11 +35,8 @@ template <- function(object, attributes = FALSE){
     vapply(properties,
            function(x){
              properties <- eml_db[[x]]
-             if(!attributes){
-               drop <- grep("^(@|#)\\w+",  properties)
-               if(length(drop) > 0 )
-                 properties <- properties[-drop]
-             }
+             drop <-  grep("^(@|#)\\w+",  properties)
+             if(length(drop) > 0 ) properties <- properties[-drop]
              length(properties)
            },
            integer(1))

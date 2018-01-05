@@ -61,6 +61,7 @@ is_jsonld.list <- function(x){
 
 
 eml_frame <- function(x){
+  x <- drop_nulls(x) ## recursive prune of nulls
 
   ## choose the context we compact into later
   if(is.null(x[["@context"]])){
