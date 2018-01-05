@@ -20,10 +20,15 @@
 as_xml <- function(x, file=NULL){ UseMethod("as_xml") }
 
 #' @export
+as_xml.list <- function(x, file=NULL){
+  as_xml.emld(x, file)
+}
+
+#' @export
 as_xml.emld <- function(x, file=NULL){
 
   ## Frame/compact into original context for a standardized structure
-  # eml_list <- frame.list(x)
+  x <- eml_frame(x)
 
   ## Drop context and serialize
   y <- x
@@ -38,14 +43,56 @@ as_xml.emld <- function(x, file=NULL){
   xml <- xml2::as_xml_document(xml)
 
   ## Serialize to file if desired
-  if(!is.null(file))
+  if(!is.null(file)){
     xml2::write_xml(xml, file)
-  else
+  } else {
     xml
+  }
+}
 
+## check if a list is JSON-LD
+## (e.g. absense of a @context could mean we are just expanded form)
+is_jsonld.list <- function(x){
+  json <- jsonlite::toJSON(x, auto_unbox = TRUE)
+  exp <- jsonld::jsonld_expand(json)
+  length(jsonlite::fromJSON(exp)) > 0
+}
+
+
+
+eml_frame <- function(x){
+
+  ## choose the context we compact into later
+  if(is.null(x[["@context"]])){
+    context <- system.file("context/eml-context.json", package = "emld")
+  } else {
+    context <- jsonlite::toJSON(x[["@context"]], auto_unbox = TRUE)
   }
 
+  ## set a context for framing if we've gotten just a plain json/list
+  if(!is_jsonld.list(x)){
+    x[["@context"]] <-
+      list("@vocab" = getOption("emld_vocab", "eml://ecoinformatics.org/eml-2.1.1/"))
+  }
+
+  ## set a type for framing
+  if(is.null(x[["@type"]])){
+    x[["@type"]] <- "EML"
+  }
+  json <- jsonlite::toJSON(x, auto_unbox = TRUE)
+  frame <- system.file("frame/eml-frame.json", package = "emld")
+  framed <- jsonld::jsonld_frame(json, frame)
+  compacted <- jsonld::jsonld_compact(framed, context)
+  out <- jsonlite::fromJSON(compacted, simplifyVector = FALSE)
+  class(out) <- c("emld", "list")
+  out
+}
+
 context_namespaces <- function(context, xml){
+  if(is.null(context)){
+    return(xml)
+  }
+
   ## unpack list-contexts
   if(is.null(names(context))){
     context <- unlist(lapply(context, function(y){

@@ -2,6 +2,7 @@
 
 S3method(as_json,emld)
 S3method(as_xml,emld)
+S3method(as_xml,list)
 S3method(json_to_xml,character)
 S3method(json_to_xml,json)
 S3method(json_to_xml,list)

@@ -1,16 +1,21 @@
-# R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
 
-language: R
-sudo: true
-cache: packages
-r_packages:
-  - httr
-  - devtools
-apt_packages:
-    - libv8-dev
-    - librdf0-dev
+## should work, but R travis has nuts
 
-warnings_are_errors: true
+#language: R
+#sudo: true
+#cache: packages
+#apt_packages:
+#    - libv8-dev
+#    - librdf0-dev
+#warnings_are_errors: true
+#after_success:
+#  - Rscript -e 'covr::codecov()'
 
-after_success:
-  - Rscript -e 'covr::codecov()'
+## so we use docker:
+sudo: required
+services:
+  - docker
+script:
+  - ./test.sh
+
+

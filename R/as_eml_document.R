@@ -32,17 +32,22 @@ as_eml_document.character <- function(x, ...){
 as_eml_document.json <- function(x, ...){
   as_eml_document(jsonlite::fromJSON(x, simplifyVector = FALSE))
 }
+
+as_eml_document.emld <- function(x, ...) {
+  as_eml_document.list(x, ...)
+}
+
 #' @importFrom xml2 xml_add_child xml_set_attr xml_new_document
 #' xml_set_namespace xml_root xml_find_first
 as_eml_document.list <- function(x, ...) {
 
   doc <- xml2::xml_new_document()
-  #type <- x[["@type"]]
   x[["@type"]] <- NULL
   add_node(x, doc, "eml")
 
   ## Set namespace of <eml> to <eml:eml>
   xml2::xml_set_namespace(xml2::xml_find_first(xml2::xml_root(doc), "."), "eml")
+  doc
 }
 
 ## Identical to as_xml_document methods
@@ -66,7 +71,9 @@ add_node <- function(x, parent, tag) {
     if (is.atomic(x)) {
       return() ## bc we call add_node after already eval on is.atomic
     }
+
     x <- sort_properties(x, tag)
+
     if(!is.null(names(x)) & length(x) > 0){
       parent <- xml2::xml_add_child(parent, tag)
     }
@@ -83,13 +90,10 @@ add_node <- function(x, parent, tag) {
 }
 
 serialize_atomics <- function(x, parent, tag, key){
-
   if(is.null(key)){
     textType <- xml2::xml_add_child(parent, tag)
     return(xml2::xml_set_text(textType, x))
   }
-
-  ## Skip
   if(grepl("^@*id$", key)){
     ## Skip `@id` element if uses a json-ld local id
     if(grepl("^_:b\\d+", x)){
@@ -125,20 +129,13 @@ serialize_atomics <- function(x, parent, tag, key){
 
 
 
-# List of all classes defined by EML and their slot names, in order compatible with schema validation
-# This data is primarily intended for internal use by the sort_properties function
-#
-# @references \url{https://github.com/ropensci/EML}
-#"eml_db"
 
 
 sort_properties <- function(x, tag){
 
   n <- names(x)
   order <- eml_db[[tag]]
-  drop <- grep("(.Data|schemaLocation|lang|slot_order|id|scope|system|authSystem)", order)
-  if(length(drop) > 0)
-    order <- order[-drop]
+
   if(length(order) == 0 | length(n) == 0)
     return(x)
 
@@ -158,6 +155,3 @@ sort_properties <- function(x, tag){
 
 }
 
-#ld <- parse_eml(system.file("extdata/hf205.xml", package="emld"))
-#names(sort_properties(ld$eml$dataset, "dataset"))
-#names(sort_properties(ld$eml$access, "access"))

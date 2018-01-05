@@ -10,21 +10,19 @@ library(magrittr)
 library(devtools)
 library(EML)
 
-class_defs <- read_lines("../../ropensci/EML/R/classes.R")
+
+## FIXME: does not get all class names!
+
+#class_defs <- read_lines("../../ropensci/EML/R/classes.R")
 #stmml_classes <- read_lines("../../ropensci/EML/R/classes-stmml.R")
+#matches <- str_match(class_defs, "setClass\\(\'(\\w+)\'.*") %>% na.omit()
+#classes <- matches[,2]
+#real_classes <- classes[ - grep("ListOf\\w+",classes)]
+real_classes <- readr::read_lines("data-raw/eml_classes.txt")
 
-matches <- str_match(class_defs, "setClass\\(\'(\\w+)\'.*") %>% na.omit()
-classes <- matches[,2]
-real_classes <- classes[ - grep("ListOf\\w+",classes)]
-
-
-eml_db <- lapply(real_classes, function(tag){
-  order <- methods::slotNames(tag)
-  # Notes: lang and schemaLocation are xsi: properties and technically available on any xml node
-  # value is a child node only used to give alternate values, e.g. for differen langs.  acts a bit like @value
-  # references acts like @id, and should not be a separate property
-  # character refers to R character type, and is not a slot
-  drop <- grep("(.Data|slot_order|schemaLocation|lang|value|references|character)", order)
+drop_bad <-  function(tag){
+  bad <- c(".Data", "slot_order", "schemaLocation", "lang", "value", "references", "character")
+  drop <- as.integer(na.omit(match(bad, order)))
   if(length(drop) > 0){
     order <- order[-drop]
   }
@@ -37,7 +35,44 @@ eml_db <- lapply(real_classes, function(tag){
   }
 
   order
-  })
+}
+
+eml_db <- lapply(real_classes, function(tag){
+  order <- methods::slotNames(tag)
+  drop_bad(tag)
+
+})
 names(eml_db) <- real_classes
 
+
+## Replace any capital-first (i.e. Element Group) slot with it's slotNames,
+## e.g. BoundsGroup -> bounds
+eml_db_ <- lapply(real_classes, function(tag){
+  order <- eml_db[[tag]]
+
+  i <- grep("^[A-Z].*", order)
+  if(length(i) == 0){
+    return(order)
+  } else if(length(i) > 1){
+    message(paste(order[i]))
+    return(order)
+  } else {
+    if(i>1){
+      start <- seq.int(1,i-1)
+    } else {
+      start <- integer(0)
+    }
+    if(i < length(order)){
+      end <- seq.int(i+1, length(order))
+    } else {
+      end <- integer(0)
+    }
+    expanded <- eml_db[[order[i]]]
+    order <- c(order[start], expanded, order[end])
+    order
+  }
+})
+names(eml_db_) <- real_classes
+
+eml_db <- eml_db_
 devtools::use_data(eml_db, overwrite = TRUE, internal = TRUE)
