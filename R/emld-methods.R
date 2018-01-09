@@ -3,6 +3,7 @@
 #' @importFrom jsonlite toJSON
 #' @export
 print.emld <- function(x, ...){
+  x[["@context"]] <- NULL # context just adds clutter to display
   style <- getOption("emld_print", "yaml")
   #cat("EML as an emld object:\n\n\n")
   switch(style,
@@ -12,3 +13,5 @@ print.emld <- function(x, ...){
 }
 
 
+## FIXME: Print method should drop context
+## Consider crayon?
