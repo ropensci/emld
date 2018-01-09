@@ -61,7 +61,12 @@ as_emld <- function(x){
     class(emld) <- c("emld", "list")
 
     return(emld)
+  } else if(is.list(x)){ # Note that xml_document is.list too
+    class(x) <- c("emld", "list")
+    return(x)
   }
+
+
 }
 
 
