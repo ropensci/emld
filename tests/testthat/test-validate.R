@@ -27,8 +27,9 @@ suite <- list.files(system.file("tests", package="emld"), full.names = TRUE)
 test_roundtrip(system.file("tests/eml.xml", package="emld"))
 test_roundtrip(system.file("tests/eml-datasetMultipleDistribution.xml", package="emld"))
 test_roundtrip(system.file("tests/eml-datasetWhitespacePatterns.xml", package="emld"))
-
 test_roundtrip(system.file("tests/eml-datasetWithAttributelevelMethods.xml", package="emld"))
+test_roundtrip(system.file("tests/eml-datasetWithAccess.xml", package="emld"))
+test_roundtrip(system.file("tests/eml-datasetWithAccessOverride.xml", package="emld"))
 
 ## Citation types are all full examples too:
 suite <- list.files(system.file("tests", package="emld"), pattern="citation", full.names = TRUE)
@@ -36,17 +37,20 @@ lapply(suite, test_roundtrip)
 
 
 # THESE ARE STILL FAILING:
-## new failures: these drop the `id` on the <access> element, no idea why
-#test_roundtrip(system.file("tests/eml-datasetWithAccess.xml", package="emld"))
-#test_roundtrip(system.file("tests/eml-datasetWithAccessOverride.xml", package="emld"))
 
-## These have more serious parse or validation failures
-#test_roundtrip("inst/tests/eml-i18n.xml")
-#test_roundtrip("inst/tests/eml-datasetWithAccessUnitsLiteralLayout.xml")
-#test_roundtrip("inst/tests/eml-datasetWithCitation.xml")
-#test_roundtrip("inst/tests/eml-datasetWithNonwordCharacters.xml")
-#test_roundtrip("inst/tests/eml-datasetWithUnits.xml")
+## These fail validation
+test_roundtrip("inst/tests/eml-i18n.xml")
 
-## Many other examples simply have wrong namespace since are fragments, not EML objects
+## These even fail to parse with as_emld
+## All error with: 'names' attribute [1] must be the same length as the vector [0]
+test_roundtrip("inst/tests/eml-datasetWithAccessUnitsLiteralLayout.xml")
+test_roundtrip("inst/tests/eml-datasetWithCitation.xml")
+test_roundtrip("inst/tests/eml-datasetWithUnits.xml")
+
+## loses elements
+test_roundtrip("inst/tests/eml-datasetWithNonwordCharacters.xml")
+
+
+## Remaining examples simply have wrong namespace since are fragments, not EML objects
 
 
