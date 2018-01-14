@@ -35,9 +35,14 @@ testthat::test_that("We can add abstract with multiple paragraphs", {
 })
 
 
-f <- system.file("tests/eml-text.xml", package="emld")
-text <- as_emld(f)
-as_json(text, "text.json")
-as_xml(text, "text.xml")
-unlink("text.xml")
-unlink("text.json")
+testthat::test_that("We can round-trip text test file", {
+  f <- system.file("tests/eml-text.xml", package="emld")
+  text <- as_emld(f)
+  as_xml(text, "text.xml", "text", "txt") # Note custom root & ns
+  testthat::expect_true(EML::eml_validate("text.xml") )
+
+  unlink("text.xml")
+
+  as_json(text, "text.json")
+  unlink("text.json")
+})

@@ -4,13 +4,17 @@
 \alias{as_xml}
 \title{as_xml}
 \usage{
-as_xml(x, file = NULL)
+as_xml(x, file = NULL, root = "eml", ns = "eml")
 }
 \arguments{
 \item{x}{an emld object}
 
 \item{file}{optional path to write out to file.
 Otherwise, defaults to NULL and will return an xml_document object.}
+
+\item{root}{name for the root node; default to 'eml'}
+
+\item{ns}{namespace abbreviation on root node, default 'eml'}
 }
 \description{
 as_xml

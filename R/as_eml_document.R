@@ -1,16 +1,15 @@
 #' @importFrom xml2 xml_add_child xml_set_attr xml_new_document
 #' @importFrom xml2 xml_set_namespace xml_root xml_find_first
-as_eml_document <- function(x, ...) {
+as_eml_document <- function(x, root = "eml", ns ="eml") {
 
+  # drop JSON-LD @type; not explicit in XML
   x[["@type"]] <- NULL
   if(is.null(x[["#schemaLocation"]]))
     x[["#schemaLocation"]] <- "eml://ecoinformatics.org/eml-2.1.1 eml.xsd"
 
   doc <- xml2::xml_new_document()
-  add_node(x, doc, "eml")
-
-  ## Set namespace of <eml> to <eml:eml>
-  xml2::xml_set_namespace(xml2::xml_find_first(xml2::xml_root(doc), "."), "eml")
+  add_node(x, doc, root)
+  xml2::xml_set_namespace(xml2::xml_root(doc), ns)
   doc
 }
 
