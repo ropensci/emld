@@ -1,6 +1,6 @@
 testthat::context("textType")
 
-
+library(xml2)
 
 me <- list(individualName = list(givenName = "Carl", surName = "Boettiger"))
 eml <- list(dataset = list(
@@ -41,7 +41,12 @@ testthat::test_that("We can round-trip text test file", {
   as_xml(text, "text.xml", "text", "txt") # Note custom root & ns
   testthat::expect_true(EML::eml_validate("text.xml") )
 
+  ## same number of XML elements before and after
+  start <- length(unlist(as_list(read_xml(f)), recursive = TRUE))
+  end <- length(unlist(as_list(read_xml("text.xml")), recursive = TRUE))
+  testthat::expect_equal(start, end)
   unlink("text.xml")
+
 
   as_json(text, "text.json")
   unlink("text.json")
