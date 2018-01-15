@@ -12,7 +12,7 @@ eml <- list(dataset = list(
 
 testthat::test_that("We have created a minimal, valid EML file", {
   as_xml(eml, "ex.xml")
-  testthat::expect_true( EML::eml_validate("ex.xml") )
+  testthat::expect_true( eml_validate("ex.xml") )
   unlink("ex.xml")
 })
 
@@ -20,7 +20,7 @@ testthat::test_that("We have created a minimal, valid EML file", {
 testthat::test_that("We can add abstract as text string", {
   eml$dataset$abstract <- "This is a short abstract for this dataset."
   as_xml(eml, "ex.xml")
-  testthat::expect_true( EML::eml_validate("ex.xml") )
+  testthat::expect_true( eml_validate("ex.xml") )
   unlink("ex.xml")
 })
 
@@ -30,7 +30,7 @@ testthat::test_that("We can add abstract with multiple paragraphs", {
       "This is a short abstract for this dataset.",
       "This is the second paragraph"))
   as_xml(eml, "ex.xml")
-  testthat::expect_true( EML::eml_validate("ex.xml") )
+  testthat::expect_true( eml_validate("ex.xml") )
   unlink("ex.xml")
 })
 
@@ -39,7 +39,7 @@ testthat::test_that("We can round-trip text test file", {
   f <- system.file("tests/eml-text.xml", package="emld")
   text <- as_emld(f)
   as_xml(text, "text.xml", "text", "txt") # Note custom root & ns
-  testthat::expect_true(EML::eml_validate("text.xml") )
+  testthat::expect_true(eml_validate("text.xml") )
 
   ## same number of XML elements before and after
   start <- length(unlist(as_list(read_xml(f)), recursive = TRUE))

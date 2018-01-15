@@ -25,7 +25,6 @@ Suggests:
     magrittr,
     rmarkdown,
     covr,
-    EML,
     knitr,
     purrr,
     rdflib

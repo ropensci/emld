@@ -56,6 +56,6 @@ test_that("We can validate after roundtrip with default xml2 methods", {
     rename_root("eml:eml") %>%
     xml2::write_xml("test.xml")
 
-  testthat::expect_true(EML::eml_validate("test.xml"))
+  testthat::expect_true(eml_validate("test.xml"))
   unlink("test.xml")
 })

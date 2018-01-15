@@ -24,7 +24,7 @@ jsonld_frame("eml.json", frame) %>%
   as_xml("eml.xml")
 
 
-  expect_true(EML::eml_validate("eml.xml"))
+  expect_true(eml_validate("eml.xml"))
 })
 
 test_that("We can roundtrip out to rdf-xml", {
@@ -44,7 +44,7 @@ rdf_parse("eml.rdf", "rdfxml") %>%
 ## Prove that as_emld frames and compacts automatically:
 as_emld("eml.json") %>%
   as_xml("eml.xml")
-expect_true(EML::eml_validate("eml.xml"))
+expect_true(eml_validate("eml.xml"))
 
 })
 

@@ -23,10 +23,10 @@ test_roundtrip <- function(f){
   elements_at_start <- length(unlist(emld, recursive = TRUE))
   as_xml(emld, out, ns$root, ns$ns)
 
-  #print(EML::eml_validate(out))
+  #print(eml_validate(out))
 
   ## Make sure output xml is still valid
-  testthat::expect_true(EML::eml_validate(out))
+  testthat::expect_true(eml_validate(out))
 
   ## Make sure we have the same number of elements as we started with
   elements_at_end <- length(unlist(as_emld(out), recursive = TRUE))

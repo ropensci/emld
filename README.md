@@ -60,11 +60,10 @@ as_xml(eml, "test.xml")
 We can prove that writing the list back into XML still creates a valid EML file.
 
 ``` r
-EML::eml_validate("test.xml")
+eml_validate("test.xml")
 #> [1] TRUE
 #> attr(,"errors")
 #> character(0)
-unlink("test.xml")
 ```
 
 ### Query
@@ -146,36 +145,29 @@ Writing EML
 
 This section is even more experimental currently, and may not be a good direction for development. Nevertheless, it can illustrate some of the convenience (and risk) of a simple S3 class.
 
-The `EML` package is arguably better suited to this task, where a collection of higher level `set_` functions can facilitate construction of EML. Still, working on the simple `list`-based classes can be convenient, particularly for developers. (For end-users, the simplicity of the `list` type also means that it is easy to define things that will create invalid EML, e.g. by misspelling a slot or providing a text value to a node-valued element). Nevertheless, one of of the main reasons the `EML` package is helpful in construction is simply the ability to a list of the possible slot names for any given object using the low-level approach of creating an object with the `new()` constructor and examining the slots (e.g. with tab completion).
-
-Here we build on that basic insight by providing an elementary helper function, `template()`, which merely returns a list of the possible child elements (aka slots or properties) of the object. We can create EML from scratch using lists with help from the `template` function.
-
-Let's create a minimal EML document
+Remember that `emld` objects are just nested lists, so you can create EML just by writing lists:
 
 ``` r
-eml <- template("eml")
-eml
-#> access: {}
-#> dataset: {}
-#> citation: {}
-#> software: {}
-#> protocol: {}
-#> additionalMetadata: {}
+
+me <- list(individualName = list(givenName = "Carl", surName = "Boettiger"))
+
+eml <- list(dataset = list(
+              title = "dataset title",
+              contact = me,
+              creator = me),
+            "#system" = "doi",
+            "#packageId" = "10.xxx")
+
+as_xml(eml, "ex.xml")
+testthat::expect_true(eml_validate("ex.xml") )
 ```
 
-Note that nodes which take data values are indicated by `~` while those where additional nodes are needed as arguments are indicated by `{}`. This gives us an idea of the possible elements (unfortunately it does not currently indicate which are required, optional, or mutually exclusive). We would also see these listed as tab-completion options if we type `eml$` using the usual list indexing mechanism.
+Note that we don't have to worry about the order of the elements here, `as_xml` will re-order if necessary to validate. (For instance, in valid EML the `creator` becomes listed before `contact`.)
 
-Let's go ahead and get a dataset template as well.
-
-``` r
-dataset <- template("dataset")
-```
-
-Incidentally, `template` also knows about the EML schema types (always starting with a capital) which are used to type various objects.
+Clearly most users are unlikely to remember what the possible properties are for each element, or which ones are attributes (which currently need the `#` prefix). The `template()` function offers a quick way to address this issue:
 
 ``` r
-contact <- template("ResponsibleParty")
-contact
+template("creator")
 #> individualName: {}
 #> organizationName: ~
 #> positionName: ~
@@ -184,35 +176,37 @@ contact
 #> electronicMailAddress: ~
 #> onlineUrl: ~
 #> userId: ~
+#> '@id': ~
+#> '#system': ~
+#> '#scope': ~
 ```
 
-Things stay a bit more tidy without recursion:
+returns a simple list object, cast as an `emld` S3 class so that it prints cleanly. Note that properties which take other objects are indicated by `{}` while properties taking text values are indicated by `~`. If we assignt it to a variable instead of merely printing the output of `template()`, we can then fill out values as needed (making use of tab completion):
 
 ``` r
-contact <- template("contact")
+scott <- template("creator")
+scott$individualName <- template("individualName")
+scott$individualName$givenName <- list("Scott", "A")
+scott$individualName$surName <- "Chamberlain"
+scott$electronicMailAddress <- "scott@ropensci.org"
 ```
 
-Let's start filling out some metadata!
+We can add this element to the EML list we already created:
 
 ``` r
-contact$individualName$givenName <- list("Carl", "David")
-contact$individualName$surName <- "Boettiger"
-contact$organiziationName <- "UC Berkeley"
-contact$electronicMailAddress <- "cboettig@ropensci.org"
-
-contact <- purrr::compact(contact)
+eml$dataset$creator <- list(me, scott)
 ```
 
-Note that repeated element types should be given as `list` types and not character vectors. This helps developers avoid unpredictable types. `purrr::compact()` is a convenient way to drop any fields we are not using once we're done.
+and confirm the file validates with this additional creator:
 
 ``` r
-dataset$title <- "Example Title"
-dataset$creator <- contact
-dataset$contact <- contact
-eml$dataset <- dataset
+as_xml(eml, "ex.xml")
+testthat::expect_true(eml_validate("ex.xml") )
 ```
 
-(Still need to add a method to add JSON-LD context. Also need a method to compact out)
+It remains to be seen if this proves substantially easier than EML creation with the S4-based constructors. Some things are certainly more convienent: no `new`, no `ListOf` types, no remembering to index repeated elements, no `.Data` slots, etc. On the other hand, S4 system prevents assigning to a slot an object that is of the wrong type. The list approach does not have this safeguard.
+
+Ultimately it might be more useful as a developer tool to construct helper functions that can streamline creation of EML.
 
 ### Going deeper
 

@@ -78,7 +78,7 @@ as_xml(eml, "test.xml")
 We can prove that writing the list back into XML still creates a valid EML file. 
 
 ```{r}
-EML::eml_validate("test.xml")
+eml_validate("test.xml")
 ```
 
  
@@ -174,7 +174,7 @@ eml <- list(dataset = list(
             "#packageId" = "10.xxx")
 
 as_xml(eml, "ex.xml")
-testthat::expect_true( EML::eml_validate("ex.xml") )
+testthat::expect_true(eml_validate("ex.xml") )
 ```
 
 Note that we don't have to worry about the order of the elements here, `as_xml` will re-order if necessary to validate. (For instance, in valid EML the `creator` becomes listed before `contact`.)  
@@ -208,7 +208,7 @@ and confirm the file validates with this additional creator:
 
 ```{r}
 as_xml(eml, "ex.xml")
-testthat::expect_true( EML::eml_validate("ex.xml") )
+testthat::expect_true(eml_validate("ex.xml") )
 ```
 
 
