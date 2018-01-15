@@ -1,6 +1,14 @@
 testthat::context("Test round trip validation")
 
-## Slows test suite by about a minute
+guess_ns <- function(file){
+  x <- xml_root(read_xml(file))
+  root <- xml_name(x)
+  ns <- xml_ns(x)
+  i <- grep(strsplit(xml_attr(x, "schemaLocation"), "\\s+")[[1]][1], ns)
+  ns <- names(ns[i])
+  list(root=root, ns=ns)
+}
+
 
 test_roundtrip <- function(f){
   testthat::test_that(paste(
@@ -8,16 +16,12 @@ test_roundtrip <- function(f){
   {
 
   ## guess root and ns for sub-modules
-  x <- xml_root(read_xml(f))
-  root <- xml_name(x)
-  ns <- xml_ns(x)
-  i <- grep(strsplit(xml_attr(x, "schemaLocation"), "\\s+")[[1]][1], ns)
-  ns <- names(ns[i])
+  ns <- guess_ns(f)
 
   out <- basename(f)
   emld <- as_emld(f)
   elements_at_start <- length(unlist(emld, recursive = TRUE))
-  as_xml(emld, out, root, ns)
+  as_xml(emld, out, ns$root, ns$ns)
 
   #print(EML::eml_validate(out))
 
