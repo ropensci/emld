@@ -12,6 +12,11 @@ test_that("template knows about internal classes too", {
 })
 
 
+test_that("We can suppress attributes", {
+  expect_output(print(template("creator", attributes=FALSE)), "individualName: \\{\\}")
+  expect_output(print(template("creator", attributes=TRUE)), "@id")
+})
+
 ## test serializing to XML fragment doc
 #f <- "tests/testthat/creator.yml"
 #creator <- yaml::read_yaml(f)

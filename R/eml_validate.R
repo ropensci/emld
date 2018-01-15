@@ -89,7 +89,7 @@ eml_locate_schema <- function(eml, ns = NA) {
     }
 
     eml_version <- strsplit(ns, "-")[[1]][2]
-    schema <- system.file(paste0("xsd/eml-", eml_version, "/", schema_file), package='eml2')
+    schema <- system.file(paste0("xsd/eml-", eml_version, "/", schema_file), package='emld')
     if(schema == '') {
         stop(paste("No schema found for namespace: ", ns))
     }
