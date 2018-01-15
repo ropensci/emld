@@ -29,14 +29,11 @@ as_emld <- function(x){
   if(is(x, "json")){
 
     ## FIXME technically this assumes our context
-
     frame <- system.file("frame/eml-frame.json", package = "emld")
     context <- system.file("context/eml-context.json", package = "emld")
     framed <- jsonld::jsonld_frame(x, frame)
     compacted <- jsonld::jsonld_compact(framed, context)
-
     emld <- jsonlite::fromJSON(compacted, simplifyVector = FALSE)
-
     class(emld) <- c("emld", "list")
     return(emld)
   }

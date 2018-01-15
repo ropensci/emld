@@ -1,0 +1,67 @@
+---
+title: "emld Spec"
+author: "Carl Boettiger"
+date: "1/13/2018"
+output: github_document
+---
+
+This document outlines the conventions used in mapping EML XML into JSON-LD.
+
+- XML node names become JSON keys
+- XML node contents (either text/data or node names) become the corresponding JSON value to the key
+- Repeated elements become list-valued:
+
+```xml
+<url>http://example.com/1</url>
+<url>http://example.com/2</url>
+<url>http://example.com/3</url>
+```
+
+becomes:
+
+```json
+"url": ["http://example.com/1", "http://example.com/2", "http://example.com/3"]
+```
+
+- XML node attribute names are converted into JSON keys prefixed with `#`, unless the attribute name is `id`, in which case it uses the special JSON-LD prefix, `@`. For instance: 
+
+
+```xml
+<dataset id="abc123", system="knb"><title>The Title<title></dataset>
+```
+
+becomes
+
+```json
+"dataset": {
+  "@id": "abc123", 
+  "#system": "knb",
+  "title": "The Title"
+}
+  
+```
+
+
+- If a node contains text/data and an attribute, the node name is repeated to denote the value as well:
+
+```xml
+<url function="download">http://example.com</url>
+```
+
+becomes:
+
+```json
+"url": {
+  "#function"="download"
+  "url": "http://example.com"
+}
+```
+
+- Contents of `para` and `section` (the two choices for components of any `TextType` content) are encoded as literal character strings and not parsed.  
+
+- references are expanded:
+
+- Semantic annotations (EML 2.2) are expanded into native JSON-LD
+
+
+

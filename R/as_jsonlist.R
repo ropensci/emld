@@ -7,6 +7,12 @@ as_jsonlist <- function(x, ns = character(), ...) {
 #' @importFrom xml2 xml_contents xml_name xml_attrs xml_type xml_text
 as_jsonlist.xml_node <- function(x, ns = character(), embed_attr=TRUE, ...) {
   key <- xml_name(x)
+
+  ## Treat <para> and <section> as literals
+  if(key %in% c("para", "section")){
+    return(paste(as.character(xml_contents(x)), collapse = "\n"))
+  }
+
   contents <- xml2::xml_contents(x)
   if (length(contents) == 0) {
     # Base case - contents
@@ -29,7 +35,7 @@ as_jsonlist.xml_node <- function(x, ns = character(), embed_attr=TRUE, ...) {
   node_attr <- special_jsonld_attrs(xml2::xml_attrs(x, ns = ns), prefix = "#")
   if(length(node_attr) > 0){
     ## If attributes become properties, need a property for node content (can't be a value)
-    if(is.null(names(out))) names(out) <- xml2::xml_name(x) #"content"
+    if(is.null(names(out))) names(out) <- xml2::xml_name(x)
     out <- c(node_attr, out)
   }
   group_repeated_key(out)

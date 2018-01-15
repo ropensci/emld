@@ -3,7 +3,8 @@
 #' @param x an emld object
 #' @param file optional path to write out to file.
 #'   Otherwise, defaults to NULL and will return an xml_document object.
-#'
+#' @param root name for the root node; default to 'eml'
+#' @param ns namespace abbreviation on root node, default 'eml'
 #' @export
 #' @details Unlike as_json, this function cannot rely on the existing
 #' convention of serializing a list to xml, eg, as defined by xml2::as_xml_document()
@@ -17,15 +18,15 @@
 #' emld <- as_emld(f)
 #' xml <- as_xml(emld)
 #'
-as_xml <- function(x, file=NULL){ UseMethod("as_xml") }
+as_xml <- function(x, file=NULL, root = "eml", ns = "eml"){ UseMethod("as_xml") }
 
 #' @export
-as_xml.list <- function(x, file=NULL){
+as_xml.list <- function(x, file=NULL, root = "eml", ns = "eml"){
   as_xml.emld(x, file)
 }
 
 #' @export
-as_xml.emld <- function(x, file=NULL){
+as_xml.emld <- function(x, file=NULL, root = "eml", ns = "eml"){
 
   ## Frame/compact into original context for a standardized structure
   x <- eml_frame(x)
@@ -33,13 +34,14 @@ as_xml.emld <- function(x, file=NULL){
   ## Drop context and serialize
   y <- x
   y[["@context"]] <- NULL
-  xml <- as_eml_document(y)
+  xml <- as_eml_document(y, root = root, ns = ns)
 
   ## Add any namespaces defined in the @context
   xml <- context_namespaces(x[["@context"]], xml)
 
   ## Fix missing namespace on root element
-  xml2::xml_set_namespace(xml2::xml_find_first(xml2::xml_root(xml), "."), "eml")
+  xml2::xml_set_namespace(xml2::xml_root(xml), ns)
+
   xml <- xml2::as_xml_document(xml)
 
   ## Serialize to file if desired
