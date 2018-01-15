@@ -53,14 +53,19 @@ add_node <- function(x, parent, tag) {
 
     ## Handle all other values (nodes and attributes)
     update_tag <- !is.null(names(x))
+
+
     for(i in seq_along(x)){
+
       if(is.atomic(x[[i]])){
         serialize_atomics(x[[i]], parent, tag, names(x)[[i]])
       }
+      ## Non-atomics with repeated keys
+      #next_tag <- tag
       if(update_tag){
         tag <- names(x)[[i]]
       }
-      add_node(x[[i]], parent, tag)
+      add_node(x[[i]], parent, tag) # does nothing if x[[i]] is atomic
     }
 
 
@@ -69,10 +74,12 @@ add_node <- function(x, parent, tag) {
 }
 
 serialize_atomics <- function(x, parent, tag, key){
+  ## Repeated elements all named by (parent) tag name
   if(is.null(key)){
     textType <- xml2::xml_add_child(parent, tag)
     return(xml2::xml_set_text(textType, x))
   }
+
 
   ## SPECIAL, handle length-1 text types
   if(key %in% c("para", "section")){
@@ -97,13 +104,13 @@ serialize_atomics <- function(x, parent, tag, key){
   }
   ## Identify properties that should become xml attributes instead of text values
   is_attr <- grepl("^(@|#)(\\w+)", key)
-  key <- gsub("^(@|#)(\\w+)", "\\2", key) # drop json-ld `@`
-  key <- gsub("^schemaLocation$", "xsi:schemaLocation", key)
+  key <- gsub("^(@|#)(\\w+)", "\\2", key) # drop json-ld `@` and `#`
+  key <- gsub("^schemaLocation$", "xsi:schemaLocation", key) # assume namespace
 
   if(length(key) > 0){
     ## Text-type atomics ##
     if(!is_attr){
-      if(grepl("^#\\w+", tag)){
+      if(xml_name(parent) == key){
         ## special case where JSON-LD repeats node name
         ## (for grouped nodes with attributes, e.g. url)
         xml2::xml_set_text(parent, x)
