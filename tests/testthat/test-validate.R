@@ -6,10 +6,20 @@ test_roundtrip <- function(f){
   testthat::test_that(paste(
     "testing that", basename(f), "can roundtrip & validate"),
   {
+
+  ## guess root and ns for sub-modules
+  x <- xml_root(read_xml(f))
+  root <- xml_name(x)
+  ns <- xml_ns(x)
+  i <- grep(strsplit(xml_attr(x, "schemaLocation"), "\\s+")[[1]][1], ns)
+  ns <- names(ns[i])
+
   out <- basename(f)
   emld <- as_emld(f)
   elements_at_start <- length(unlist(emld, recursive = TRUE))
-  as_xml(emld, out)
+  as_xml(emld, out, root, ns)
+
+  #print(EML::eml_validate(out))
 
   ## Make sure output xml is still valid
   testthat::expect_true(EML::eml_validate(out))
@@ -46,11 +56,21 @@ lapply(suite, test_roundtrip)
 #test_roundtrip("inst/tests/eml-datasetWithAccessUnitsLiteralLayout.xml")
 #test_roundtrip("inst/tests/eml-datasetWithCitation.xml")
 #test_roundtrip("inst/tests/eml-datasetWithUnits.xml")
+#test_roundtrip(system.file("tests/eml-inline.xml", package="emld"), "physical", "phys")
 
 ## loses elements
 #test_roundtrip("inst/tests/eml-datasetWithNonwordCharacters.xml")
 
 
-## Remaining examples simply have wrong namespace since are fragments, not EML objects
+## Modular subsets
+test_roundtrip(system.file("tests/eml-text.xml", package="emld"))
+test_roundtrip(system.file("tests/eml-access.xml", package="emld"))
+test_roundtrip(system.file("tests/eml-attribute.xml", package="emld"))
+#test_roundtrip(system.file("tests/eml-literature.xml", package="emld"))
 
 
+## drops alternateIdentifier tag??
+#test_roundtrip(system.file("tests/eml-dataTable.xml", package="emld"))
+#test_roundtrip(system.file("tests/eml-entity.xml", package="emld"))
+
+f = system.file("tests/eml-dataTable.xml", package="emld")
