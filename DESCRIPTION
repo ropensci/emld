@@ -27,7 +27,8 @@ Suggests:
     covr,
     knitr,
     purrr,
-    rdflib
+    rdflib,
+    jqr
 Imports: xml2,
     jsonlite,
     jsonld,
