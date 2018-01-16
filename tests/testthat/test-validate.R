@@ -22,7 +22,7 @@ test_roundtrip <- function(f, schema = NULL){
 
   out <- basename(f)
   emld <- as_emld(f)
-  elements_at_start <- names(unlist(emld, recursive = TRUE))
+  elements_at_start <- sort(names(unlist(emld, recursive = TRUE)))
   as_xml(emld, out, ns$root, ns$ns)
 
   #print(eml_validate(out, schema = schema))
@@ -32,7 +32,7 @@ test_roundtrip <- function(f, schema = NULL){
   testthat::expect_true(eml_validate(out, schema = schema))
 
   ## Make sure we have the same number of elements as we started with
-  elements_at_end <- names(unlist(as_emld(out), recursive = TRUE))
+  elements_at_end <- sort(names(unlist(as_emld(out), recursive = TRUE)))
   testthat::expect_equal(elements_at_start, elements_at_end)
   unlink(out)
   })
