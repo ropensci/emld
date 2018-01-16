@@ -65,18 +65,24 @@ testthat::test_that("we chan handle crazy mixed text types", {
   "
   x <- xml2::read_xml(xml)
   emld <- as_emld(x)
-  as_xml(emld, root = "abstract", ns = "", schemaLocation = NULL)
+  y <- as_xml(emld, root = "abstract", ns = "", schemaLocation = NULL)
+  testthat::expect_identical(xml_text(xml_find_first(xml_root(y), "//emphasis")), "emphasis")
 })
 
 testthat::test_that("internationalized text values", {
 
   xml <- '
+  <dataset>
   <title xml:lang="es">
     Histórico Cocinera base de datos para el quelpo gigante (Macrocystis pyrifera) de la biomasa en California y México.
     <value xml:lang="en">Historical Kelp Database for giant kelp (Macrocystis pyrifera) biomass in California and Mexico.</value>
   </title>
+  </dataset>
   '
   x <- xml2::read_xml(xml)
   emld <- as_emld(x)
+  y <- as_xml(emld, root = "dataset", ns = "", schemaLocation = NULL)
+  testthat::expect_identical(xml_attrs(xml_find_first(xml_root(y), "//title")), c(lang="es"))
+  testthat::expect_identical(xml_attrs(xml_find_first(xml_root(y), "//value")), c(lang="en"))
 
 })

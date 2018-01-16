@@ -12,7 +12,7 @@ guess_ns <- function(file){
 }
 
 
-test_roundtrip <- function(f, schema = NULL){
+test_roundtrip <- function(f, schema = NULL, check_lengths=TRUE){
   testthat::test_that(paste(
     "testing that", basename(f), "can roundtrip & validate"),
   {
@@ -22,25 +22,20 @@ test_roundtrip <- function(f, schema = NULL){
 
   out <- basename(f)
   emld <- as_emld(f)
-  elements_at_start <- sort(names(unlist(emld, recursive = TRUE)))
   as_xml(emld, out, ns$root, ns$ns)
-
-  #print(eml_validate(out, schema = schema))
-
 
   ## Make sure output xml is still valid
   testthat::expect_true(eml_validate(out, schema = schema))
 
-  ## Make sure we have the same number of elements as we started with
-  elements_at_end <- sort(names(unlist(as_emld(out), recursive = TRUE)))
-  testthat::expect_equal(elements_at_start, elements_at_end)
+  ## Make sure we have the same number & names of elements as we started with
+  if(check_lengths){
+    elements_at_end <- sort(names(unlist(as_emld(out), recursive = TRUE)))
+    elements_at_start <- sort(names(unlist(emld, recursive = TRUE)))
+    testthat::expect_equal(elements_at_start, elements_at_end)
+  }
   unlink(out)
   })
 }
-## Test everything in test suite:
-suite <- list.files(system.file("tests", package="emld"), full.names = TRUE)
-#lapply(suite, test_roundtrip)
-
 
 ## Test all citation-* examples:
 suite <- list.files(system.file("tests", package="emld"),
@@ -48,9 +43,7 @@ suite <- list.files(system.file("tests", package="emld"),
 lapply(suite, test_roundtrip)
 
 
-## This validates but looses two elements. Technically this is okay:
-## Framing decides that several of the quote characters are literally identical, e.g. " and \"
-#test_roundtrip(system.file("tests/eml-datasetWithNonwordCharacters.xml", package="emld"))
+## Special or imperfect cases ##
 
 
 
@@ -68,15 +61,21 @@ test_roundtrip(system.file("tests/eml-datasetWithAccessOverride.xml", package="e
 test_roundtrip(system.file("tests/eml-datasetWithAccessUnitsLiteralLayout.xml", package="emld"))
 test_roundtrip(system.file("tests/eml-datasetWithAttributelevelMethods.xml", package="emld"))
 test_roundtrip(system.file("tests/eml-datasetWithCitation.xml", package="emld"))
+## Framing decides several of the quote chars are literally identical, e.g. " and \"
+test_roundtrip(system.file("tests/eml-datasetWithNonwordCharacters.xml", package="emld"),
+               check_lengths = FALSE)
 test_roundtrip(system.file("tests/eml-datasetWithUnits.xml", package="emld"))
 test_roundtrip(system.file("tests/eml-dataTable.xml", package="emld"))
 test_roundtrip(system.file("tests/eml-entity.xml", package="emld"))
-## Deal with international notation: content becomes 'value'
-#test_roundtrip(system.file("tests/eml-i18n.xml", package="emld"))
+## Short one element
+test_roundtrip(system.file("tests/eml-i18n.xml", package="emld"),
+               check_lengths = FALSE)
 test_roundtrip(system.file("tests/eml-inline.xml", package="emld"))
-## crazy TextType, see textType
-#test_roundtrip(system.file("tests/eml-literature.xml", package="emld"))
-#test_roundtrip(system.file("tests/eml-literatureInPress.xml", package="emld"))
+## lenghts differ only due to whitespace nodes(?)
+test_roundtrip(system.file("tests/eml-literature.xml", package="emld"),
+               check_lengths = FALSE)
+test_roundtrip(system.file("tests/eml-literatureInPress.xml", package="emld"),
+               check_lengths = FALSE)
 test_roundtrip(system.file("tests/eml-method.xml", package="emld"))
 test_roundtrip(system.file("tests/eml-offline.xml", package="emld"))
 test_roundtrip(system.file("tests/eml-party.xml", package="emld"))
@@ -119,7 +118,6 @@ testthat::test_that("unitDictionary", {
   eml_validate(out, schema = schema)
 
   testthat::expect_true(eml_validate(out, schema = schema))
-
 
   elements_at_end <- names(unlist(as_emld(out), recursive = TRUE))
   testthat::expect_equal(elements_at_start, elements_at_end)

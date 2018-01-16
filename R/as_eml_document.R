@@ -23,6 +23,11 @@ add_node <- function(x, parent, tag) {
     }
     #x <- drop_nulls(x)
 
+    ## Unnamed tags arise when xml text is interspersed with tags
+    if(!is.na(suppressWarnings(as.integer(tag)))){
+      return(xml2::xml_set_text(parent, paste(x, collapse="")))
+    }
+
     ## unwrap group_by_key sets
     if(!is.null(names(x)) & length(x) > 0){
       parent <- xml2::xml_add_child(parent, tag)
@@ -30,15 +35,18 @@ add_node <- function(x, parent, tag) {
 
     ## Handle text-type explicitly, parsing back into XML
     if(tag %in% c("para", "section")){
-      if(length(x) > 1) {
+      if(length(x) >= 1) {
         ## Note: length-1 case gets handled as an atomic character string
-        if(grepl("<\\w+>", x[[1]])){ ## contains an xml opening tag, assume XML
-          for(i in seq_along(x)){
+        for(i in seq_along(x)){
+          if(grepl("<\\w+>", x[[i]])){ ## contains an xml opening tag, assume XML
             n <- read_xml(paste0("<", tag, ">", x[[i]], "</", tag, ">"))
             xml2::xml_add_child(parent, n, .copy = TRUE)
+          } else {
+            textType <- xml2::xml_add_child(parent, tag)
+            xml2::xml_set_text(textType, x[[i]])
           }
-          return()
         }
+        return()
       }
     }
 
@@ -60,6 +68,7 @@ add_node <- function(x, parent, tag) {
 }
 
 serialize_atomics <- function(x, parent, tag, key){
+
   ## Repeated elements all named by (parent) tag name
   if(is.null(key)){
     textType <- xml2::xml_add_child(parent, tag)
@@ -89,8 +98,14 @@ serialize_atomics <- function(x, parent, tag, key){
   is_attr <- grepl("^(@|#)(\\w+)", key)
   key <- gsub("^(@|#)(\\w+)", "\\2", key) # drop json-ld `@` and `#`
   key <- gsub("^schemaLocation$", "xsi:schemaLocation", key) # assume namespace
+  key <- gsub("^lang$", "xml:lang", key) # assume namespace
 
   if(length(key) > 0){
+
+    if(!is.na(suppressWarnings(as.integer(key)))){
+      return(xml2::xml_set_text(parent, paste(x, collapse="")))
+    }
+
     ## Text-type atomics ##
     if(!is_attr){
       if(xml_name(parent) == key){
