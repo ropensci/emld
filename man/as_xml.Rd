@@ -4,7 +4,8 @@
 \alias{as_xml}
 \title{as_xml}
 \usage{
-as_xml(x, file = NULL, root = "eml", ns = "eml")
+as_xml(x, file = NULL, root = "eml", ns = "eml",
+  schemaLocation = "eml://ecoinformatics.org/eml-2.1.1 eml.xsd")
 }
 \arguments{
 \item{x}{an emld object}
@@ -15,6 +16,8 @@ Otherwise, defaults to NULL and will return an xml_document object.}
 \item{root}{name for the root node; default to 'eml'}
 
 \item{ns}{namespace abbreviation on root node, default 'eml'}
+
+\item{schemaLocation}{default to set schemaLocation if not already defined in emld object}
 }
 \description{
 as_xml

@@ -51,3 +51,19 @@ testthat::test_that("We can round-trip text test file", {
   as_json(text, "text.json")
   unlink("text.json")
 })
+
+
+## FIXME TextType needs to be able to handle the crazyiness that is `eml-literature.xml`:
+
+testthat::test_that("we chan handle crazy mixed text types", {
+  xml <- "
+  <abstract>this is the abstract without TextType elements.
+  <para>This is the abstract's first paragraph.</para>
+  <para>This is the abstract's second paragraph. With
+  <emphasis>emphasis</emphasis>.</para>
+  </abstract>
+  "
+  x <- xml2::read_xml(xml)
+  emld <- as_emld(x)
+  as_xml(emld, root = "abstract", ns = "", schemaLocation=NULL)
+})

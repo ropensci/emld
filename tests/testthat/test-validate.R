@@ -3,7 +3,7 @@ testthat::context("Test round trip validation")
 library(xml2)
 
 guess_ns <- function(file){
-  x <- xml2::xml_root(read_xml(file))
+  x <- xml2::xml_root(xml2::read_xml(file))
   root <- xml2::xml_name(x)
   ns <- xml2::xml_ns(x)
   i <- grep(strsplit(xml2::xml_attr(x, "schemaLocation"), "\\s+")[[1]][1], ns)
@@ -62,7 +62,7 @@ test_roundtrip(system.file("tests/eml-datasetWithAccess.xml", package="emld"))
 test_roundtrip(system.file("tests/eml-datasetWithAccessOverride.xml", package="emld"))
 test_roundtrip(system.file("tests/eml-datasetWithAccessUnitsLiteralLayout.xml", package="emld"))
 test_roundtrip(system.file("tests/eml-datasetWithAttributelevelMethods.xml", package="emld"))
-#test_roundtrip(system.file("tests/eml-datasetWithCitation.xml", package="emld"))
+test_roundtrip(system.file("tests/eml-datasetWithCitation.xml", package="emld"))
 #test_roundtrip(system.file("tests/eml-datasetWithNonwordCharacters.xml", package="emld")) ## loses elements
 test_roundtrip(system.file("tests/eml-datasetWithUnits.xml", package="emld"))
 test_roundtrip(system.file("tests/eml-dataTable.xml", package="emld"))

@@ -1,12 +1,6 @@
 #' @importFrom xml2 xml_add_child xml_set_attr xml_new_document
 #' @importFrom xml2 xml_set_namespace xml_root xml_find_first
 as_eml_document <- function(x, root = "eml", ns ="eml") {
-
-  # drop JSON-LD @type; not explicit in XML
-  x[["@type"]] <- NULL
-  if(is.null(x[["#schemaLocation"]]))
-    x[["#schemaLocation"]] <- "eml://ecoinformatics.org/eml-2.1.1 eml.xsd"
-
   doc <- xml2::xml_new_document()
   add_node(x, doc, root)
   xml2::xml_set_namespace(xml2::xml_root(doc), ns)
@@ -27,8 +21,7 @@ add_node <- function(x, parent, tag) {
     if (is.atomic(x)) {
       return() ## bc we call add_node after already eval on is.atomic
     }
-
-    #x <- drop_nulls(x)  ## FIXME: drop any numbered tags
+    #x <- drop_nulls(x)
 
     ## unwrap group_by_key sets
     if(!is.null(names(x)) & length(x) > 0){
@@ -36,10 +29,10 @@ add_node <- function(x, parent, tag) {
     }
 
     ## Handle text-type explicitly, parsing back into XML
-    ## Note: length-1 case gets handled as an atomic character string
     if(tag %in% c("para", "section")){
       if(length(x) > 1) {
-        if(grepl("^<\\w+>", x[[1]])){ ## starts with a tag, assume XML
+        ## Note: length-1 case gets handled as an atomic character string
+        if(grepl("<\\w+>", x[[1]])){ ## contains an xml opening tag, assume XML
           for(i in seq_along(x)){
             n <- read_xml(paste0("<", tag, ">", x[[i]], "</", tag, ">"))
             xml2::xml_add_child(parent, n, .copy = TRUE)
@@ -53,24 +46,17 @@ add_node <- function(x, parent, tag) {
 
     ## Handle all other values (nodes and attributes)
     update_tag <- !is.null(names(x))
-
-
     for(i in seq_along(x)){
-
       if(is.atomic(x[[i]])){
         serialize_atomics(x[[i]], parent, tag, names(x)[[i]])
       }
       ## Non-atomics with repeated keys
-      #next_tag <- tag
+      next_tag <- tag
       if(update_tag){
-        tag <- names(x)[[i]]
+        next_tag <- names(x)[[i]]
       }
-      add_node(x[[i]], parent, tag) # does nothing if x[[i]] is atomic
+      add_node(x[[i]], parent, next_tag) # does nothing if x[[i]] is atomic
     }
-
-
-
-
 }
 
 serialize_atomics <- function(x, parent, tag, key){
@@ -80,17 +66,14 @@ serialize_atomics <- function(x, parent, tag, key){
     return(xml2::xml_set_text(textType, x))
   }
 
-
   ## SPECIAL, handle length-1 text types
   if(key %in% c("para", "section")){
-      if(grepl("^<\\w+>", x)){ ## starts with a xml element, assume XML
+      if(grepl("<\\w+>", x)){ ## contains an xml opening tag, assume XML
         n <- read_xml(paste0("<", key, ">", x, "</", key, ">"))
         xml2::xml_add_child(parent, n, .copy = TRUE)
         return()
       }
   }
-
-
 
   if(grepl("^@*id$", key)){
     ## Skip `@id` element if uses a json-ld local id
@@ -123,7 +106,6 @@ serialize_atomics <- function(x, parent, tag, key){
       xml2::xml_set_attr(parent, key, x)
     }
   }
-
 }
 
 
