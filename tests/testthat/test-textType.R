@@ -55,7 +55,7 @@ testthat::test_that("We can round-trip text test file", {
 
 ## FIXME TextType needs to be able to handle the crazyiness that is `eml-literature.xml`:
 
-testthat::test_that("we chan handle crazy mixed text types", {
+testthat::test_that("we can handle crazy mixed text types", {
   xml <- "
   <abstract>this is the abstract without TextType elements.
   <para>This is the abstract's first paragraph.</para>

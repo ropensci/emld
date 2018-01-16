@@ -23,7 +23,7 @@ add_node <- function(x, parent, tag) {
     }
     #x <- drop_nulls(x)
 
-    ## Unnamed tags arise when xml text is interspersed with tags
+    ## Unnamed elements can arise when xml text is interspersed with tags
     if(!is.na(suppressWarnings(as.integer(tag)))){
       return(xml2::xml_set_text(parent, paste(x, collapse="")))
     }
@@ -126,7 +126,7 @@ serialize_atomics <- function(x, parent, tag, key){
 
 
 
-
+## sorts the elements of list x in order given by eml_db[[tag]]
 sort_properties <- function(x, tag){
 
   n <- names(x)

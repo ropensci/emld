@@ -72,11 +72,9 @@ as_xml.emld <- function(x, file=NULL, root = "eml", ns = "eml",
 ## (e.g. absense of a @context could mean we are just expanded form)
 is_jsonld.list <- function(x){
   json <- jsonlite::toJSON(x, auto_unbox = TRUE)
-  exp <- jsonld::jsonld_expand(json)
-  length(jsonlite::fromJSON(exp)) > 0
+  expanded <- jsonld::jsonld_expand(json)
+  length(jsonlite::fromJSON(expanded)) > 0
 }
-
-
 
 eml_frame <- function(x){
   x <- drop_nulls(x) ## recursive prune of nulls
