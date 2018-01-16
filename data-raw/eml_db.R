@@ -8,18 +8,20 @@ library(readr)
 library(stringr)
 library(magrittr)
 library(devtools)
-library(EML)
+
 
 
 ## FIXME: does not get all class names!
 
 #class_defs <- read_lines("../../ropensci/EML/R/classes.R")
-#stmml_classes <- read_lines("../../ropensci/EML/R/classes-stmml.R")
 #matches <- str_match(class_defs, "setClass\\(\'(\\w+)\'.*") %>% na.omit()
 #classes <- matches[,2]
 #real_classes <- classes[ - grep("ListOf\\w+",classes)]
-real_classes <- readr::read_lines("data-raw/eml_classes.txt")
 
+
+
+library(EML)
+real_classes <- readr::read_lines("data-raw/eml_classes.txt")
 drop_bad <-  function(tag){
   bad <- c(".Data", "slot_order", "schemaLocation", "lang", "value", "references", "character")
   drop <- as.integer(na.omit(match(bad, order)))
@@ -75,4 +77,25 @@ eml_db_ <- lapply(real_classes, function(tag){
 names(eml_db_) <- real_classes
 
 eml_db <- eml_db_
+
+
+
+######### Mannually create stmml  #######
+stmml_db <-
+list(
+  'appinfo' = character(0),
+  'documentation' = character(0),
+  'annotation' = c("appinfo", "documentation"),
+  'description' = character(0),
+  'dimension' = c("#name", "power"),
+  'unitList' = c('#href', 'unit', 'unitType'),
+  'unitType' = c('dimension', '@id', '#name'),
+  'unit' = c('description', 'annotation', '@id', '#abbreviation', '#name',
+             '#parentSI', '#unitType', '#multiplierToSI', '#constantToSI')
+)
+
+eml_db$unit <- stmml_db$unit
+eml_db <- c(eml_db, stmml_db)
+
+
 devtools::use_data(eml_db, overwrite = TRUE, internal = TRUE)
