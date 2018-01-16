@@ -25,10 +25,10 @@
 #' @importFrom methods is
 eml_validate <- function(eml, encoding = "UTF-8", schema = NULL){
 
-  if(is.character(eml) & file.exists(eml)){
-    doc <- xml2::read_xml(eml, encoding = encoding)
-  } else if(is(eml, "xml_document")){
+  if(is(eml, "xml_document")){
     doc <- eml
+  } else if(is.character(eml) & file.exists(eml)){
+    doc <- xml2::read_xml(eml, encoding = encoding)
   }
 
   # Use the EML namespace to find the EML version and the schema location
@@ -67,17 +67,11 @@ result
 #' schema <- eml_locate_schema(eml)
 #' }
 #' @importFrom xml2 xml_ns xml_attr
-#' @export
 eml_locate_schema <- function(eml, ns = NA) {
   schemaLocation <- strsplit(xml2::xml_attr(eml,
                                             "schemaLocation"),
                              "\\s+")[[1]]
   schema_file <- basename(schemaLocation[2])
-
-    if(!is(eml,'xml_document')) {
-        stop("Argument is not an instance of an
-             XML document (xml2::xml_document)")
-    }
     namespace <- xml2::xml_ns(eml)
     stopifnot(is(namespace, 'xml_namespace'))
 
