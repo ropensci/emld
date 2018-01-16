@@ -78,7 +78,9 @@ names(eml_db_) <- real_classes
 
 eml_db <- eml_db_
 
-
+## Manual fixes
+eml_db$complex <- c("textFixed", "textDelimited")
+eml_db$textFormat <- gsub("eml:complex", "complex", eml_db$textFormat)
 
 ######### Mannually create stmml  #######
 stmml_db <-
@@ -88,7 +90,7 @@ list(
   'annotation' = c("appinfo", "documentation"),
   'description' = character(0),
   'dimension' = c("#name", "power"),
-  'unitList' = c('#href', 'unit', 'unitType'),
+  'unitList' = c('#href', 'unitType', 'unit'),
   'unitType' = c('dimension', '@id', '#name'),
   'unit' = c('description', 'annotation', '@id', '#abbreviation', '#name',
              '#parentSI', '#unitType', '#multiplierToSI', '#constantToSI')

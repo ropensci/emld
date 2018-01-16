@@ -76,7 +76,7 @@ test_roundtrip(system.file("tests/eml-offline.xml", package="emld"))
 test_roundtrip(system.file("tests/eml-party.xml", package="emld"))
 test_roundtrip(system.file("tests/eml-physical-inline-cdatasection.xml", package="emld"))
 test_roundtrip(system.file("tests/eml-physical-inline.xml", package="emld"))
-#test_roundtrip(system.file("tests/eml-physical.xml", package="emld"))
+test_roundtrip(system.file("tests/eml-physical.xml", package="emld"))
 test_roundtrip(system.file("tests/eml-project.xml", package="emld"))
 test_roundtrip(system.file("tests/eml-protocol.xml", package="emld"))
 test_roundtrip(system.file("tests/eml-sample.xml", package="emld"))
@@ -85,9 +85,39 @@ test_roundtrip(system.file("tests/eml-softwareWithAcessDistribution.xml", packag
 test_roundtrip(system.file("tests/eml-spatialVector.xml", package="emld"))
 test_roundtrip(system.file("tests/eml-storedProcedure.xml", package="emld"))
 test_roundtrip(system.file("tests/eml-text.xml", package="emld"))
-#test_roundtrip(system.file("tests/eml-unitDictionary.xml", package="emld"),
-#               schema = system.file("xsd/eml-2.1.1/stmml.xsd", package = "emld"))
+
 test_roundtrip(system.file("tests/eml-view.xml", package="emld"))
 
 
+
+testthat::test_that("unitDictionary", {
+  f <- system.file("tests/eml-unitDictionary.xml", package="emld")
+  schema <- system.file("xsd/eml-2.1.1/stmml.xsd", package = "emld")
+  out <- basename(f)
+  emld <- as_emld(f)
+  elements_at_start <- names(unlist(emld, recursive = TRUE))
+
+  ## Applies JSON-LD framing.  Because vocab is stmml, framing drops all elements!
+  ## So do this manually
+  # as_xml(emld, out, "unitList", "stmml")
+
+  context <- emld[["@context"]]
+  emld[["@type"]] <- NULL
+  emld[["@context"]] <- NULL
+  xml <- as_eml_document(emld, "unitList", "stmml")
+  xml <- context_namespaces(context, xml)
+  root <- xml_root(xml)
+  xml2::xml_set_attr(root, "xmlns", gsub("/$", "", context[["@vocab"]]))
+  write_xml(xml, out)
+
+  eml_validate(out, schema = schema)
+
+
+  testthat::expect_true(eml_validate(out, schema = schema))
+  ## Make sure we have the same number of elements as we started with
+  elements_at_end <- names(unlist(as_emld(out), recursive = TRUE))
+  testthat::expect_equal(elements_at_start, elements_at_end)
+  unlink(out)
+
+})
 

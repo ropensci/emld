@@ -36,7 +36,7 @@ testthat::test_that("We can add abstract with multiple paragraphs", {
 
 
 testthat::test_that("We can round-trip text test file", {
-  f <- system.file("tests/eml-text.xml", package="emld")
+  f <- system.file("tests/eml-text.xml", package = "emld")
   text <- as_emld(f)
   as_xml(text, "text.xml", "text", "txt") # Note custom root & ns
   testthat::expect_true(eml_validate("text.xml") )
@@ -65,5 +65,5 @@ testthat::test_that("we chan handle crazy mixed text types", {
   "
   x <- xml2::read_xml(xml)
   emld <- as_emld(x)
-  as_xml(emld, root = "abstract", ns = "", schemaLocation=NULL)
+  as_xml(emld, root = "abstract", ns = "", schemaLocation = NULL)
 })
