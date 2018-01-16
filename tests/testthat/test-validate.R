@@ -22,16 +22,17 @@ test_roundtrip <- function(f, schema = NULL){
 
   out <- basename(f)
   emld <- as_emld(f)
-  elements_at_start <- length(unlist(emld, recursive = TRUE))
+  elements_at_start <- names(unlist(emld, recursive = TRUE))
   as_xml(emld, out, ns$root, ns$ns)
 
   #print(eml_validate(out, schema = schema))
+
 
   ## Make sure output xml is still valid
   testthat::expect_true(eml_validate(out, schema = schema))
 
   ## Make sure we have the same number of elements as we started with
-  elements_at_end <- length(unlist(as_emld(out), recursive = TRUE))
+  elements_at_end <- names(unlist(as_emld(out), recursive = TRUE))
   testthat::expect_equal(elements_at_start, elements_at_end)
   unlink(out)
   })
@@ -46,6 +47,10 @@ suite <- list.files(system.file("tests", package="emld"),
                     pattern="citation", full.names = TRUE)
 lapply(suite, test_roundtrip)
 
+
+## This validates but looses two elements. Technically this is okay:
+## Framing decides that several of the quote characters are literally identical, e.g. " and \"
+#test_roundtrip(system.file("tests/eml-datasetWithNonwordCharacters.xml", package="emld"))
 
 
 
@@ -63,12 +68,13 @@ test_roundtrip(system.file("tests/eml-datasetWithAccessOverride.xml", package="e
 test_roundtrip(system.file("tests/eml-datasetWithAccessUnitsLiteralLayout.xml", package="emld"))
 test_roundtrip(system.file("tests/eml-datasetWithAttributelevelMethods.xml", package="emld"))
 test_roundtrip(system.file("tests/eml-datasetWithCitation.xml", package="emld"))
-#test_roundtrip(system.file("tests/eml-datasetWithNonwordCharacters.xml", package="emld")) ## loses elements
 test_roundtrip(system.file("tests/eml-datasetWithUnits.xml", package="emld"))
 test_roundtrip(system.file("tests/eml-dataTable.xml", package="emld"))
 test_roundtrip(system.file("tests/eml-entity.xml", package="emld"))
+## Deal with international notation: content becomes 'value'
 #test_roundtrip(system.file("tests/eml-i18n.xml", package="emld"))
 test_roundtrip(system.file("tests/eml-inline.xml", package="emld"))
+## crazy TextType, see textType
 #test_roundtrip(system.file("tests/eml-literature.xml", package="emld"))
 #test_roundtrip(system.file("tests/eml-literatureInPress.xml", package="emld"))
 test_roundtrip(system.file("tests/eml-method.xml", package="emld"))
@@ -85,9 +91,9 @@ test_roundtrip(system.file("tests/eml-softwareWithAcessDistribution.xml", packag
 test_roundtrip(system.file("tests/eml-spatialVector.xml", package="emld"))
 test_roundtrip(system.file("tests/eml-storedProcedure.xml", package="emld"))
 test_roundtrip(system.file("tests/eml-text.xml", package="emld"))
-
 test_roundtrip(system.file("tests/eml-view.xml", package="emld"))
 
+## Define test without framing for a few special cases.
 
 
 testthat::test_that("unitDictionary", {
@@ -112,12 +118,12 @@ testthat::test_that("unitDictionary", {
 
   eml_validate(out, schema = schema)
 
-
   testthat::expect_true(eml_validate(out, schema = schema))
-  ## Make sure we have the same number of elements as we started with
+
+
   elements_at_end <- names(unlist(as_emld(out), recursive = TRUE))
   testthat::expect_equal(elements_at_start, elements_at_end)
-  unlink(out)
 
+  unlink(out)
 })
 

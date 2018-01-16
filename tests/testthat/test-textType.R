@@ -67,3 +67,16 @@ testthat::test_that("we chan handle crazy mixed text types", {
   emld <- as_emld(x)
   as_xml(emld, root = "abstract", ns = "", schemaLocation = NULL)
 })
+
+testthat::test_that("internationalized text values", {
+
+  xml <- '
+  <title xml:lang="es">
+    Histórico Cocinera base de datos para el quelpo gigante (Macrocystis pyrifera) de la biomasa en California y México.
+    <value xml:lang="en">Historical Kelp Database for giant kelp (Macrocystis pyrifera) biomass in California and Mexico.</value>
+  </title>
+  '
+  x <- xml2::read_xml(xml)
+  emld <- as_emld(x)
+
+})
