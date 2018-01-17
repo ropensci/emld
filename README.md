@@ -68,7 +68,7 @@ eml_validate("test.xml")
 
 ### Query
 
-We can query it with SPARQL, a rich, semantic way to extract data from one or many EML files.
+We can query it with SPARQL, a rich, semantic way to extract data from one or many EML files. (The [W3C standard for SPARQL-RDF](https://www.w3.org/TR/rdf-sparql-query/) provides a passable introduction to the query syntax; haven't found a more readable alternative that is still reasonably feature-complete).
 
 ``` r
 library(rdflib)
@@ -106,7 +106,7 @@ df
 #> data frame with 0 columns and 0 rows
 ```
 
-We can query it with JQ, a [simple and powerful query language](https://stedolan.github.io/jq/manual/) that also gives us a lot of flexibility over the return structure of our results:
+We can also create queries with JQ, a [simple and powerful query language](https://stedolan.github.io/jq/manual/) that also gives us a lot of flexibility over the return structure of our results. JQ syntax is both intuitive and well documented, and quite a bit easier than the popular iterative strategies for rectangling JSON/list data using `purrr`. Here's an example query:
 
 ``` r
 library(jqr)
