@@ -9,14 +9,6 @@ as_eml_document <- function(x, root = "eml", ns ="eml") {
 
 
 
-drop_nulls <- function(x){
-  if(is.atomic(x))
-    return(x)
-  i <- vapply(x, length, integer(1)) > 0
-  x <- x[i]
-  lapply(x, drop_nulls)
-}
-
 add_node <- function(x, parent, tag) {
     if (is.atomic(x)) {
       return() ## bc we call add_node after already eval on is.atomic
@@ -43,7 +35,7 @@ add_node <- function(x, parent, tag) {
             xml2::xml_add_child(parent, n, .copy = TRUE)
           } else {
             textType <- xml2::xml_add_child(parent, tag)
-            xml2::xml_set_text(textType, x[[i]])
+            xml2::xml_set_text(textType, as.character(x[[i]]))
           }
         }
         return()
@@ -72,7 +64,7 @@ serialize_atomics <- function(x, parent, tag, key){
   ## Repeated elements all named by (parent) tag name
   if(is.null(key)){
     textType <- xml2::xml_add_child(parent, tag)
-    return(xml2::xml_set_text(textType, x))
+    return(xml2::xml_set_text(textType, as.character(x)))
   }
 
   ## SPECIAL, handle length-1 text types
@@ -103,7 +95,7 @@ serialize_atomics <- function(x, parent, tag, key){
   if(length(key) > 0){
 
     if(!is.na(suppressWarnings(as.integer(key)))){
-      return(xml2::xml_set_text(parent, paste(x, collapse="")))
+      return(xml2::xml_set_text(parent, paste(as.character(x), collapse="")))
     }
 
     ## Text-type atomics ##
@@ -111,10 +103,10 @@ serialize_atomics <- function(x, parent, tag, key){
       if(xml_name(parent) == key){
         ## special case where JSON-LD repeats node name
         ## (for grouped nodes with attributes, e.g. url)
-        xml2::xml_set_text(parent, x)
+        xml2::xml_set_text(parent, as.character(x))
       } else {
         textType <- xml2::xml_add_child(parent, key)
-        xml2::xml_set_text(textType, x)
+        xml2::xml_set_text(textType, as.character(x))
       }
     ## Attribute atomics ##
     } else {

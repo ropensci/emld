@@ -101,6 +101,7 @@ eml_frame <- function(x){
   framed <- jsonld::jsonld_frame(json, frame)
   compacted <- jsonld::jsonld_compact(framed, context)
   out <- jsonlite::fromJSON(compacted, simplifyVector = FALSE)
+
   class(out) <- c("emld", "list")
   out
 }
@@ -127,4 +128,17 @@ context_namespaces <- function(context, xml){
                               gsub("/$", "", context[[ns]])))
   }
   xml2::as_xml_document(xml)
+}
+
+
+
+
+
+## FIXME drop NAs too?
+drop_nulls <- function(x){
+  if(is.atomic(x))
+    return(x)
+  i <- vapply(x, length, integer(1)) > 0
+  x <- x[i]
+  lapply(x, drop_nulls)
 }
