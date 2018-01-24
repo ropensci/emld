@@ -7,9 +7,14 @@
 #' @importFrom jsonld jsonld_compact jsonld_frame
 #'
 #' @export
-as_emld <- function(x){
+as_emld <- function(x)
+{
+  UseMethod("as_emld")
+}
+
+#' @export
+as_emld.character <- function(x){
   ## Read json or xml files, based on extension
-  if(is.character(x)){
     if(file.exists(x)){
       if(grepl("\\.xml$", x)){
         x <- xml2::read_xml(x)
@@ -21,26 +26,30 @@ as_emld <- function(x){
         stop(paste("extension for", basename(x), "not recognized"))
       }
     }
-  }
+    as_emld(x)
+}
 
-  ### FROM JSON FILES ###
 
+### FROM JSON FILES ###
+#' @export
+as_emld.json <- function(x){
   ## Convert json or xml_document to the S3 emld object
-  if(is(x, "json")){
 
-    ## FIXME technically this assumes our context
+    ## FIXME technically this assumes only our context
     frame <- system.file("frame/eml-frame.json", package = "emld")
     context <- system.file("context/eml-context.json", package = "emld")
     framed <- jsonld::jsonld_frame(x, frame)
     compacted <- jsonld::jsonld_compact(framed, context)
     emld <- jsonlite::fromJSON(compacted, simplifyVector = FALSE)
     class(emld) <- c("emld", "list")
-    return(emld)
-  }
+    emld
+}
 
 
-  ### FROM XML FILES ######
-  else if(is(x, "xml_document")){
+### FROM XML FILES ######
+#' @export
+as_emld.xml_document <- function(x){
+
     ## Drop comment nodes
     xml2::xml_remove(xml2::xml_find_all(x, "//comment()"))
 
@@ -57,13 +66,15 @@ as_emld <- function(x){
     emld <- add_context(emld)
     class(emld) <- c("emld", "list")
 
-    return(emld)
-  } else if(is.list(x)){ # Note that xml_document is.list too
-    class(x) <- c("emld", "list")
-    return(x)
+    emld
   }
 
-
+## CHECKME xml_document and json are also list!
+#' @export
+as_emld.list <- function(x){
+  # Note that xml_document is.list too
+    class(x) <- c("emld", "list")
+    return(x)
 }
 
 
