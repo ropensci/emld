@@ -112,7 +112,9 @@ testthat::test_that("unitDictionary", {
   xml <- as_eml_document(emld, "unitList", "stmml")
   xml <- context_namespaces(context, xml)
   root <- xml_root(xml)
-  xml2::xml_set_attr(root, "xmlns", gsub("/$", "", context[["@vocab"]]))
+  #xml_set_name(root, "stmml:unitList", ns = xml_ns(xml))
+  xml2::xml_set_attr(root, "xmlns", gsub("/$", "", "http://www.xml-cml.org/schema/stmml-1.1"))
+
   write_xml(xml, out)
 
   eml_validate(out, schema = schema)

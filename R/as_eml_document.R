@@ -92,7 +92,7 @@ serialize_atomics <- function(x, parent, tag, key){
   is_attr <- FALSE
   order <- eml_db[[tag]]
   if(length(order) > 0 & !is.na(key)){
-    is_attr <- any(grepl(paste0("#", key), order)) | key == "id"
+    is_attr <- any(grepl(paste0("^#", key, "$"), order)) | key == "id"
   }
   key <- gsub("^schemaLocation$", "xsi:schemaLocation", key) # assume namespace
   key <- gsub("^lang$", "xml:lang", key) # assume namespace
