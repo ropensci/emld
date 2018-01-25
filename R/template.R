@@ -5,8 +5,6 @@
 #' template
 #'
 #' @param object the name of an eml object to create
-#' @param attributes logical, default TRUE Should template include
-#'  properties that are represented as XML attributes in EML? (e.g. system, id. etc)
 #'
 #' @return a list with elements named according to the properties of the object.
 #'         This can be coerced into EML, see vignettes. NULL-valued elements (~)
@@ -18,13 +16,9 @@
 #' @examples
 #' template("creator")
 #'
-template <- function(object, attributes = TRUE){
-  properties <- eml_db[[object]]
+template <- function(object){
+  properties <- gsub("^(@|#)", "", eml_db[[object]])
 
-  if(!attributes){
-    drop <- grep("^(@|#)\\w+",  properties)
-    if(length(drop) > 0 ) properties <- properties[-drop]
-  }
   output <- vector("list", length(properties))
   names(output) <- properties
 
