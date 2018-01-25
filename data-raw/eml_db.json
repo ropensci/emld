@@ -447,7 +447,6 @@
   "spatialVector": ["alternateIdentifier", "entityName", "entityDescription", "physical", "coverage", "methods", "additionalInfo", "attributeList", "constraint", "geometry", "geometricObjectCount", "topologyLevel", "spatialReference", "horizontalAccuracy", "verticalAccuracy", "@id", "#system", "#scope"],
   "geometry": [],
   "topologyLevel": [],
-  "spatialReference.1": ["horizCoordSysName", "horizCoordSysDef", "vertCoordSys", "@id", "#system", "#scope"],
   "horizontalAccuracy": ["accuracyReport", "quantitativeAccuracyReport"],
   "verticalAccuracy": ["accuracyReport", "quantitativeAccuracyReport"],
   "xCoordinate": [],
