@@ -87,7 +87,10 @@ serialize_atomics <- function(x, parent, tag, key){
     }
   }
   ## Identify properties that should become xml attributes instead of text values
-  is_attr <- grepl("^(@|#)(\\w+)", key)
+  ## is_attr <- grepl("^(@|#)(\\w+)", key) ## NOPE -- don't rely on prefixing
+
+  is_attr <- grepl(paste0("#", key), eml_db[[tag]])
+
   key <- gsub("^(@|#)(\\w+)", "\\2", key) # drop json-ld `@` and `#`
   key <- gsub("^schemaLocation$", "xsi:schemaLocation", key) # assume namespace
   key <- gsub("^lang$", "xml:lang", key) # assume namespace
