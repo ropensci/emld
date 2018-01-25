@@ -25,7 +25,7 @@ test_roundtrip <- function(f, schema = NULL, check_lengths=TRUE){
   as_xml(emld, out, ns$root, ns$ns)
 
   ## Make sure output xml is still valid
-  testthat::expect_true(eml_validate(out, schema = schema))
+  testthat::expect_true( eml_validate(out, schema = schema) )
 
   ## Make sure we have the same number & names of elements as we started with
   if(check_lengths){

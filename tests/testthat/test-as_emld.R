@@ -1,7 +1,7 @@
 library(magrittr)
 library(xml2)
 library(jsonlite)
-
+library(testthat)
 testthat::context("as_* methods")
 
 hf205 <- system.file("extdata/hf205.xml", package="emld")
@@ -11,7 +11,20 @@ ex <- system.file("extdata/example.xml", package="emld")
 test_that("we can convert example.xml into complete JSON-LD", {
   X <- as_emld(ex)
   expect_true("dataset" %in% names(X))
-  expect_length(unlist(X), 15)
+  expect_length(unlist(X), 17)
+})
+
+test_that("we can round-trip and validate a simple example", {
+  emld <- as_emld(ex)
+  as_xml(emld, "test.xml")
+  expect_true(eml_validate("test.xml"))
+
+
+  elements_at_end <- sort(names(unlist(as_emld("test.xml"), recursive = TRUE)))
+  elements_at_start <- sort(names(unlist(emld, recursive = TRUE)))
+  testthat::expect_equal(elements_at_start, elements_at_end)
+
+  unlink("test.xml")
 })
 
 

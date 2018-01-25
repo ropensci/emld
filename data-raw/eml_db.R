@@ -99,5 +99,7 @@ list(
 eml_db$unit <- stmml_db$unit
 eml_db <- c(eml_db, stmml_db)
 
+## Fix missing attribute declaration on order
+eml_db$access <- c("allow", "deny", "@id", "#system", "#scope", "#order", "#authSystem")
 
 devtools::use_data(eml_db, overwrite = TRUE, internal = TRUE)
