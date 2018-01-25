@@ -321,7 +321,6 @@
   "PhysicalOnlineType": ["onlineDescription", "url", "connection", "connectionDefinition"],
   "PhysicalDistributionType": ["online", "offline", "inline", "access", "@id", "#system", "#scope"],
   "physical": ["objectName", "size", "authentication", "compressionMethod", "encodingMethod", "characterEncoding", "dataFormat", "distribution", "@id", "#system", "#scope"],
-  "distribution.1": ["online", "offline", "inline", "access", "@id", "#system", "#scope"],
   "personnel": ["individualName", "organizationName", "positionName", "address", "phone", "electronicMailAddress", "onlineUrl", "userId", "@id", "#system", "#scope", "role"],
   "descriptorValue": "name_or_id",
   "descriptor": ["descriptorValue", "citation", "name", "citableClassificationSystem"],
