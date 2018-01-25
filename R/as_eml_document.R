@@ -87,10 +87,21 @@ serialize_atomics <- function(x, parent, tag, key){
     }
   }
   ## Identify properties that should become xml attributes instead of text values
-  is_attr <- grepl("^(@|#)(\\w+)", key)
-  key <- gsub("^(@|#)(\\w+)", "\\2", key) # drop json-ld `@` and `#`
+  ## is_attr <- grepl("^(@|#)(\\w+)", key) ## NOPE -- don't rely on prefixing
+
+  is_attr <- FALSE
+  order <- eml_db[[tag]]
+  if(length(order) > 0 & !is.na(key)){
+    is_attr <- any(grepl(paste0("^#", key, "$"), order)) | key == "id"
+  }
   key <- gsub("^schemaLocation$", "xsi:schemaLocation", key) # assume namespace
   key <- gsub("^lang$", "xml:lang", key) # assume namespace
+  if(grepl("xmlns:\\w+", key)) is_attr <- TRUE
+  if(grepl("xml:\\w+", key)) is_attr <- TRUE
+  if(grepl("xsi:\\w+", key)) is_attr <- TRUE
+
+  ## No longer needed:
+  #key <- gsub("^(@|#)(\\w+)", "\\2", key) # drop json-ld `@` and `#`
 
   if(length(key) > 0){
 
@@ -122,13 +133,20 @@ serialize_atomics <- function(x, parent, tag, key){
 sort_properties <- function(x, tag){
 
   n <- names(x)
-  order <- eml_db[[tag]]
+  children <- eml_db[[tag]]
 
-  if(length(order) == 0 | length(n) == 0)
+  if(length(children) == 0 | length(n) == 0)
     return(x)
 
+
+  ## Possible attributes for this object
+  is_attr <- grep("^(#|@)\\w",children)
+  possible_attrs <- unique(gsub("^(#|@)", "", c(children[is_attr], "id", "schemaLocation")))
+
+  ## Actual attributes present
+  attrs <- which(n %in% possible_attrs)
+  order <- unique(c(gsub("^(#|@)", "", children), "id", "schemaLocation"))
   nodes <- x
-  attrs <- grep("^(#|@)\\w",n)
   if(length(attrs) > 0 ){
     n <- n[-attrs]
     nodes <- x[-attrs]
@@ -140,6 +158,5 @@ sort_properties <- function(x, tag){
     vapply(n,function(i) which(i == order), integer(1))))
 
   c(x[attrs],nodes[fixed])
-
 }
 

@@ -1,14 +1,15 @@
+testthat::context("test rdf roundtrips")
+
 library(rdflib)
 library(jsonlite)
 library(jsonld)
 library(magrittr)
-
-testthat::context("test rdf roundtrips")
+library(testthat)
 
 f <- system.file("tests/eml.xml", package="emld")
 
 test_that("We can roundtrip into rdf and validate", {
-x <-
+
   f %>%
   as_emld() %>%
   as_json() %>%
@@ -22,8 +23,6 @@ jsonld_frame("eml.json", frame) %>%
   jsonld_compact(context) %>%
   as_emld() %>%
   as_xml("eml.xml")
-
-
   expect_true(eml_validate("eml.xml"))
 })
 

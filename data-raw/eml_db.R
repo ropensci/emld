@@ -89,7 +89,7 @@ list(
   'documentation' = character(0),
   'annotation' = c("appinfo", "documentation"),
   'description' = character(0),
-  'dimension' = c("#name", "power"),
+  'dimension' = c("#name", "#power"),
   'unitList' = c('#href', 'unitType', 'unit'),
   'unitType' = c('dimension', '@id', '#name'),
   'unit' = c('description', 'annotation', '@id', '#abbreviation', '#name',
@@ -99,5 +99,12 @@ list(
 eml_db$unit <- stmml_db$unit
 eml_db <- c(eml_db, stmml_db)
 
+## Fix missing attribute declaration on order
+eml_db$access <- c("allow", "deny", "@id", "#system", "#scope", "#order", "#authSystem")
+eml_db$size <- "#unit"
+
+
 
 devtools::use_data(eml_db, overwrite = TRUE, internal = TRUE)
+
+jsonlite::write_json(eml_db, "data-raw/eml_db.json", pretty=TRUE, auto_unbox = TRUE)

@@ -170,8 +170,8 @@ eml <- list(dataset = list(
               title = "dataset title",
               contact = me,
               creator = me),
-            "#system" = "doi",
-            "#packageId" = "10.xxx")
+              system = "doi",
+              packageId = "10.xxx")
 
 as_xml(eml, "ex.xml")
 testthat::expect_true(eml_validate("ex.xml") )

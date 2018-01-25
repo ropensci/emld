@@ -5,7 +5,7 @@ as_jsonlist <- function(x, ns = character(), ...) {
 
 # Add xml attributes as #attribute keys
 
-attributes_to_json <- function(x, ns = character(), prefix = "#", out = list()){
+attributes_to_json <- function(x, ns = character(), prefix = "", out = list()){
   the_attrs <- xml2::xml_attrs(x, ns = ns)
   node_attr <- special_jsonld_attrs(the_attrs, prefix = prefix)
   if(length(node_attr) > 0){
@@ -74,16 +74,16 @@ lapply_nodes <- function(x, f, ns = character(), ...){
 
 
 ld_attributes <- c("id", "type")
-special_jsonld_attrs <- function(x, prefix = "") {
+special_jsonld_attrs <- function(x, prefix = "#") {
   if (length(x) == 0) {
     return(NULL)
   }
-  # escape special JSON-LD names
-  special <- names(x) %in% ld_attributes
-  names(x)[special] <- paste0("@", names(x)[special])
-  # prefix other attributes
+  # escape special JSON-LD names -- NOPE, don't do this
+  #special <- names(x) %in% ld_attributes
+  #names(x)[special] <- paste0("@", names(x)[special])
 
-  names(x)[!special] <-  paste0(prefix, names(x)[!special])
+  # prefix other attributes -- NOPE, don't do this either
+  ##names(x)[!special] <-  paste0(prefix, names(x)[!special])
   r_attrs_to_xml(as.list(x))
 }
 

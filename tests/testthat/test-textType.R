@@ -7,8 +7,8 @@ eml <- list(dataset = list(
   title = "dataset title",
   contact = me,
   creator = me),
-  "#system" = "doi",
-  "#packageId" = "10.xxx")
+  system = "doi",
+  packageId = "10.xxx")
 
 testthat::test_that("We have created a minimal, valid EML file", {
   as_xml(eml, "ex.xml")

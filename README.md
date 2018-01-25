@@ -155,8 +155,8 @@ eml <- list(dataset = list(
               title = "dataset title",
               contact = me,
               creator = me),
-            "#system" = "doi",
-            "#packageId" = "10.xxx")
+              system = "doi",
+              packageId = "10.xxx")
 
 as_xml(eml, "ex.xml")
 testthat::expect_true(eml_validate("ex.xml") )
@@ -176,9 +176,9 @@ template("creator")
 #> electronicMailAddress: ~
 #> onlineUrl: ~
 #> userId: ~
-#> '@id': ~
-#> '#system': ~
-#> '#scope': ~
+#> id: ~
+#> system: ~
+#> scope: ~
 ```
 
 returns a simple list object, cast as an `emld` S3 class so that it prints cleanly. Note that properties which take other objects are indicated by `{}` while properties taking text values are indicated by `~`. If we assignt it to a variable instead of merely printing the output of `template()`, we can then fill out values as needed (making use of tab completion):
