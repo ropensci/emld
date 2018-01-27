@@ -39,7 +39,7 @@
         <parameterDefinition>
           <name>owner</name>
           <definition>The owner catalog</definition>
-        <defaultValue>dbo</defaultValue>
+          <defaultValue>dbo</defaultValue>
         </parameterDefinition>
       </connectionDefinition>
       </online>

@@ -46,9 +46,9 @@ as_xml.emld <- function(x, file=NULL, root = "eml", ns = "eml",
   x[["@type"]] <- NULL
 
   ## add schemaLocation
-  if(is.null(x[["#schemaLocation"]])){
+  if(is.null(x[["schemaLocation"]])){
     if(!is.null(schemaLocation))
-    x[["#schemaLocation"]] <- schemaLocation
+    x[["schemaLocation"]] <- schemaLocation
   }
   ## here we go, serialize to XML!
   xml <- as_eml_document(x, root = root, ns = ns)

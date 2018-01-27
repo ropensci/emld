@@ -4,13 +4,10 @@
 \alias{template}
 \title{template}
 \usage{
-template(object, attributes = TRUE)
+template(object)
 }
 \arguments{
 \item{object}{the name of an eml object to create}
-
-\item{attributes}{logical, default TRUE Should template include
-properties that are represented as XML attributes in EML? (e.g. system, id. etc)}
 }
 \value{
 a list with elements named according to the properties of the object.

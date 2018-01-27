@@ -1,7 +1,3 @@
-## FIXME: Consider generating a version that returns a data.frame for each class:
-## with columns as property, required, type, & description (indicating if it takes a text/data value or another node)
-## Would be constructed by parsing the XSD again directly...
-
 
 
 library(readr)
@@ -84,20 +80,24 @@ eml_db$textFormat <- gsub("eml:complex", "complex", eml_db$textFormat)
 
 ######### Mannually create stmml  #######
 stmml_db <-
-list(
-  'appinfo' = character(0),
-  'documentation' = character(0),
-  'annotation' = c("appinfo", "documentation"),
-  'description' = character(0),
-  'dimension' = c("#name", "power"),
-  'unitList' = c('#href', 'unitType', 'unit'),
-  'unitType' = c('dimension', '@id', '#name'),
-  'unit' = c('description', 'annotation', '@id', '#abbreviation', '#name',
-             '#parentSI', '#unitType', '#multiplierToSI', '#constantToSI')
-)
+  list(
+    'appinfo' = character(0),
+    'documentation' = character(0),
+    'annotation' = c("appinfo", "documentation"),
+    'description' = character(0),
+    'dimension' = c("#name", "#power"),
+    'unitList' = c('#href', 'unitType', 'unit'),
+    'unitType' = c('dimension', '@id', '#name'),
+    'unit' = c('description', 'annotation', '@id', '#abbreviation', '#name',
+               '#parentSI', '#unitType', '#multiplierToSI', '#constantToSI')
+  )
 
 eml_db$unit <- stmml_db$unit
 eml_db <- c(eml_db, stmml_db)
 
+## Fix missing attribute declaration on order
+eml_db$access <- c("allow", "deny", "@id", "#system", "#scope", "#order", "#authSystem")
+eml_db$size <- "#unit"
 
 devtools::use_data(eml_db, overwrite = TRUE, internal = TRUE)
+jsonlite::write_json(eml_db, "data-raw/eml_db.json", pretty=TRUE, auto_unbox = TRUE)
