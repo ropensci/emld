@@ -530,6 +530,6 @@
   "dimension": ["#name", "#power"],
   "unitList": ["#href", "unitType", "unit"],
   "unitType": ["dimension", "@id", "#name"],
-  "unit": ["description", "annotation", "@id", "#abbreviation", "#name", "#parentSI", "#unitType", "#multiplierToSI", "#constantToSI"],
+  "unit": ["standardUnit", "customUnit", "description", "annotation", "@id", "#abbreviation", "#name", "#parentSI", "#unitType", "#multiplierToSI", "#constantToSI"],
   "complex": ["textFixed", "textDelimited"]
 }
