@@ -308,7 +308,7 @@
   "totalrowbytes": [],
   "bandgapbytes": [],
   "size": "#unit",
-  "authentication": "method",
+  "authentication": "#method",
   "simpleDelimited": ["fieldDelimiter", "collapseDelimiters", "quoteCharacter", "literalCharacter"],
   "textFixed": ["fieldWidth", "lineNumber", "fieldStartColumn"],
   "textDelimited": ["fieldDelimiter", "collapseDelimiters", "lineNumber", "quoteCharacter", "literalCharacter"],
