@@ -27,7 +27,6 @@
 #' @export
 #' @importFrom xml2 read_xml xml_validate
 #' @importFrom methods is
-#' @importFrom emld as_xml
 eml_validate <- function(eml,
                          encoding = "UTF-8",
                          schema = NULL) {
@@ -39,9 +38,9 @@ eml_validate <- function(eml,
     doc <- eml
   } else if (is(eml, "list")){
     ##  FIXME shouldn't have to write to tempfile,
-    ## but  `doc <- emld::as_xml(eml)` fails to drop xsi prefix on "schemaLocation"
+    ## but  `doc <- as_xml(eml)` fails to drop xsi prefix on "schemaLocation"
     f <- tempfile()
-    x <- emld::as_xml(eml, f)
+    x <- as_xml(eml, f)
     doc <- xml2::read_xml(f)
     unlink(f)
   } else {
