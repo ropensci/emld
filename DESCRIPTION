@@ -34,4 +34,3 @@ Imports: xml2,
     methods,
     yaml
 VignetteBuilder: knitr
-Remotes: cboettig/rdflib
