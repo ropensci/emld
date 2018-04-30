@@ -7,7 +7,6 @@ xsd_files <- list.files("inst/xsd/eml-2.2.0", full.names = TRUE)
 # test case
 #xsd <- xsd_files[[4]]
 
-drop_prefix <- function(x) gsub("^\\w+:", "", x)
 
 type_magic <- function(node){
   type <- xml_attr(node, "type")
@@ -48,38 +47,53 @@ type_magic <- function(node){
       type <- character(0L)
     }
   }
-
-
   type <- drop_prefix(type)
   type
 }
 
+## Basic helper functions #######
+drop_prefix <- function(x) gsub("^\\w+:", "", x)
 
 xml_select <- function(nodeset, pattern = ".*", fn = xml_name,  ...){
   names <- map_chr(nodeset, fn, ...)
   match <- grepl(pattern, names)
-  nodeset[match]
+  which(match)
 }
 
-## FIXME NOT DONE
-## get an xs:element and all it's siblings, including xs:group, xs:choice, xs:sequence
-## xs:element descendents contained in these latter (and their siblings) should be
-## treated as siblings of the first (i.e. they are all properties of the same class)
-all_element_siblings <- function(xml, name, nodename="element"){
-
-  first <- xml_find_first(xml,
-  glue::glue("//xs:{nodename}[@name='{name}']//xs:element|//xs:{nodename}[@name='{name}']//xs:group"))
-  siblings <- xml_siblings(first)
-
-  ## Replace xs:choice with xs:element components
-  choice <- xml_select(siblings, "choice")
-  sequence <- xml_select(siblings, "sequence")
-  element_nodes <- c(list(first), siblings)
-  class(element_nodes) <- "xml_nodeset"
-  element_nodes
+# replace the i'th element of list A with list B in flat list
+list_insert <- function(A, B, i){
+  if(length(i)>1)
+    stop("i > 1 case not handled")
+  n <- length(A)
+  if(n < 2)
+    return(B)
+  if(i < n)
+    return(c( A[seq(1,i) - 1], B, A[seq(i+1, n)]))
+  if(i == n)
+    return(c( A[seq(1,i) - 1], B))
 }
 
-get_slots <- function(nodeset, xml, nodename = "element", typelist = NULL){
+
+expand_series <- function(nodeset){
+  ## Recursively expand choice and sequence into elements=
+  choice <- xml_select(nodeset, "choice")
+  if(length(choice) > 0){
+    tmp <- expand_series(xml_children(nodeset[[choice]]))
+    nodeset <- list_insert(nodeset, tmp, choice)
+  }
+  sequence <- xml_select(nodeset, "sequence")
+  if(length(sequence) > 0){
+    tmp <- expand_series(xml_children(nodeset[[sequence]]))
+    nodeset <- list_insert(nodeset, tmp, sequence)
+  }
+  class(nodeset) <- "xml_nodeset"
+  nodeset
+}
+
+
+## For each member of a nodeset which contains all xs:elements in an XML XSD file
+## Extract all of it's xs:attribute and xs:element members
+get_slots <- function(nodeset, xml, nodename = "element", typelist = NULL, grouplist = NULL){
   who <- map_chr(nodeset, xml_attr, "name")
 
   def <- map(nodeset, function(node){
@@ -100,15 +114,21 @@ get_slots <- function(nodeset, xml, nodename = "element", typelist = NULL){
     ## Note! xpath always works on full doc, even if given a node.
     first <- xml_find_first(xml,
       glue::glue("//xs:{nodename}[@name='{name}']//xs:element|//xs:{nodename}[@name='{name}']//xs:group"))
-    element_nodes <- c(list(first), xml_siblings(first))
-    class(element_nodes) <- "xml_nodeset"
+    nodeset<- c(list(first), xml_siblings(first))
+    class(nodeset) <- "xml_nodeset"
+    element_nodes <- expand_series(nodeset)
 
-    elements <- map_chr(element_nodes, function(n){
+    elements <-
+      unlist(map(element_nodes, function(n){
       out <- xml_attr(n, "name")
-      if(is.na(out))
+      if(is.na(out)){ ## only xs:group don't have names(?)
         out <- drop_prefix(xml_attr(n, "ref"))
+#        if(!is.na(out)){
+#          out <- grouplist[[out]]
+#        }
+      }
       out
-      })
+      }))
     elements <- as.character(na.omit(elements))
 
     if(length(type)>0){
@@ -128,10 +148,20 @@ typelist <- map(xsd_files, function(xsd){
   get_slots(complex_types, xml, "complexType")
 })  %>% unlist(FALSE)
 
+
+
+grouplist <- map(xsd_files, function(xsd){
+  xml <- read_xml(xsd)
+  groups <- xml_find_all(xml, "//xs:group[@name]")
+  get_slots(groups, xml, "group", typelist)
+})  %>% unlist(FALSE)
+
+
+
 map(xsd_files, function(xsd){
   xml <- read_xml(xsd)
   named_elements <- xml_find_all(xml, "//xs:element[@name]")
-  get_slots(named_elements, xml, "element", typelist)
+  get_slots(named_elements, xml, "element", typelist, NULL)
 })  %>%
   unlist(FALSE) %>%
   ## FIXME Drop duplicate keys
