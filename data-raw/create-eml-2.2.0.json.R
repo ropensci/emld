@@ -71,13 +71,13 @@ xsd_recursion <- function(node, grouplist = NULL){
   nodeset
 }
 
+
 group_nodes <- map(xsd_files, function(xsd){
    xml <- read_xml(xsd)
    groups <- xml_find_all(xml, "//xs:group[@name]")
    def <- map(groups, xsd_recursion)
    who <- map_chr(groups, xml_attr, "name")
   setNames(def, who)
-
 }) %>% unlist(FALSE)  %>% purrr::compact()
 
 type_nodes <- map(xsd_files, function(xsd){
@@ -86,83 +86,49 @@ type_nodes <- map(xsd_files, function(xsd){
    def <- map(groups, xsd_recursion, group_nodes)
    who <- map_chr(groups, xml_attr, "name")
   setNames(def, who)
-
 }) %>% unlist(FALSE)  %>% purrr::compact()
 
 
+element_nodes <- map(xsd_files, function(xsd){
+   xml <- read_xml(xsd)
+   groups <- xml_find_all(xml, "//xs:element[@name]")
+   ## Element declares a type:
+   types <- drop_prefix(map_chr(groups, xml_attr, "type"))
+   elements <- unname(type_nodes[types])
+   missing_type <- map_lgl(elements, is.null)
 
-element_nodes <-
-map(xsd_files, function(xsd){
-  xml <- read_xml(xsd)
-  named_elements <- xml_find_all(xml, "//xs:element[@name]")
-  get_nodes(named_elements, xml, "element", type_nodes, group_nodes)
+   ## Element contains a type, which we recurse
+   defs <- map(groups, xsd_recursion, group_nodes)
+   missing_def <- map_lgl(defs, ~length(.x)< 1)
+   defs[!missing_def] <-  map(defs[!missing_def],
+                              ~xsd_recursion(xml_child(.x), group_nodes))
+   elements[missing_type] <- defs[missing_type]
+
+   who <- map_chr(groups, xml_attr, "name")
+  setNames(elements, who)
 }) %>% unlist(FALSE)  %>% purrr::compact()
 
 
-
-
-
-
-
-
-
-type_magic <- function(node){
-  type <- xml_attr(node, "type")
-
-  if(is.na(type)){
-    type <- xml_child(node, "xs:complexType") %>%
-      xml_child("xs:complexContent") %>%
-      xml_child("xs:extension") %>% # could be restriction?
-      xml_attr("base")
-  }
-
-  if(is.na(type)){
-    type <- xml_child(node, "xs:simpleType") %>%
-      xml_child("xs:restriction") %>%
-      xml_attr("base")
-  }
-
-  ## drop trivial types (drop all lower-case types)
-  type <- switch(type,
-                 "xs:string" = character(),
-                 "xs:decimal" = numeric(),
-                 "xs:float" = numeric(),
-                 "xs:integer" = integer(),
-                 "xs:int" = integer(),
-                 "xs:time" = character(),
-                 "xs:boolean" = logical(),
-                 "xs:anyURI" = character(),
-                 "res:i18nNonEmptyStringType" = character(),
-                 "res:NonEmptyStringType" = character(),
-                 "res:i18nString" = character(),
-                 "i18nNonEmptyStringType" = character(),
-                 "NonEmptyStringType" = character(),
-                 "i18nString" = character(),
-                 type)
-
-  if(length(type)>0){
-    if(is.na(type)){
-      type <- character(0L)
-    }
-  }
-  type <- drop_prefix(type)
-  type
-}
 
 ## FIXME Some things are missed:  (These create NULLS in the data)
 map(element_nodes, xml_name) %>% unlist() %>% table()
 ## lots of unnamed elements too, (on data-valued nodes)
-map(element_nodes, xml_attr, "name") %>% map_int(~ sum(is.na(.x)))
+# map(element_nodes, xml_attr, "name") %>% map_int(~ sum(is.na(.x)))
 
 
 
 out <-
 map(element_nodes, function(nodeset){
-  names <- map_chr(nodeset, xml_attr, "name")
-  type <- map_lgl(nodeset, function(n) xml_name(n) == "attribute")
-  names[type] <- map_chr(names[type], ~ paste0("#", .x))
-  as.character(na.omit(names))
-})
+    names <- map_chr(nodeset, xml_attr, "name")
+    # some attributes have ref instead of name!
+    drop <- map_lgl(names, is.na)
+    names <- names[!drop]
+    type <- map_lgl(nodeset[!drop], function(n) xml_name(n) == "attribute")
+    names[type] <- map_chr(names[type], ~ paste0("#", .x))
+    names
+  })
+
+
 
 out %>%
   ## FIXME Drop duplicate keys

@@ -5,6 +5,53 @@
 
 
 
+type_magic <- function(node){
+  type <- xml_attr(node, "type")
+
+  if(is.na(type)){
+    type <- xml_child(node, "xs:complexType") %>%
+      xml_child("xs:complexContent") %>%
+      xml_child("xs:extension") %>% # could be restriction?
+      xml_attr("base")
+  }
+
+  if(is.na(type)){
+    type <- xml_child(node, "xs:simpleType") %>%
+      xml_child("xs:restriction") %>%
+      xml_attr("base")
+  }
+
+  ## drop trivial types (drop all lower-case types)
+  type <- switch(type,
+                 "xs:string" = character(),
+                 "xs:decimal" = numeric(),
+                 "xs:float" = numeric(),
+                 "xs:integer" = integer(),
+                 "xs:int" = integer(),
+                 "xs:time" = character(),
+                 "xs:boolean" = logical(),
+                 "xs:anyURI" = character(),
+                 "res:i18nNonEmptyStringType" = character(),
+                 "res:NonEmptyStringType" = character(),
+                 "res:i18nString" = character(),
+                 "i18nNonEmptyStringType" = character(),
+                 "NonEmptyStringType" = character(),
+                 "i18nString" = character(),
+                 type)
+
+  if(length(type)>0){
+    if(is.na(type)){
+      type <- character(0L)
+    }
+  }
+  type <- drop_prefix(type)
+  type
+}
+
+
+
+
+
 get_nodes <- function(nodeset, xml, nodename = "element", typelist = NULL, grouplist = NULL){
   who <- map_chr(nodeset, xml_attr, "name")
   def <- map(nodeset, function(node){
@@ -155,3 +202,14 @@ map(xsd_files, function(xsd){
   unlist(FALSE) %>%
   ## FIXME Drop duplicate keys
   write_json("data-raw/eml-2.2.0.json", pretty=TRUE)
+
+
+
+
+out <-
+  map(element_nodes, function(nodeset){
+    names <- map_chr(nodeset, xml_attr, "name")
+    type <- map_lgl(nodeset, function(n) xml_name(n) == "attribute")
+    names[type] <- map_chr(names[type], ~ paste0("#", .x))
+    as.character(na.omit(names))
+  })
