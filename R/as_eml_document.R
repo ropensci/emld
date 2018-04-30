@@ -82,7 +82,7 @@ serialize_atomics <- function(x, parent, tag, key){
       return()
     }
     ## Skip `@id` elements unless explicitly permitted
-    if(!any(grepl("^@*id$", eml_schema[[getOption("emld_schema", "eml2.2.0")]][[tag]]))){
+    if(!any(grepl("^@*id$", eml_db[[getOption("emld_db", "eml-2.2.0")]][[tag]]))){
       return()
     }
   }
@@ -90,7 +90,7 @@ serialize_atomics <- function(x, parent, tag, key){
   ## is_attr <- grepl("^(@|#)(\\w+)", key) ## NOPE -- don't rely on prefixing
 
   is_attr <- FALSE
-  order <- eml_schema[[getOption("emld_schema", "eml2.2.0")]][[tag]]
+  order <- eml_db[[getOption("emld_db", "eml-2.2.0")]][[tag]]
   if(length(order) > 0 & !is.na(key)){
     is_attr <- any(grepl(paste0("^#", key, "$"), order)) | key == "id"
   }
@@ -129,11 +129,11 @@ serialize_atomics <- function(x, parent, tag, key){
 
 
 
-## sorts the elements of list x in order given by eml_schema[[getOption("emld_schema", "eml2.2.0")]][[tag]]
+## sorts the elements of list x in order given by eml_db[[getOption("emld_db", "eml-2.2.0")]][[tag]]
 sort_properties <- function(x, tag){
 
   n <- names(x)
-  children <- eml_schema[[getOption("emld_schema", "eml2.2.0")]][[tag]]
+  children <- eml_db[[getOption("emld_db", "eml-2.2.0")]][[tag]]
 
   if(length(children) == 0 | length(n) == 0)
     return(x)

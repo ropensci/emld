@@ -47,6 +47,12 @@ xsd_recursion <- function(node, grouplist = NULL){
   ## drop docs
   nodeset <- xml_drop(nodeset, "annotation")
 
+  simpleContent <- xml_select(nodeset, "simpleContent")
+  if(length(simpleContent) > 0){
+    tmp <- xml_children( xml_child(nodeset[[simpleContent]]) )
+    nodeset <- list_insert(nodeset, tmp, simpleContent)
+  }
+
   ## Recursively expand choice and sequence into elements=
   choice <- xml_select(nodeset, "choice")
   if(length(choice) > 0){
@@ -127,6 +133,10 @@ map(element_nodes, function(nodeset){
     names[type] <- map_chr(names[type], ~ paste0("#", .x))
     names
   })
+
+## "#id" -> "@id"
+out <- map(out, ~gsub("^#id$", "@id", .x))
+
 
 ## Drop duplicates
 who <- unique(names(out))

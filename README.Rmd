@@ -169,6 +169,12 @@ me <- list(individualName = list(givenName = "Carl", surName = "Boettiger"))
 
 eml <- list(dataset = list(
               title = "dataset title",
+              abstract = list(markdown = 
+"**Look** at this list:
+  - item
+  - item
+`code`
+"),
               contact = me,
               creator = me),
               system = "doi",

@@ -36,8 +36,12 @@ as_emld.json <- function(x){
   ## Convert json or xml_document to the S3 emld object
 
     ## FIXME technically this assumes only our context
-    frame <- system.file("frame/eml-frame.json", package = "emld")
-    context <- system.file("context/eml-context.json", package = "emld")
+    frame <- system.file(paste0("frame/",
+                              getOption("emld_db", "eml-2.2.0"),
+                              "/eml-frame.json"), package = "emld")
+    context <- system.file(paste0("context/",
+                           getOption("emld_db", "eml-2.2.0"),
+                           "/eml-context.json"), package = "emld")
     framed <- jsonld::jsonld_frame(x, frame)
     compacted <- jsonld::jsonld_compact(framed, context)
     emld <- jsonlite::fromJSON(compacted, simplifyVector = FALSE)
@@ -61,7 +65,8 @@ as_emld.xml_document <- function(x){
 
     ## Set up the JSON-LD context
     if(is.null(emld[["xmlns"]])){
-      emld[["xmlns"]] <- "eml://ecoinformatics.org/eml-2.1.1/"
+      emld[["xmlns"]] <- getOption("emld_schemaLocation",
+                                   "eml://ecoinformatics.org/eml-2.2.0/")
     }
     emld <- add_context(emld)
     class(emld) <- c("emld", "list")
@@ -81,7 +86,10 @@ as_emld.list <- function(x){
 
 add_context <- function(json){
   ## Set up the JSON-LD context
-  con <- jsonlite::read_json(system.file("context/eml-context.json", package="emld"))[["@context"]]
+  context <- system.file(paste0("context/",
+                                getOption("emld_db", "eml-2.2.0"),
+                                "/eml-context.json"), package = "emld")
+  con <- jsonlite::read_json(context)[["@context"]]
   if ("base" %in% names(json)) {
     con$`@base` <- json$base
     json$base <- NULL
@@ -111,7 +119,6 @@ add_context <- function(json){
   # order names so @context shows up first
   json <- json[order(names(json))]
 
-  ## Add context defining @id types
   json
 }
 

@@ -17,8 +17,12 @@ test_that("We can roundtrip into rdf and validate", {
   rdf_serialize("eml.json", "jsonld")
 
 ## frame & compact explicitly, even though as_emld should now do this on json input
-frame <- system.file("frame/eml-frame.json", package = "emld")
-context <- system.file("context/eml-context.json", package = "emld")
+frame <- system.file(paste0("frame/",
+                            getOption("emld_db", "eml-2.2.0"),
+                            "/eml-frame.json"), package = "emld")
+context <- system.file(paste0("context/",
+                       getOption("emld_db", "eml-2.2.0"),
+                       "/eml-context.json"), package = "emld")
 jsonld_frame("eml.json", frame) %>%
   jsonld_compact(context) %>%
   as_emld() %>%
