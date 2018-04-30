@@ -128,9 +128,9 @@ map(element_nodes, function(nodeset){
     names
   })
 
-
-
-out %>%
+## Drop duplicates
+who <- unique(names(out))
+out[who] %>%
   ## FIXME Drop duplicate keys
   write_json("data-raw/eml-2.2.0.json", pretty=TRUE)
 
