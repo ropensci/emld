@@ -101,7 +101,7 @@ element_nodes <- map(xsd_files, function(xsd){
    defs <- map(groups, xsd_recursion, group_nodes)
    missing_def <- map_lgl(defs, ~length(.x)< 1)
    defs[!missing_def] <-  map(defs[!missing_def],
-                              ~xsd_recursion(xml_child(.x), group_nodes))
+                              ~xsd_recursion(.x, group_nodes))
    elements[missing_type] <- defs[missing_type]
 
    who <- map_chr(groups, xml_attr, "name")

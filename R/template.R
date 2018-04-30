@@ -17,7 +17,7 @@
 #' template("creator")
 #'
 template <- function(object){
-  properties <- gsub("^(@|#)", "", eml_db[[object]])
+  properties <- gsub("^(@|#)", "", eml_schema[[getOption("emld_schema", "eml2.2.0")]][[object]])
 
   output <- vector("list", length(properties))
   names(output) <- properties
@@ -28,7 +28,7 @@ template <- function(object){
   children <-
     vapply(properties,
            function(x){
-             properties <- eml_db[[x]]
+             properties <- eml_schema[[getOption("emld_schema", "eml2.2.0")]][[x]]
              drop <-  grep("^(@|#)\\w+",  properties)
              if(length(drop) > 0 ) properties <- properties[-drop]
              length(properties)
