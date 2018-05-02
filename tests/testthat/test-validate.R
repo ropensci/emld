@@ -37,24 +37,45 @@ test_roundtrip <- function(f, schema = NULL, check_lengths = TRUE){
   })
 }
 
+## Enforce testing on 2.1.1 for this
 options("emld_db" = "eml-2.1.1")
+
+print(paste("testing", getOption("emld_db", "eml-2.2.0")))
 
 ## Test all citation-* examples:
 suite <- list.files(system.file(
   file.path("tests", getOption("emld_db", "eml-2.2.0")), package="emld"),
                     pattern="citation", full.names = TRUE)
-out <- lapply(suite, purrr::safely(test_roundtrip))
-failed <- purrr::map_lgl(purrr::map(out, "result"), is.null)
-bib <- unlist(purrr::map(out, "error"))
+lapply(suite, test_roundtrip)
 
 suite <- list.files(system.file(
   file.path("tests", getOption("emld_db", "eml-2.2.0")), package="emld"),
                     pattern="eml-", full.names = TRUE)
-out <- lapply(suite, purrr::safely(test_roundtrip))
-other <- unlist(purrr::map(out, "error"))
+drop <- basename(suite) %in% c("eml-datasetWithNonwordCharacters.xml",
+                       "eml-i18n.xml",
+                       "eml-literature.xml",
+                       "eml-literatureInPress.xml",
+                       "eml-unitDictionary.xml",
+                       "eml-units.xml")
+test_suite <- suite[!drop]
+lapply(test_suite, test_roundtrip)
+
+## These four skip the length-check
+partial_test <- basename(suite) %in%
+  c("eml-datasetWithNonwordCharacters.xml",
+    "eml-i18n.xml", "eml-literature.xml", "eml-literatureInPress.xml")
+lapply(suite[partial_test], test_roundtrip, check_lengths = FALSE)
+
+## Add testing for 2.2.0 suite separately here.
+
+## Helper methods for debugging
+#' out <- lapply(suite, purrr::safely(test_roundtrip))
+#' failed <- purrr::map_lgl(purrr::map(out, "result"), is.null)
+#' suite[failed]
+#' msg <- unlist(purrr::map(out, "error"))
 
 
-
+## 35 & 36 have units we check separately since our validator can't automatically find schema
 
 
 

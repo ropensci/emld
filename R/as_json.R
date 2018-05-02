@@ -16,7 +16,7 @@ as_json <- function(x, file=NULL){ UseMethod("as_json") }
 
 #' @export
 as_json.emld <- function(x, file=NULL){
-  x <- drop_nulls(x)
+  # x <- drop_nulls(x) # recursion sometimes infinite / beyond stack limit
   if(is.null(file)){
     jsonlite::toJSON(x, pretty = TRUE, auto_unbox = TRUE)
   } else {

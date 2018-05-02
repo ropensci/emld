@@ -6,7 +6,9 @@ library(jsonld)
 library(magrittr)
 library(testthat)
 
-f <- system.file("tests/eml.xml", package="emld")
+f <- system.file(file.path("tests",
+                           getOption("emld_db", "eml-2.2.0"),
+                           "eml.xml"), package="emld")
 
 test_that("We can roundtrip into rdf and validate", {
 
