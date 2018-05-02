@@ -129,7 +129,8 @@ serialize_atomics <- function(x, parent, tag, key){
 
 
 
-## sorts the elements of list x in order given by eml_db[[getOption("emld_db", "eml-2.2.0")]][[tag]]
+## sorts the elements of list x in order given
+# by eml_db[[getOption("emld_db", "eml-2.2.0")]][[tag]]
 sort_properties <- function(x, tag){
 
   n <- names(x)
@@ -141,7 +142,8 @@ sort_properties <- function(x, tag){
 
   ## Possible attributes for this object
   is_attr <- grep("^(#|@)\\w",children)
-  possible_attrs <- unique(gsub("^(#|@)", "", c(children[is_attr], "id", "schemaLocation")))
+  possible_attrs <- unique(gsub("^(#|@)", "",
+                                c(children[is_attr], "id", "schemaLocation")))
 
   ## Actual attributes present
   attrs <- which(n %in% possible_attrs)
