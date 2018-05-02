@@ -40,8 +40,6 @@ test_roundtrip <- function(f, schema = NULL, check_lengths = TRUE){
 ## Enforce testing on 2.1.1 for this
 options("emld_db" = "eml-2.1.1")
 
-print(paste("testing", getOption("emld_db", "eml-2.2.0")))
-
 ## Test all citation-* examples:
 suite <- list.files(system.file(
   file.path("tests", getOption("emld_db", "eml-2.2.0")), package="emld"),
