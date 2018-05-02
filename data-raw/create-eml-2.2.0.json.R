@@ -97,6 +97,9 @@ type_nodes <- map(xsd_files, function(xsd){
 
 element_nodes <- map(xsd_files, function(xsd){
    xml <- read_xml(xsd)
+
+   ## fixme get elements with refs instead of name
+
    groups <- xml_find_all(xml, "//xs:element[@name]")
    ## Element declares a type:
    types <- drop_prefix(map_chr(groups, xml_attr, "type"))
@@ -121,12 +124,21 @@ map(element_nodes, xml_name) %>% unlist() %>% table()
 ## lots of unnamed elements too, (on data-valued nodes)
 # map(element_nodes, xml_attr, "name") %>% map_int(~ sum(is.na(.x)))
 
+xml_attr_or <- function(x, A, B){
+  a <- xml_attr(x, A)
+  b <- xml_attr(x, B)
+  out <- as.character(na.omit(c(a,b)))
+  if(length(out) > 1)
+    out <- out[[1]]
+  if(length(out) == 0)
+    out <- as.character(NA)
+  out
+}
 
 
 out <-
 map(element_nodes, function(nodeset){
-    names <- map_chr(nodeset, xml_attr, "name")
-    # some attributes have ref instead of name!
+    names <- map_chr(nodeset, xml_attr_or, "name", "ref")
     drop <- map_lgl(names, is.na)
     names <- names[!drop]
     type <- map_lgl(nodeset[!drop], function(n) xml_name(n) == "attribute")
@@ -143,5 +155,10 @@ who <- unique(names(out))
 out[who] %>%
   ## FIXME Drop duplicate keys
   write_json("data-raw/eml-2.2.0.json", pretty=TRUE)
+
+
+eml_db <- list("eml-2.1.1" = jsonlite::read_json("data-raw/eml-2.1.1.json"),
+               "eml-2.2.0" = jsonlite::read_json("data-raw/eml-2.2.0.json"))
+devtools::use_data(eml_db, overwrite = TRUE, internal = TRUE)
 
 

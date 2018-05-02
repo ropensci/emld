@@ -20,29 +20,25 @@
 #' xml <- as_xml(emld)
 #'
 as_xml <- function(x, file=NULL, root = "eml", ns = "eml",
-                   schemaLocation = paste(
-                    getOption("emld_schemaLocation",
-                              "eml://ecoinformatics.org/eml-2.2.0/"),
-                    "eml.xsd"))
+  schemaLocation = paste0("eml://ecoinformatics.org/",
+  getOption("emld_db", "eml-2.2.0"), "eml-2.2.0/ eml.xsd"))
   {
     UseMethod("as_xml")
   }
 
 #' @export
 as_xml.list <- function(x, file=NULL, root = "eml", ns = "eml",
-                        schemaLocation = paste(
-                          getOption("emld_schemaLocation",
-                                    "eml://ecoinformatics.org/eml-2.2.0/"),
-                          "eml.xsd")){
+                        schemaLocation = paste0("eml://ecoinformatics.org/",
+                          getOption("emld_db", "eml-2.2.0"),
+                          "eml-2.2.0/ eml.xsd")){
   as_xml.emld(x, file)
 }
 
 #' @export
 as_xml.emld <- function(x, file=NULL, root = "eml", ns = "eml",
-                        schemaLocation = paste(
-                          getOption("emld_schemaLocation",
-                                    "eml://ecoinformatics.org/eml-2.2.0/"),
-                          "eml.xsd")){
+                        schemaLocation = paste0("eml://ecoinformatics.org/",
+                          getOption("emld_db", "eml-2.2.0"),
+                          "eml-2.2.0/ eml.xsd")){
 
   ## Frame/compact into original context for a standardized structure
   x <- eml_frame(x)
@@ -100,8 +96,8 @@ eml_frame <- function(x){
   ## set a context for framing if we've gotten just a plain json/list
   if(!is_jsonld.list(x)){
     x[["@context"]] <-
-      list("@vocab" = getOption("emld_schemaLocation",
-                                "eml://ecoinformatics.org/eml-2.2.0/"))
+      list("@vocab" = paste0("eml://ecoinformatics.org/",
+                             getOption("emld_db", "eml-2.2.0"),"/"))
   }
 
   ## set a type for framing

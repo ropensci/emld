@@ -65,8 +65,8 @@ as_emld.xml_document <- function(x){
 
     ## Set up the JSON-LD context
     if(is.null(emld[["xmlns"]])){
-      emld[["xmlns"]] <- getOption("emld_schemaLocation",
-                                   "eml://ecoinformatics.org/eml-2.2.0/")
+      emld[["xmlns"]] <- paste0("eml://ecoinformatics.org/",
+                                getOption("emld_db", "eml-2.2.0"),"/")
     }
     emld <- add_context(emld)
     class(emld) <- c("emld", "list")
