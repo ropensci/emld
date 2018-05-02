@@ -17,7 +17,7 @@ test_that("we can group repeated xml keys into json", {
 
   ## tests
   in_list <- xml2::as_list(xml2::read_xml(input))
-  json <- jsonlite::toJSON(group_repeated_key(in_list), auto_unbox = TRUE)
+  json <- jsonlite::toJSON(emld:::group_repeated_key(in_list), auto_unbox = TRUE)
   expect_is(json, "json")
 
 })

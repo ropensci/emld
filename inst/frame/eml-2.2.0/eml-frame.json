@@ -1,0 +1,11 @@
+{
+  "@context": {
+    "@vocab": "eml://ecoinformatics.org/eml-2.2.0/",
+    "eml": "eml://ecoinformatics.org/eml-2.2.0/",
+    "xsi": "http://www.w3.org/2001/XMLSchema-instance/",
+    "xml": "http://www.w3.org/XML/1998/namespace",
+    "id": "@id"
+  },
+  "@type": "EML",
+  "@embed": "@always"
+}

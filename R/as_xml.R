@@ -20,20 +20,25 @@
 #' xml <- as_xml(emld)
 #'
 as_xml <- function(x, file=NULL, root = "eml", ns = "eml",
-                   schemaLocation = "eml://ecoinformatics.org/eml-2.1.1 eml.xsd")
+  schemaLocation = paste0("eml://ecoinformatics.org/",
+  getOption("emld_db", "eml-2.2.0"), "/ eml.xsd"))
   {
     UseMethod("as_xml")
   }
 
 #' @export
 as_xml.list <- function(x, file=NULL, root = "eml", ns = "eml",
-                        schemaLocation = "eml://ecoinformatics.org/eml-2.1.1 eml.xsd"){
+                        schemaLocation = paste0("eml://ecoinformatics.org/",
+                          getOption("emld_db", "eml-2.2.0"),
+                          "/ eml.xsd")){
   as_xml.emld(x, file)
 }
 
 #' @export
 as_xml.emld <- function(x, file=NULL, root = "eml", ns = "eml",
-                        schemaLocation = "eml://ecoinformatics.org/eml-2.1.1 eml.xsd"){
+                        schemaLocation = paste0("eml://ecoinformatics.org/",
+                          getOption("emld_db", "eml-2.2.0"),
+                          "/ eml.xsd")){
 
   ## Frame/compact into original context for a standardized structure
   x <- eml_frame(x)
@@ -81,7 +86,9 @@ eml_frame <- function(x){
 
   ## choose the context we compact into later
   if(is.null(x[["@context"]])){
-    context <- system.file("context/eml-context.json", package = "emld")
+    context <- system.file(paste0("context/",
+                                  getOption("emld_db", "eml-2.2.0"),
+                                  "/eml-context.json"), package = "emld")
   } else {
     context <- jsonlite::toJSON(x[["@context"]], auto_unbox = TRUE)
   }
@@ -89,7 +96,8 @@ eml_frame <- function(x){
   ## set a context for framing if we've gotten just a plain json/list
   if(!is_jsonld.list(x)){
     x[["@context"]] <-
-      list("@vocab" = getOption("emld_vocab", "eml://ecoinformatics.org/eml-2.1.1/"))
+      list("@vocab" = paste0("eml://ecoinformatics.org/",
+                             getOption("emld_db", "eml-2.2.0"),"/"))
   }
 
   ## set a type for framing
@@ -97,7 +105,9 @@ eml_frame <- function(x){
     x[["@type"]] <- "EML"
   }
   json <- jsonlite::toJSON(x, auto_unbox = TRUE)
-  frame <- system.file("frame/eml-frame.json", package = "emld")
+  frame <- system.file(paste0("frame/",
+                              getOption("emld_db", "eml-2.2.0"),
+                              "/eml-frame.json"), package = "emld")
   framed <- jsonld::jsonld_frame(json, frame)
   compacted <- jsonld::jsonld_compact(framed, context)
   out <- jsonlite::fromJSON(compacted, simplifyVector = FALSE)
