@@ -10,7 +10,7 @@
   "nonNumericDomain": ["enumeratedDomain", "textDomain", "references", "@id"],
   "ordinal": ["nonNumericDomain"],
   "interval": ["unit", "precision", "numericDomain"],
-  "unit": ["standardUnit", "customUnit"],
+  "unit": ["standardUnit", "customUnit", "description", "annotation", "@id", "#abbreviation", "#name", "#parentSI", "#unitType", "#multiplierToSI", "#constantToSI"],
   "numericDomain": ["numberType", "bounds", "references", "@id"],
   "ratio": ["unit", "precision", "numericDomain"],
   "dateTime": ["formatString", "dateTimePrecision", "dateTimeDomain"],
@@ -193,7 +193,7 @@
   "parameterDefinition": ["name", "definition", "defaultValue"],
   "onlineDescription": ["value", "#xml:lang"],
   "connectionDefinition": ["schemeName", "description", "parameterDefinition", "references", "@id", "#system", "#scope"],
-  "parameter": ["name", "value"],
+  "parameter": ["name", "domainDescription", "required", "repeats"],
   "value": ["#xml:lang"],
   "implementation": ["distribution", "size", "language", "operatingSystem", "machineProcessor", "virtualMachine", "diskUsage", "runtimeMemoryUsage", "programmingLanguage", "checksum", "dependency"],
   "dependency": ["action", "software"],
@@ -234,5 +234,9 @@
   "listitem": ["para", "itemizedlist", "orderedlist"],
   "eml": ["access", "dataset", "citation", "software", "protocol", "additionalMetadata", "#packageId", "#system", "#scope", "#xml:lang"],
   "additionalMetadata": ["describes", "metadata", "@id"],
-  "metadata": []
+  "metadata": [],
+  "dimension": ["#name", "#power"],
+  "unitList": ["#href", "unitType", "unit"],
+  "unitType": ["dimension", "@id", "#name"],
+  "unit.1": ["standardUnit", "customUnit", "description", "annotation", "@id", "#abbreviation", "#name", "#parentSI", "#unitType", "#multiplierToSI", "#constantToSI"]
 }

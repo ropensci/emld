@@ -1,3 +1,7 @@
+---
+---
+
+
 ```{r}
 library(tidyverse)
 library(glue)
@@ -5,6 +9,27 @@ library(xml2)
 library(jsonlite)
 xsd_files <- list.files("../inst/xsd/eml-2.2.0", full.names = TRUE)
 ```
+
+Find arbitrary element
+
+```{r}
+found <- map(xsd_files, function(xsd){
+  read_xml(xsd) %>% xml_find_all("//xs:complexType[@name='ConferenceProceedings']")})
+
+names(found) <- xsd_files
+compact(found)
+```
+
+
+```{r}
+found <- map(xsd_files, function(xsd){
+  read_xml(xsd) %>% xml_find_all("//xs:complexContent/xs:restriction")})
+
+names(found) <- xsd_files
+compact(found)
+```
+
+# Explore
 
 Root contains: 
  - `attribute`, `attributeGroup`, `complexType`, `element`, `group`, `simpleType`
@@ -35,6 +60,8 @@ contains one of:
 - Both `simpleContent` and `complexContent` contains one of either `xs:extension` or `xs:restriction`
 - `simpleType` contains one of `restriction`, `union`, or `list`
 
+
+
 ```{r}
 map(xsd_files, function(xsd){
   read_xml(xsd) %>% xml_find_all("//xs:element") %>% map(xml_children) %>% map(xml_name) })
@@ -42,8 +69,11 @@ map(xsd_files, function(xsd){
   read_xml(xsd) %>% xml_find_all("//xs:extension") %>% map(xml_children) %>% map(xml_name) }) %>% unlist() %>% table()
 map(xsd_files, function(xsd){
   read_xml(xsd) %>% xml_find_all("//xs:sequence/xs:any") }) %>% compact() -> a
+```
 
 
+
+```{r}
 map(xsd_files, function(xsd){
     read_xml(xsd) %>% xml_root() %>% xml_children() %>% map_chr(xml_name)
 }) %>% unlist() %>% table()
