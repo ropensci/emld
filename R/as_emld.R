@@ -18,15 +18,20 @@ as_emld.character <- function(x){
     if(file.exists(x)){
       if(grepl("\\.xml$", x)){
         x <- xml2::read_xml(x)
+        as_emld.xml_document(x)
       } else if(grepl("\\.json$", x)){
         ## read_json returns list, not json object
         x <- jsonlite::read_json(x)
         x <- jsonlite::toJSON(x, pretty = TRUE, auto_unbox = TRUE)
+        as_emld.json(x)
       } else {
         stop(paste("extension for", basename(x), "not recognized"))
       }
+    } else {
+      ## what other kind of character string examples do we expect other than filenames?
+
+    as_emld.list(as.list(x))
     }
-    as_emld(x)
 }
 
 
