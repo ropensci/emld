@@ -34,6 +34,11 @@ as_emld.character <- function(x){
     }
 }
 
+#' @export
+as_emld.raw <- function(x){
+  x <- xml2::read_xml(x)
+  as_emld.xml_document(x)
+}
 
 ### FROM JSON FILES ###
 #' @export

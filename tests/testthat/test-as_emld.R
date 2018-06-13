@@ -62,3 +62,15 @@ test_that("we can parse repeated name elements", {
   expect_is(json, "json")
   })
 
+test_that("raw files can be parsed", {
+  emld <- as_emld(ex)
+
+  ex_char <- paste(readLines(ex), collapse = "\n")
+  # potentially test for char formats here. currently doesn't work (converts to list of 1 instead of 6)
+  # emld_char <- as_emld(ex_char)
+  # expect_equal(emld, emld_char)
+
+  ex_raw <- charToRaw(ex_char)
+  emld_raw <- as_emld(ex_raw)
+  expect_equal(emld, emld_raw)
+})
