@@ -110,3 +110,43 @@ testthat::test_that("unitDictionary", {
   unlink(out)
 })
 
+
+
+
+
+
+
+
+
+
+
+##########
+
+## Enforce testing on 2.1.1 for this
+options("emld_db" = "eml-2.2.0")
+
+## Test all citation-* examples:
+suite <- list.files(system.file(
+  file.path("tests", getOption("emld_db", "eml-2.2.0")), package="emld"),
+  pattern="citation", full.names = TRUE)
+lapply(suite, test_roundtrip)
+
+suite <- list.files(system.file(
+  file.path("tests", getOption("emld_db", "eml-2.2.0")), package="emld"),
+  pattern="eml-", full.names = TRUE)
+drop <- basename(suite) %in% c("eml-datasetWithNonwordCharacters.xml",
+                               "eml-i18n.xml",
+                               "eml-literature.xml",
+                               "eml-literatureInPress.xml",
+                               "eml-unitDictionary.xml",
+                               "eml-units.xml")
+test_suite <- suite[!drop]
+lapply(test_suite, test_roundtrip)
+
+## These four skip the length-check
+partial_test <- basename(suite) %in%
+  c("eml-datasetWithNonwordCharacters.xml",
+    "eml-i18n.xml", "eml-literature.xml", "eml-literatureInPress.xml")
+lapply(suite[partial_test], test_roundtrip, check_lengths = FALSE)
+
+
