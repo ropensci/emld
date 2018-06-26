@@ -3,6 +3,7 @@
 S3method(as_emld,character)
 S3method(as_emld,json)
 S3method(as_emld,list)
+S3method(as_emld,raw)
 S3method(as_emld,xml_document)
 S3method(as_json,emld)
 S3method(as_json,list)
