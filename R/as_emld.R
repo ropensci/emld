@@ -2,18 +2,58 @@
 #'
 #' Parse an EML file into an emld object.
 #' @param x path to an EML file
+#' @param from explicit type for the input format. By default, will
+#' attempt to guess the format, but it always safer to specify the
+#' input format. This is essential for literal text strings or raw
+#' vectors where the type cannot be guessed by the R object class
+#' or file extension of the input.
 #' @importFrom xml2 read_xml xml_find_all xml_remove
 #' @importFrom methods is
 #' @importFrom jsonld jsonld_compact jsonld_frame
 #'
 #' @export
-as_emld <- function(x)
+as_emld <- function(x, from = c("guess", "xml", "json", "list"))
 {
   UseMethod("as_emld")
 }
 
+
 #' @export
-as_emld.character <- function(x){
+as_emld.raw <- function(x, from = c("guess", "xml", "json", "list") ){
+
+  from <- match.arg(from)
+  if(from == "xml") {
+    x <- xml2::read_xml(x)
+    return(as_emld.xml_document(x) )
+  } else if (from == "json"){
+    return (as_emld.json(x) )
+  } else {
+    warning("assuming raw vector is xml...")
+    x <- xml2::read_xml(x)
+    return(as_emld.xml_document(x) )
+  }
+
+}
+
+
+#' @export
+as_emld.character <- function(x, from = c("guess", "xml", "json", "list")){
+
+  # Character could be literal or filepath.  Let's hope `from` is specified
+  from <- match.arg(from)
+
+  ## Handle declared cases first
+  if(from == "xml"){
+    x <- xml2::read_xml(x)
+    return(as_emld.xml_document(x) )
+  } else if(from == "json"){
+    x <- jsonlite::read_json(x)
+    return(as_emld.json(x) )
+  } else if(from == "list"){
+    return( as_emld.list(as.list(x), from = "list") )
+
+  } else { # Handle "guess"
+
   ## Read json or xml files, based on extension
     if(file.exists(x)){
       if(grepl("\\.xml$", x)){
@@ -30,15 +70,17 @@ as_emld.character <- function(x){
     } else {
       ## what other kind of character string examples do we expect other than filenames?
 
-    as_emld.list(as.list(x))
+    as_emld.list(as.list(x), from = "list")
+
     }
+  }
 }
 
 
-### FROM JSON FILES ###
+### FROM json Class objects ###
 #' @export
-as_emld.json <- function(x){
-  ## Convert json or xml_document to the S3 emld object
+as_emld.json <- function(x, from = "json"){
+  ## Convert json to the S3 emld object
 
     ## FIXME technically this assumes only our context
     frame <- system.file(paste0("frame/",
@@ -47,6 +89,7 @@ as_emld.json <- function(x){
     context <- system.file(paste0("context/",
                            getOption("emld_db", "eml-2.2.0"),
                            "/eml-context.json"), package = "emld")
+
     framed <- jsonld::jsonld_frame(x, frame)
     compacted <- jsonld::jsonld_compact(framed, context)
     emld <- jsonlite::fromJSON(compacted, simplifyVector = FALSE)
@@ -55,9 +98,9 @@ as_emld.json <- function(x){
 }
 
 
-### FROM XML FILES ######
+### FROM xml_document Class objects ######
 #' @export
-as_emld.xml_document <- function(x){
+as_emld.xml_document <- function(x, from = "xml_document"){
 
     ## Drop comment nodes
     xml2::xml_remove(xml2::xml_find_all(x, "//comment()"))
@@ -81,10 +124,15 @@ as_emld.xml_document <- function(x){
 
 ## CHECKME xml_document and json are also list!
 #' @export
-as_emld.list <- function(x){
-  # Note that xml_document is.list too
+as_emld.list <- function(x, from = "list"){
+  if(is(x, "xml_document")){
+    return(as_emld.xml_document(x))
+  } else if(is(x, "json")){
+    return(as_emld.json(x))
+  } else {
     class(x) <- c("emld", "list")
     return(x)
+  }
 }
 
 

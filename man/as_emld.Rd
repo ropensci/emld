@@ -4,10 +4,16 @@
 \alias{as_emld}
 \title{as_emld}
 \usage{
-as_emld(x)
+as_emld(x, from = c("guess", "xml", "json", "list"))
 }
 \arguments{
 \item{x}{path to an EML file}
+
+\item{from}{explicit type for the input format. By default, will
+attempt to guess the format, but it always safer to specify the
+input format. This is essential for literal text strings or raw
+vectors where the type cannot be guessed by the R object class
+or file extension of the input.}
 }
 \description{
 Parse an EML file into an emld object.
