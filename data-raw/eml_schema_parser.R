@@ -221,10 +221,16 @@ table_from_schema <- function(xsd_files){
   }
 
 
-xsd_files <- list.files("inst/xsd/eml-2.2.0", full.names = TRUE)
+xsd_files <- list.files("inst/xsd/eml-2.2.0", pattern=".xsd", full.names = TRUE)
 df <- table_from_schema(xsd_files)
 
 readr::write_tsv(df, "data-raw/eml-2.2.0.tsv")
+
+
+
+list.files("inst/xsd/eml-2.1.1", pattern=".xsd", full.names = TRUE) %>%
+  table_from_schema() %>%
+  readr::write_tsv("data-raw/eml-2.1.1.tsv")
 
 ###############
 

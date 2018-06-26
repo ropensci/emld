@@ -1,0 +1,1223 @@
+parent	names	summary	details	attribute
+access	allow	A rule that grants a permission type.		FALSE
+access	deny	A rule that revokes a permission type.		FALSE
+access	references	The id of another element in this EML document to be used to here in this context.		FALSE
+access	id			TRUE
+access	system			TRUE
+access	scope			TRUE
+access	order	The order in which the allow and deny rules should be applied.		TRUE
+access	authSystem	The authentication system is used to verify the user or group to whom access is allowed or denied.		TRUE
+allow	principal	The user or group (principal) for which the access control applies.		FALSE
+allow	permission	The type of permission being granted or denied.		FALSE
+deny	principal	The user or group (principal) for which the access control applies.		FALSE
+deny	permission	The type of permission being granted or denied.		FALSE
+attribute	attributeName	The name of the attribute		FALSE
+attribute	attributeLabel	A label for displaying an attribute name.		FALSE
+attribute	attributeDefinition	Precise definition of the attribute		FALSE
+attribute	storageType	Storage type hint for this field		FALSE
+attribute	measurementScale	The measurement scale for the attribute.		FALSE
+attribute	missingValueCode	Character for missing value in the data of the field		FALSE
+attribute	accuracy	The accuracy of the attribute. This information should describe any accuracy information that is known about the collection of this data attribute.		FALSE
+attribute	coverage	An explanation of the coverage of the attribute.		FALSE
+attribute	methods	An explanation of the methods involved in the collection of this attribute.		FALSE
+attribute	references	The id of another element in this EML document to be used to here in this context.		FALSE
+attribute	id			TRUE
+attribute	system			TRUE
+attribute	scope			TRUE
+storageType	typeSystem	The system used to define the storage types. This should be an identifier of a well known and published typing system.		TRUE
+measurementScale	nominal	Characteristics used to define nominal (categorical) scale attributes		FALSE
+measurementScale	ordinal	Characteristics used to define ordinal (ordered) scale attributes		FALSE
+measurementScale	interval	Characteristics used to define interval scale attributes		FALSE
+measurementScale	ratio	Characteristics used to define ratio scale attributes		FALSE
+measurementScale	dateTime	Characteristics used to define date and time attributes		FALSE
+nominal	nonNumericDomain			FALSE
+nonNumericDomain	enumeratedDomain	Description of any coded values associated with the attribute.		FALSE
+nonNumericDomain	textDomain	Description of a free-text domain pattern for the attribute		FALSE
+nonNumericDomain	references	The id of another element in this EML document to be used to here in this context.		FALSE
+nonNumericDomain	id			TRUE
+ordinal	nonNumericDomain			FALSE
+interval	unit			FALSE
+interval	precision			FALSE
+interval	numericDomain			FALSE
+unit	standardUnit	The name of a standard unit used to make this measurement		FALSE
+unit	customUnit	The name of a custom unit used to make this measurement.		FALSE
+numericDomain	numberType			FALSE
+numericDomain	bounds	Elements for specifying allowed values range.		FALSE
+numericDomain	references	The id of another element in this EML document to be used to here in this context.		FALSE
+numericDomain	id			TRUE
+ratio	unit			FALSE
+ratio	precision			FALSE
+ratio	numericDomain			FALSE
+dateTime	formatString	A format string that describes the format for a date-time value from the Gregorian calendar.		FALSE
+dateTime	dateTimePrecision	An indication of the precision of a date or time value		FALSE
+dateTime	dateTimeDomain	See the summary for the type: DateTimeDomainType		FALSE
+dateTimeDomain	bounds	Elements for specifying allowed date range.		FALSE
+dateTimeDomain	references	The id of another element in this EML document to be used to here in this context.		FALSE
+dateTimeDomain	id			TRUE
+missingValueCode	code	The missing value code itself.		FALSE
+missingValueCode	codeExplanation	An explanation of what the missing value code means.		FALSE
+accuracy	attributeAccuracyReport	An explanatory report of the accuracy of the attribute.		FALSE
+accuracy	quantitativeAttributeAccuracyAssessment	A value assigned to summarize the accuracy of the attribute.		FALSE
+coverage	geographicCoverage	Geographic coverage information.		FALSE
+coverage	temporalCoverage	Temporal coverage information.		FALSE
+coverage	taxonomicCoverage	Taxonomic coverage information.		FALSE
+coverage	references	The id of another element in this EML document to be used to here in this context.		FALSE
+coverage	id			TRUE
+coverage	system			TRUE
+coverage	scope			TRUE
+methods	methodStep	Information about the methods employed in collecting or generating a data set or other resource.		FALSE
+methods	sampling	Description of sampling procedures including the geographic, temporal and taxonomic coverage of the study.		FALSE
+methods	qualityControl	Information on possible errors or on the quality of a data set.		FALSE
+quantitativeAttributeAccuracyAssessment	attributeAccuracyValue	A value assigned to estimate the accuracy of the attribute.		FALSE
+quantitativeAttributeAccuracyAssessment	attributeAccuracyExplanation	The test which yields the Attribute Accuracy Value.		FALSE
+attributeList	attribute			FALSE
+attributeList	references	The id of another element in this EML document to be used to here in this context.		FALSE
+attributeList	id			TRUE
+enumeratedDomain	codeDefinition	A codes and its definition		FALSE
+enumeratedDomain	externalCodeSet	A reference to an externally defined set of codes used in this attribute		FALSE
+enumeratedDomain	entityCodeList	A code list that is defined in a data table		FALSE
+enumeratedDomain	enforced	Indicates whether the enumerated domain values enforced.		TRUE
+codeDefinition	code	Code value allowed in the domain		FALSE
+codeDefinition	definition	Definition of the associated code		FALSE
+codeDefinition	source	The name of the source for this code and its definition		FALSE
+codeDefinition	order	Mechanism for specifying what the order of the code-definitions included should be		TRUE
+externalCodeSet	codesetName	The name of an externally defined code set		FALSE
+externalCodeSet	citation	A citation for the code set reference		FALSE
+externalCodeSet	codesetURL	A URL for the code set reference		FALSE
+citation	alternateIdentifier	A secondary identifier for this entity		FALSE
+citation	shortName	A short name that describes the resource, sometimes a filename.		FALSE
+citation	title	A brief description of the resource, providing enough detail to differentiate it from other similar resources.		FALSE
+citation	creator	The people or organizations who created this resource.		FALSE
+citation	metadataProvider	The people or organizations who created provided documentation and other metadata for this resource.		FALSE
+citation	associatedParty	Other people or organizations who should be associated with this resource.		FALSE
+citation	pubDate	The publication date of the resource.		FALSE
+citation	language	The language in which the resource is written.		FALSE
+citation	series	The series from which the resource came.		FALSE
+citation	abstract	A brief overview of the resource.		FALSE
+citation	keywordSet	Keyword information that describes the resource.		FALSE
+citation	additionalInfo	Any extra information pertitent to the resource.		FALSE
+citation	intellectualRights	Intellectual property rights regarding usage and licensing of this resource.		FALSE
+citation	distribution	Information on how the resource is distributed online and offline		FALSE
+citation	coverage	Extent of the coverage of the resource.		FALSE
+citation	contact	An optional contact individual for this citation		FALSE
+citation	article	Information for full citation of a journal article or other periodical article.		FALSE
+citation	book	Information for full citation of a book		FALSE
+citation	chapter	Information for citation of a chapter in a book		FALSE
+citation	editedBook	Information for full citation of an edited book		FALSE
+citation	manuscript	Information about an unpublished manuscript		FALSE
+citation	report	Information about a report published by an institution.		FALSE
+citation	thesis	Information about a thesis that has been written as part of a degree requirement and is frequently published in small numbers by the degree awarding institution.		FALSE
+citation	conferenceProceedings	The published notes, papers, presentations etc... of a conference.		FALSE
+citation	personalCommunication	A personal communication that has been saved online or as hard-copy.		FALSE
+citation	map	This element describes the map that is being cited or cataloged.		FALSE
+citation	generic	This reference type was created for references that do not fit in to the other existing reference types		FALSE
+citation	audioVisual	This reference type is meant to cover all forms of audio and visual media.		FALSE
+citation	presentation	An unpublished presentation from a conference, workshop, workgroup, symposium etc.		FALSE
+citation	references	The id of another element in this EML document to be used to here in this context.		FALSE
+citation	id			TRUE
+citation	system			TRUE
+citation	scope			TRUE
+entityCodeList	entityReference	A reference to the id of the entity in which the code list has been defined		FALSE
+entityCodeList	valueAttributeReference	A reference to the id of the attribute that contains the list of codes		FALSE
+entityCodeList	definitionAttributeReference	A reference to the id of the attribute that contains the definition of codes		FALSE
+entityCodeList	orderAttributeReference	A reference to the id of the attribute that contains the order of codes		FALSE
+textDomain	definition	Definition of what this text domain represents		FALSE
+textDomain	pattern	Regular expression pattern constraining the attribute		FALSE
+textDomain	source	The name of the source for this text domain.		FALSE
+bounds	minimum	Minimum numeric bound of attribute		FALSE
+bounds	maximum	Maximum numeric bound of attribute		FALSE
+minimum	exclusive	Exclusive bounds flag		TRUE
+maximum	exclusive	Exclusive bounds flag		TRUE
+bounds	minimum	Minimum date bound of attribute		FALSE
+bounds	maximum	Maximum date bound of attribute		FALSE
+primaryKey	constraintName	A meaningfull name of the constraint.		FALSE
+primaryKey	constraintDescription	Descibes the purpose of the constraint.		FALSE
+primaryKey	key	The set of attributes to which this constraint applies.		FALSE
+key	attributeReference	The identifier of an attribute found in the identified entity		FALSE
+uniqueKey	constraintName	A meaningfull name of the constraint.		FALSE
+uniqueKey	constraintDescription	Descibes the purpose of the constraint.		FALSE
+uniqueKey	key	The set of attributes to which this constraint applies.		FALSE
+checkConstraint	constraintName	A meaningfull name of the constraint.		FALSE
+checkConstraint	constraintDescription	Descibes the purpose of the constraint.		FALSE
+checkConstraint	checkCondition	An SQL statement or other language implementation of the condition for a check constraint.		FALSE
+checkConstraint	language	The language that the is used to express or implement the check constraint.		TRUE
+foreignKey	key	The set of attributes to which this constraint applies.		FALSE
+foreignKey	entityReference	The id of the parent-entity in a foreign key constraint.		FALSE
+foreignKey	relationshipType	Relationship type: Identifying or non-identifying		FALSE
+foreignKey	cardinality	Cardinality of the relationship between a parent entity and a child entity.		FALSE
+joinCondition	key	The set of attributes to which this constraint applies.		FALSE
+joinCondition	entityReference	The id of the parent-entity in a foreign key constraint.		FALSE
+joinCondition	relationshipType	Relationship type: Identifying or non-identifying		FALSE
+joinCondition	cardinality	Cardinality of the relationship between a parent entity and a child entity.		FALSE
+joinCondition	referencedKey	The set of attributes to which a foreign key constraint refers.		FALSE
+referencedKey	attributeReference	The identifier of an attribute found in the identified entity		FALSE
+notNullConstraint	constraintName	A meaningfull name of the constraint.		FALSE
+notNullConstraint	constraintDescription	Descibes the purpose of the constraint.		FALSE
+notNullConstraint	key	The set of attributes to which this constraint applies.		FALSE
+cardinality	parentOccurences	Parent portion of a 1 to exactly N cardinality. May have a value of either 0 or 1.		FALSE
+cardinality	childOccurences	"Child portion of a cardinality expression Allowed values are positive integers including zero or the string value ""many""."		FALSE
+geographicCoverage	geographicDescription	Short text description of the geographic areal domain of the data set.		FALSE
+geographicCoverage	boundingCoordinates	The four margins (N, S, E, W) of a bounding box on the earth's surface, or when considered in lat-lon pairs, the corners of the box. To define a single point, use the same value in each lat or lon pair. These elements are meant to convey general information and are not for accurate mapping. More specific information may be included by using the elements in the spatialReference schema.		FALSE
+geographicCoverage	datasetGPolygon	This construct creates a spatial ring with a hollow center.		FALSE
+geographicCoverage	references	The id of another element in this EML document to be used to here in this context.		FALSE
+geographicCoverage	id			TRUE
+geographicCoverage	system			TRUE
+geographicCoverage	scope			TRUE
+temporalCoverage	singleDateTime	Means of encoding a single date and time		FALSE
+temporalCoverage	rangeOfDates	Means of encoding a range of dates and times.		FALSE
+temporalCoverage	references	The id of another element in this EML document to be used to here in this context.		FALSE
+temporalCoverage	id			TRUE
+temporalCoverage	system			TRUE
+temporalCoverage	scope			TRUE
+taxonomicCoverage	taxonomicSystem	Documentation of taxonomic sources, procedures, and treatments.		FALSE
+taxonomicCoverage	generalTaxonomicCoverage	A description of the range of taxa addressed in the data set or collection.		FALSE
+taxonomicCoverage	taxonomicClassification	Information about the range of taxa addressed in the data set or collection.		FALSE
+taxonomicCoverage	references	The id of another element in this EML document to be used to here in this context.		FALSE
+taxonomicCoverage	id			TRUE
+taxonomicCoverage	system			TRUE
+taxonomicCoverage	scope			TRUE
+singleDateTime	calendarDate	The calendar date for an event.		FALSE
+singleDateTime	time	The time of day for an event.		FALSE
+singleDateTime	alternativeTimeScale	A name, code, or date describing an event or period in an alternative time scale, such as one of the geologic time scales.		FALSE
+rangeOfDates	beginDate	A single time stamp signifying the beginning of some time period		FALSE
+rangeOfDates	endDate	A single time stamp signifying the end of some time period		FALSE
+beginDate	calendarDate	The calendar date for an event.		FALSE
+beginDate	time	The time of day for an event.		FALSE
+beginDate	alternativeTimeScale	A name, code, or date describing an event or period in an alternative time scale, such as one of the geologic time scales.		FALSE
+endDate	calendarDate	The calendar date for an event.		FALSE
+endDate	time	The time of day for an event.		FALSE
+endDate	alternativeTimeScale	A name, code, or date describing an event or period in an alternative time scale, such as one of the geologic time scales.		FALSE
+alternativeTimeScale	timeScaleName	Name of a recognized alternative time scale.		FALSE
+alternativeTimeScale	timeScaleAgeEstimate			FALSE
+alternativeTimeScale	timeScaleAgeUncertainty	The error estimate for the alternative time scale.		FALSE
+alternativeTimeScale	timeScaleAgeExplanation	The name and/or description of the method used to calculate the time scale age estimate.		FALSE
+alternativeTimeScale	timeScaleCitation	Citation for works providing detailed information about any element of the time scale age.		FALSE
+timeScaleCitation	alternateIdentifier	A secondary identifier for this entity		FALSE
+timeScaleCitation	shortName	A short name that describes the resource, sometimes a filename.		FALSE
+timeScaleCitation	title	A brief description of the resource, providing enough detail to differentiate it from other similar resources.		FALSE
+timeScaleCitation	creator	The people or organizations who created this resource.		FALSE
+timeScaleCitation	metadataProvider	The people or organizations who created provided documentation and other metadata for this resource.		FALSE
+timeScaleCitation	associatedParty	Other people or organizations who should be associated with this resource.		FALSE
+timeScaleCitation	pubDate	The publication date of the resource.		FALSE
+timeScaleCitation	language	The language in which the resource is written.		FALSE
+timeScaleCitation	series	The series from which the resource came.		FALSE
+timeScaleCitation	abstract	A brief overview of the resource.		FALSE
+timeScaleCitation	keywordSet	Keyword information that describes the resource.		FALSE
+timeScaleCitation	additionalInfo	Any extra information pertitent to the resource.		FALSE
+timeScaleCitation	intellectualRights	Intellectual property rights regarding usage and licensing of this resource.		FALSE
+timeScaleCitation	distribution	Information on how the resource is distributed online and offline		FALSE
+timeScaleCitation	coverage	Extent of the coverage of the resource.		FALSE
+timeScaleCitation	contact	An optional contact individual for this citation		FALSE
+timeScaleCitation	article	Information for full citation of a journal article or other periodical article.		FALSE
+timeScaleCitation	book	Information for full citation of a book		FALSE
+timeScaleCitation	chapter	Information for citation of a chapter in a book		FALSE
+timeScaleCitation	editedBook	Information for full citation of an edited book		FALSE
+timeScaleCitation	manuscript	Information about an unpublished manuscript		FALSE
+timeScaleCitation	report	Information about a report published by an institution.		FALSE
+timeScaleCitation	thesis	Information about a thesis that has been written as part of a degree requirement and is frequently published in small numbers by the degree awarding institution.		FALSE
+timeScaleCitation	conferenceProceedings	The published notes, papers, presentations etc... of a conference.		FALSE
+timeScaleCitation	personalCommunication	A personal communication that has been saved online or as hard-copy.		FALSE
+timeScaleCitation	map	This element describes the map that is being cited or cataloged.		FALSE
+timeScaleCitation	generic	This reference type was created for references that do not fit in to the other existing reference types		FALSE
+timeScaleCitation	audioVisual	This reference type is meant to cover all forms of audio and visual media.		FALSE
+timeScaleCitation	presentation	An unpublished presentation from a conference, workshop, workgroup, symposium etc.		FALSE
+timeScaleCitation	references	The id of another element in this EML document to be used to here in this context.		FALSE
+timeScaleCitation	id			TRUE
+timeScaleCitation	system			TRUE
+timeScaleCitation	scope			TRUE
+boundingCoordinates	westBoundingCoordinate	Western-most limit of a bounding box, expressed in degrees of longitude.		FALSE
+boundingCoordinates	eastBoundingCoordinate	Eastern-most limit of a bounding box, expressed in degrees of longitude.		FALSE
+boundingCoordinates	northBoundingCoordinate	Northern-most lilmit of a bounding box expressed in latitude.		FALSE
+boundingCoordinates	southBoundingCoordinate	Southern-most limit of the bounding box expressed in latitude.		FALSE
+boundingCoordinates	boundingAltitudes	The vertical limits of a data set expressed by altitude.		FALSE
+boundingAltitudes	altitudeMinimum	The minimum altitude extent of coverage.		FALSE
+boundingAltitudes	altitudeMaximum	The maximum altitude extent of coverage.		FALSE
+boundingAltitudes	altitudeUnits	The unit of altitude		FALSE
+datasetGPolygon	datasetGPolygonOuterGRing	The outer containment loop of a datasetGPolygon.		FALSE
+datasetGPolygon	datasetGPolygonExclusionGRing	Data Set G-Polygon Exclusion G-Ring, the closed nonintersecting boundary of a void area (or hole in an interior area).		FALSE
+datasetGPolygonOuterGRing	gRingPoint	A single geographic location		FALSE
+datasetGPolygonOuterGRing	gRing			FALSE
+gRingPoint	gRingLatitude	The latitude of a point of the g-ring.		FALSE
+gRingPoint	gRingLongitude			FALSE
+datasetGPolygonExclusionGRing	gRingPoint	A single geographic location		FALSE
+datasetGPolygonExclusionGRing	gRing			FALSE
+taxonomicSystem	classificationSystem	Information about the classification system or authority used.		FALSE
+taxonomicSystem	identificationReference			FALSE
+taxonomicSystem	identifierName			FALSE
+taxonomicSystem	taxonomicProcedures			FALSE
+taxonomicSystem	taxonomicCompleteness			FALSE
+taxonomicSystem	vouchers			FALSE
+classificationSystem	classificationSystemCitation			FALSE
+classificationSystem	classificationSystemModifications			FALSE
+classificationSystemCitation	alternateIdentifier	A secondary identifier for this entity		FALSE
+classificationSystemCitation	shortName	A short name that describes the resource, sometimes a filename.		FALSE
+classificationSystemCitation	title	A brief description of the resource, providing enough detail to differentiate it from other similar resources.		FALSE
+classificationSystemCitation	creator	The people or organizations who created this resource.		FALSE
+classificationSystemCitation	metadataProvider	The people or organizations who created provided documentation and other metadata for this resource.		FALSE
+classificationSystemCitation	associatedParty	Other people or organizations who should be associated with this resource.		FALSE
+classificationSystemCitation	pubDate	The publication date of the resource.		FALSE
+classificationSystemCitation	language	The language in which the resource is written.		FALSE
+classificationSystemCitation	series	The series from which the resource came.		FALSE
+classificationSystemCitation	abstract	A brief overview of the resource.		FALSE
+classificationSystemCitation	keywordSet	Keyword information that describes the resource.		FALSE
+classificationSystemCitation	additionalInfo	Any extra information pertitent to the resource.		FALSE
+classificationSystemCitation	intellectualRights	Intellectual property rights regarding usage and licensing of this resource.		FALSE
+classificationSystemCitation	distribution	Information on how the resource is distributed online and offline		FALSE
+classificationSystemCitation	coverage	Extent of the coverage of the resource.		FALSE
+classificationSystemCitation	contact	An optional contact individual for this citation		FALSE
+classificationSystemCitation	article	Information for full citation of a journal article or other periodical article.		FALSE
+classificationSystemCitation	book	Information for full citation of a book		FALSE
+classificationSystemCitation	chapter	Information for citation of a chapter in a book		FALSE
+classificationSystemCitation	editedBook	Information for full citation of an edited book		FALSE
+classificationSystemCitation	manuscript	Information about an unpublished manuscript		FALSE
+classificationSystemCitation	report	Information about a report published by an institution.		FALSE
+classificationSystemCitation	thesis	Information about a thesis that has been written as part of a degree requirement and is frequently published in small numbers by the degree awarding institution.		FALSE
+classificationSystemCitation	conferenceProceedings	The published notes, papers, presentations etc... of a conference.		FALSE
+classificationSystemCitation	personalCommunication	A personal communication that has been saved online or as hard-copy.		FALSE
+classificationSystemCitation	map	This element describes the map that is being cited or cataloged.		FALSE
+classificationSystemCitation	generic	This reference type was created for references that do not fit in to the other existing reference types		FALSE
+classificationSystemCitation	audioVisual	This reference type is meant to cover all forms of audio and visual media.		FALSE
+classificationSystemCitation	presentation	An unpublished presentation from a conference, workshop, workgroup, symposium etc.		FALSE
+classificationSystemCitation	references	The id of another element in this EML document to be used to here in this context.		FALSE
+classificationSystemCitation	id			TRUE
+classificationSystemCitation	system			TRUE
+classificationSystemCitation	scope			TRUE
+identificationReference	alternateIdentifier	A secondary identifier for this entity		FALSE
+identificationReference	shortName	A short name that describes the resource, sometimes a filename.		FALSE
+identificationReference	title	A brief description of the resource, providing enough detail to differentiate it from other similar resources.		FALSE
+identificationReference	creator	The people or organizations who created this resource.		FALSE
+identificationReference	metadataProvider	The people or organizations who created provided documentation and other metadata for this resource.		FALSE
+identificationReference	associatedParty	Other people or organizations who should be associated with this resource.		FALSE
+identificationReference	pubDate	The publication date of the resource.		FALSE
+identificationReference	language	The language in which the resource is written.		FALSE
+identificationReference	series	The series from which the resource came.		FALSE
+identificationReference	abstract	A brief overview of the resource.		FALSE
+identificationReference	keywordSet	Keyword information that describes the resource.		FALSE
+identificationReference	additionalInfo	Any extra information pertitent to the resource.		FALSE
+identificationReference	intellectualRights	Intellectual property rights regarding usage and licensing of this resource.		FALSE
+identificationReference	distribution	Information on how the resource is distributed online and offline		FALSE
+identificationReference	coverage	Extent of the coverage of the resource.		FALSE
+identificationReference	contact	An optional contact individual for this citation		FALSE
+identificationReference	article	Information for full citation of a journal article or other periodical article.		FALSE
+identificationReference	book	Information for full citation of a book		FALSE
+identificationReference	chapter	Information for citation of a chapter in a book		FALSE
+identificationReference	editedBook	Information for full citation of an edited book		FALSE
+identificationReference	manuscript	Information about an unpublished manuscript		FALSE
+identificationReference	report	Information about a report published by an institution.		FALSE
+identificationReference	thesis	Information about a thesis that has been written as part of a degree requirement and is frequently published in small numbers by the degree awarding institution.		FALSE
+identificationReference	conferenceProceedings	The published notes, papers, presentations etc... of a conference.		FALSE
+identificationReference	personalCommunication	A personal communication that has been saved online or as hard-copy.		FALSE
+identificationReference	map	This element describes the map that is being cited or cataloged.		FALSE
+identificationReference	generic	This reference type was created for references that do not fit in to the other existing reference types		FALSE
+identificationReference	audioVisual	This reference type is meant to cover all forms of audio and visual media.		FALSE
+identificationReference	presentation	An unpublished presentation from a conference, workshop, workgroup, symposium etc.		FALSE
+identificationReference	references	The id of another element in this EML document to be used to here in this context.		FALSE
+identificationReference	id			TRUE
+identificationReference	system			TRUE
+identificationReference	scope			TRUE
+identifierName	individualName	The full name of the person being described		FALSE
+identifierName	organizationName	The full name of the organization being described		FALSE
+identifierName	positionName	The name of the title or position associated with the resource.		FALSE
+identifierName	address	The full address information for a given responsible party entry.		FALSE
+identifierName	phone	Information about the contact's telephone		FALSE
+identifierName	electronicMailAddress	The email address of the contact.		FALSE
+identifierName	onlineUrl	A link to associated online information, usually a web site.		FALSE
+identifierName	userId	An identifier that links this party to a directory of personnel		FALSE
+identifierName	references	The id of another element in this EML document to be used to here in this context.		FALSE
+identifierName	id			TRUE
+identifierName	system			TRUE
+identifierName	scope			TRUE
+vouchers	specimen			FALSE
+vouchers	repository			FALSE
+repository	originator	A person or organization asociated with this resource.		FALSE
+originator	individualName	The full name of the person being described		FALSE
+originator	organizationName	The full name of the organization being described		FALSE
+originator	positionName	The name of the title or position associated with the resource.		FALSE
+originator	address	The full address information for a given responsible party entry.		FALSE
+originator	phone	Information about the contact's telephone		FALSE
+originator	electronicMailAddress	The email address of the contact.		FALSE
+originator	onlineUrl	A link to associated online information, usually a web site.		FALSE
+originator	userId	An identifier that links this party to a directory of personnel		FALSE
+originator	references	The id of another element in this EML document to be used to here in this context.		FALSE
+originator	id			TRUE
+originator	system			TRUE
+originator	scope			TRUE
+taxonomicClassification	taxonRankName	The name of the taxonomic rank for which the Taxon rank value is provided.		FALSE
+taxonomicClassification	taxonRankValue	The name representing the taxonomic rank of the taxon being described.		FALSE
+taxonomicClassification	commonName	Specification of applicable common names.		FALSE
+taxonomicClassification	taxonomicClassification	Information about the range of taxa addressed in the data set or collection.		FALSE
+dataset	alternateIdentifier	A secondary identifier for this entity		FALSE
+dataset	shortName	A short name that describes the resource, sometimes a filename.		FALSE
+dataset	title	A brief description of the resource, providing enough detail to differentiate it from other similar resources.		FALSE
+dataset	creator	The people or organizations who created this resource.		FALSE
+dataset	metadataProvider	The people or organizations who created provided documentation and other metadata for this resource.		FALSE
+dataset	associatedParty	Other people or organizations who should be associated with this resource.		FALSE
+dataset	pubDate	The publication date of the resource.		FALSE
+dataset	language	The language in which the resource is written.		FALSE
+dataset	series	The series from which the resource came.		FALSE
+dataset	abstract	A brief overview of the resource.		FALSE
+dataset	keywordSet	Keyword information that describes the resource.		FALSE
+dataset	additionalInfo	Any extra information pertitent to the resource.		FALSE
+dataset	intellectualRights	Intellectual property rights regarding usage and licensing of this resource.		FALSE
+dataset	distribution	Information on how the resource is distributed online and offline		FALSE
+dataset	coverage	Extent of the coverage of the resource.		FALSE
+dataset	purpose	A description of the purpose of this dataset.		FALSE
+dataset	maintenance	A description of the maintenance of this data resource.		FALSE
+dataset	contact	The contact for this dataset		FALSE
+dataset	publisher	The publisher of this data set		FALSE
+dataset	pubPlace	The location that the resource was published.		FALSE
+dataset	methods	The methods field documents scientific methods used in the collection of this dataset.		FALSE
+dataset	project	The project field contains information on the project in which this dataset was collected.		FALSE
+dataset	dataTable	The dataTable field documents the dataTable(s) that make up this dataset.		FALSE
+dataset	spatialRaster	The spatialRaster field describes any spatial raster images included in this dataset.		FALSE
+dataset	spatialVector	The spatialVector field describes any spatial vectors included in this dataset.		FALSE
+dataset	storedProcedure	The storedProcedure field contains information about any stored procedures included with this dataset.		FALSE
+dataset	view	The view field contains information about any views included with this dataset.		FALSE
+dataset	otherEntity	The otherEntity field contains information about any entity in the dataset that is not any of the preceding entities.		FALSE
+dataset	references	The id of another element in this EML document to be used to here in this context.		FALSE
+dataset	id			TRUE
+dataset	system			TRUE
+dataset	scope			TRUE
+purpose	section	A section of related text.		FALSE
+purpose	para	A simple paragraph of text.		FALSE
+purpose	xml:lang			TRUE
+maintenance	description	A text description of the maintenance of this data resource.		FALSE
+maintenance	maintenanceUpdateFrequency	Frequency with which changes and additions are made to the dataset after the initial dataset is completed.		FALSE
+maintenance	changeHistory	A description of changes made to the data since its release.		FALSE
+contact	individualName	The full name of the person being described		FALSE
+contact	organizationName	The full name of the organization being described		FALSE
+contact	positionName	The name of the title or position associated with the resource.		FALSE
+contact	address	The full address information for a given responsible party entry.		FALSE
+contact	phone	Information about the contact's telephone		FALSE
+contact	electronicMailAddress	The email address of the contact.		FALSE
+contact	onlineUrl	A link to associated online information, usually a web site.		FALSE
+contact	userId	An identifier that links this party to a directory of personnel		FALSE
+contact	references	The id of another element in this EML document to be used to here in this context.		FALSE
+contact	id			TRUE
+contact	system			TRUE
+contact	scope			TRUE
+publisher	individualName	The full name of the person being described		FALSE
+publisher	organizationName	The full name of the organization being described		FALSE
+publisher	positionName	The name of the title or position associated with the resource.		FALSE
+publisher	address	The full address information for a given responsible party entry.		FALSE
+publisher	phone	Information about the contact's telephone		FALSE
+publisher	electronicMailAddress	The email address of the contact.		FALSE
+publisher	onlineUrl	A link to associated online information, usually a web site.		FALSE
+publisher	userId	An identifier that links this party to a directory of personnel		FALSE
+publisher	references	The id of another element in this EML document to be used to here in this context.		FALSE
+publisher	id			TRUE
+publisher	system			TRUE
+publisher	scope			TRUE
+project	title	Title of the project.		FALSE
+project	personnel	Contact and role information for people involved in the research project.		FALSE
+project	abstract	Project Abstract.		FALSE
+project	funding	Funding information.		FALSE
+project	studyAreaDescription	Description of the physical area associated with the research project, potentially including coverage, climate, geology, disturbances, etc.		FALSE
+project	designDescription	Description of the design of the research project		FALSE
+project	relatedProject	This field is a recursive link to another project.		FALSE
+project	references	The id of another element in this EML document to be used to here in this context.		FALSE
+project	id			TRUE
+project	system			TRUE
+project	scope			TRUE
+dataTable	alternateIdentifier	A secondary identifier for this entity		FALSE
+dataTable	entityName	The name of the entity name		FALSE
+dataTable	entityDescription	General description of the entity and its contents		FALSE
+dataTable	physical	Description of the physical format of the entity		FALSE
+dataTable	coverage	Information on the geographic, spatial and temporal coverages used in this entity.		FALSE
+dataTable	methods			FALSE
+dataTable	additionalInfo	Any extra information pertitent to the entity.		FALSE
+dataTable	attributeList	The list of attributes associated with this entity.		FALSE
+dataTable	constraint			FALSE
+dataTable	caseSensitive	Specification of text case sensitivity in the dataTable.		FALSE
+dataTable	numberOfRecords	The integer count of the number of records in the dataTable.		FALSE
+dataTable	references	The id of another element in this EML document to be used to here in this context.		FALSE
+dataTable	id			TRUE
+dataTable	system			TRUE
+dataTable	scope			TRUE
+spatialRaster	alternateIdentifier	A secondary identifier for this entity		FALSE
+spatialRaster	entityName	The name of the entity name		FALSE
+spatialRaster	entityDescription	General description of the entity and its contents		FALSE
+spatialRaster	physical	Description of the physical format of the entity		FALSE
+spatialRaster	coverage	Information on the geographic, spatial and temporal coverages used in this entity.		FALSE
+spatialRaster	methods			FALSE
+spatialRaster	additionalInfo	Any extra information pertitent to the entity.		FALSE
+spatialRaster	attributeList	The list of attributes associated with this entity.		FALSE
+spatialRaster	constraint	Description of any relational constraints on this entity.		FALSE
+spatialRaster	spatialReference	The means by which positional information in this entity is related to points on the earth's surface.		FALSE
+spatialRaster	georeferenceInfo	Information on how to position the grid within the coordinate system defined in the spatial reference module.		FALSE
+spatialRaster	horizontalAccuracy	The accuracy of horizontal locational measurements within the data.		FALSE
+spatialRaster	verticalAccuracy	The accuracy of vertical locational measurements within the data.		FALSE
+spatialRaster	cellSizeXDirection	The width of the cell in the x direction.		FALSE
+spatialRaster	cellSizeYDirection	The width of the cell in the x direction.		FALSE
+spatialRaster	numberOfBands	The number of bands in the image.		FALSE
+spatialRaster	rasterOrigin	The corner location of the pixel having the minimum x and y values		FALSE
+spatialRaster	rows	Maximum number of raster objects along the ordinate (y) axis		FALSE
+spatialRaster	columns	Maximum number of raster objects along the abscissa (x) axis		FALSE
+spatialRaster	verticals	Maximum number of raster objects along the vertical (z) axis		FALSE
+spatialRaster	cellGeometry	Geometric representation of the cell's content.		FALSE
+spatialRaster	toneGradation	Number of colors present in the image.		FALSE
+spatialRaster	scaleFactor	The value used for scaling the source raster.		FALSE
+spatialRaster	offset	The offset value used for scaling the source raster.		FALSE
+spatialRaster	imageDescription	Detailed information for data derived from image sensors.		FALSE
+spatialRaster	references	The id of another element in this EML document to be used to here in this context.		FALSE
+spatialRaster	id			TRUE
+spatialRaster	system			TRUE
+spatialRaster	scope			TRUE
+spatialVector	alternateIdentifier	A secondary identifier for this entity		FALSE
+spatialVector	entityName	The name of the entity name		FALSE
+spatialVector	entityDescription	General description of the entity and its contents		FALSE
+spatialVector	physical	Description of the physical format of the entity		FALSE
+spatialVector	coverage	Information on the geographic, spatial and temporal coverages used in this entity.		FALSE
+spatialVector	methods			FALSE
+spatialVector	additionalInfo	Any extra information pertitent to the entity.		FALSE
+spatialVector	attributeList	The list of attributes associated with this entity.		FALSE
+spatialVector	constraint	Description of any relational constraints on this entity.		FALSE
+spatialVector	geometry	Type of geometric feature(s) represented in the entity.		FALSE
+spatialVector	geometricObjectCount	Total number of the geometric objects occurring in the dataset.		FALSE
+spatialVector	topologyLevel	Code which identifies the degree of complexity.		FALSE
+spatialVector	spatialReference			FALSE
+spatialVector	horizontalAccuracy	Horizontal positional accuracy of the data		FALSE
+spatialVector	verticalAccuracy	Vertical positional accuracy of the data		FALSE
+spatialVector	references	The id of another element in this EML document to be used to here in this context.		FALSE
+spatialVector	id			TRUE
+spatialVector	system			TRUE
+spatialVector	scope			TRUE
+storedProcedure	alternateIdentifier	A secondary identifier for this entity		FALSE
+storedProcedure	entityName	The name of the entity name		FALSE
+storedProcedure	entityDescription	General description of the entity and its contents		FALSE
+storedProcedure	physical	Description of the physical format of the entity		FALSE
+storedProcedure	coverage	Information on the geographic, spatial and temporal coverages used in this entity.		FALSE
+storedProcedure	methods			FALSE
+storedProcedure	additionalInfo	Any extra information pertitent to the entity.		FALSE
+storedProcedure	attributeList	The list of attributes associated with this entity.		FALSE
+storedProcedure	constraint			FALSE
+storedProcedure	parameter	A parameter that is required as input to the stored procedure.		FALSE
+storedProcedure	references	The id of another element in this EML document to be used to here in this context.		FALSE
+storedProcedure	id			TRUE
+storedProcedure	system			TRUE
+storedProcedure	scope			TRUE
+view	alternateIdentifier	A secondary identifier for this entity		FALSE
+view	entityName	The name of the entity name		FALSE
+view	entityDescription	General description of the entity and its contents		FALSE
+view	physical	Description of the physical format of the entity		FALSE
+view	coverage	Information on the geographic, spatial and temporal coverages used in this entity.		FALSE
+view	methods			FALSE
+view	additionalInfo	Any extra information pertitent to the entity.		FALSE
+view	attributeList	The list of attributes associated with this entity.		FALSE
+view	constraint			FALSE
+view	queryStatement	Query syntax that produced the view		FALSE
+view	references	The id of another element in this EML document to be used to here in this context.		FALSE
+view	id			TRUE
+view	system			TRUE
+view	scope			TRUE
+otherEntity	alternateIdentifier	A secondary identifier for this entity		FALSE
+otherEntity	entityName	The name of the entity name		FALSE
+otherEntity	entityDescription	General description of the entity and its contents		FALSE
+otherEntity	physical	Description of the physical format of the entity		FALSE
+otherEntity	coverage	Information on the geographic, spatial and temporal coverages used in this entity.		FALSE
+otherEntity	methods			FALSE
+otherEntity	additionalInfo	Any extra information pertitent to the entity.		FALSE
+otherEntity	attributeList	The list of attributes associated with this entity.		FALSE
+otherEntity	constraint			FALSE
+otherEntity	entityType	Contains the name of the type for this entity.		FALSE
+otherEntity	references	The id of another element in this EML document to be used to here in this context.		FALSE
+otherEntity	id			TRUE
+otherEntity	system			TRUE
+otherEntity	scope			TRUE
+description	section	A section of related text.		FALSE
+description	para	A simple paragraph of text.		FALSE
+description	xml:lang			TRUE
+changeHistory	changeScope	An expression describing the scope to which the documented change was applied.		FALSE
+changeHistory	oldValue	The previous value of the data prior to the change.		FALSE
+changeHistory	changeDate	The date the changes were applied.		FALSE
+changeHistory	comment	Explanation or justification for the change made to the data.		FALSE
+constraint	primaryKey	The primary key in the entity		FALSE
+constraint	uniqueKey	A unique key in the entity		FALSE
+constraint	checkConstraint	A constraint which checks a conditional clause within an entity.		FALSE
+constraint	foreignKey	A foreign key relationship among entities		FALSE
+constraint	joinCondition	A non primary/foreign key join		FALSE
+constraint	notNullConstraint	A constraint that indicates that no null values should be present for an attribute.		FALSE
+constraint	id			TRUE
+constraint	system			TRUE
+constraint	scope			TRUE
+moduleDocs	moduleName			FALSE
+moduleDocs	moduleDescription			FALSE
+moduleDocs	recommendedUsage			FALSE
+moduleDocs	standAlone			FALSE
+moduleDescription	section	A section of related text.		FALSE
+moduleDescription	para	A simple paragraph of text.		FALSE
+moduleDescription	xml:lang			TRUE
+example	section	A section of related text.		FALSE
+example	para	A simple paragraph of text.		FALSE
+example	xml:lang			TRUE
+alternateIdentifier	system	The system in which this id is relevant		TRUE
+physical	objectName	The name of the data object.		FALSE
+physical	size	Describes the physical size of the data object.		FALSE
+physical	authentication	A value, typically a checksum, used to authenticate that the bitstream delivered to the user is identical to the original.		FALSE
+physical	compressionMethod	Name of a compression method applied		FALSE
+physical	encodingMethod	Name of a encoding method applied		FALSE
+physical	characterEncoding	Contains the name of the character encoding used for the data.		FALSE
+physical	dataFormat	Describes the internal physical format of a data object.		FALSE
+physical	distribution	Information on how the resource is distributed online and offline		FALSE
+physical	references	The id of another element in this EML document to be used to here in this context.		FALSE
+physical	id			TRUE
+physical	system			TRUE
+physical	scope			TRUE
+additionalInfo	section	A section of related text.		FALSE
+additionalInfo	para	A simple paragraph of text.		FALSE
+additionalInfo	xml:lang			TRUE
+article	journal	The name of the journal, magazine, newspaper, zine, etc... in which the article was published.		FALSE
+article	volume	The volume of the journal in which the article appears		FALSE
+article	issue	The issue of the journal in which the article appears		FALSE
+article	pageRange	The beginning and end page numbers of the journal article		FALSE
+article	publisher	Organization that actually publishes the article		FALSE
+article	publicationPlace	The location at which the work was published.		FALSE
+article	ISSN	The unique Internation Standard Serial Number		FALSE
+book	publisher	Organization that actually publishes the book		FALSE
+book	publicationPlace	The location at which the work was published.		FALSE
+book	edition	The edition of the book being described.		FALSE
+book	volume	The volume of the book that is part of a series.		FALSE
+book	numberOfVolumes	Number of volumes in a collection		FALSE
+book	totalPages	The total number of pages in the book.		FALSE
+book	totalFigures	The total number of figures in the book.		FALSE
+book	totalTables	The total number of tables in a book.		FALSE
+book	ISBN	The unique Internation Standard Book Number		FALSE
+chapter	publisher	Organization that actually publishes the book		FALSE
+chapter	publicationPlace	The location at which the work was published.		FALSE
+chapter	edition	The edition of the book being described.		FALSE
+chapter	volume	The volume of the book that is part of a series.		FALSE
+chapter	numberOfVolumes	Number of volumes in a collection		FALSE
+chapter	totalPages	The total number of pages in the book.		FALSE
+chapter	totalFigures	The total number of figures in the book.		FALSE
+chapter	totalTables	The total number of tables in a book.		FALSE
+chapter	ISBN	The unique Internation Standard Book Number		FALSE
+chapter	chapterNumber	The chapter number of interest within a book		FALSE
+chapter	editor	The name of the editor of the book.		FALSE
+chapter	bookTitle	The title of the book.		FALSE
+chapter	pageRange	The beginning and ending page numbers of a chapter.		FALSE
+editedBook	publisher	Organization that actually publishes the book		FALSE
+editedBook	publicationPlace	The location at which the work was published.		FALSE
+editedBook	edition	The edition of the book being described.		FALSE
+editedBook	volume	The volume of the book that is part of a series.		FALSE
+editedBook	numberOfVolumes	Number of volumes in a collection		FALSE
+editedBook	totalPages	The total number of pages in the book.		FALSE
+editedBook	totalFigures	The total number of figures in the book.		FALSE
+editedBook	totalTables	The total number of tables in a book.		FALSE
+editedBook	ISBN	The unique Internation Standard Book Number		FALSE
+manuscript	institution	The address and contact information needed to request a manuscript.		FALSE
+manuscript	totalPages	The total number of pages in the manuscript.		FALSE
+report	reportNumber	The unique identification number assigned to the report.		FALSE
+report	publisher	Organization that actually publishes the report		FALSE
+report	publicationPlace	The location at which the work was published.		FALSE
+report	totalPages	The total number of pages in the report.		FALSE
+thesis	degree	The name or degree level for which the thesis was completed.		FALSE
+thesis	institution	The name of the degree-awarding institution		FALSE
+thesis	totalPages	The total number of pages in the thesis.		FALSE
+conferenceProceedings	publisher	Organization that actually publishes the book		FALSE
+conferenceProceedings	publicationPlace	The location at which the work was published.		FALSE
+conferenceProceedings	edition	The edition of the book being described.		FALSE
+conferenceProceedings	volume	The volume of the book that is part of a series.		FALSE
+conferenceProceedings	numberOfVolumes	Number of volumes in a collection		FALSE
+conferenceProceedings	totalPages	The total number of pages in the book.		FALSE
+conferenceProceedings	totalFigures	The total number of figures in the book.		FALSE
+conferenceProceedings	totalTables	The total number of tables in a book.		FALSE
+conferenceProceedings	ISBN	The unique Internation Standard Book Number		FALSE
+conferenceProceedings	chapterNumber	The chapter number of interest within a book		FALSE
+conferenceProceedings	editor	The name of the editor of the book.		FALSE
+conferenceProceedings	bookTitle	The title of the book.		FALSE
+conferenceProceedings	pageRange	The beginning and ending page numbers of a chapter.		FALSE
+conferenceProceedings	conferenceName	The name of the conference whose proceedings have been published.		FALSE
+conferenceProceedings	conferenceDate	The date the conference was held.		FALSE
+conferenceProceedings	conferenceLocation	The location where the conference was held.		FALSE
+personalCommunication	publisher	Organization that actually publishes the communication		FALSE
+personalCommunication	publicationPlace	The location at which the work was published.		FALSE
+personalCommunication	communicationType	The type of personal communication.		FALSE
+personalCommunication	recipient	Recipient of the communication		FALSE
+map	publisher	Organization that actually publishes the map		FALSE
+map	edition	The edition of the map being described.		FALSE
+map	geographicCoverage	Description of the geographic area which the map covers		FALSE
+map	scale	The Map's scale		FALSE
+generic	publisher	Organization which actually publishes the reference		FALSE
+generic	publicationPlace	The location at which the work was published.		FALSE
+generic	referenceType	The type of reference.		FALSE
+generic	volume	The volume of the reference that is part of a series.		FALSE
+generic	numberOfVolumes	Number of volumes in a collection		FALSE
+generic	totalPages	The total number of pages in the references.		FALSE
+generic	totalFigures	The total number of figures in the reference.		FALSE
+generic	totalTables	The total number of tables in a reference.		FALSE
+generic	edition	The edition of the generic reference being described.		FALSE
+generic	originalPublication	References current publication to its original.		FALSE
+generic	reprintEdition	Reference for current edition that was originally published under a different title.		FALSE
+generic	reviewedItem	Reference types that are reviews of other references.		FALSE
+generic	ISBN	The unique Internation Standard Book Number		FALSE
+generic	ISSN	The unique Internation Standard Serial Number		FALSE
+audioVisual	publisher	Organization which actually distributes the video, film, the broadcaster etc...		FALSE
+audioVisual	publicationPlace	The location at which the work was published.		FALSE
+audioVisual	performer	The performers in the audio visual production		FALSE
+audioVisual	ISBN	The unique Internation Standard Book Number		FALSE
+presentation	conferenceName	The name of the conference at which this presentation was given.		FALSE
+presentation	conferenceDate	The date the conference was held.		FALSE
+presentation	conferenceLocation	The location where the conference was held.		FALSE
+editor	individualName	The full name of the person being described		FALSE
+editor	organizationName	The full name of the organization being described		FALSE
+editor	positionName	The name of the title or position associated with the resource.		FALSE
+editor	address	The full address information for a given responsible party entry.		FALSE
+editor	phone	Information about the contact's telephone		FALSE
+editor	electronicMailAddress	The email address of the contact.		FALSE
+editor	onlineUrl	A link to associated online information, usually a web site.		FALSE
+editor	userId	An identifier that links this party to a directory of personnel		FALSE
+editor	references	The id of another element in this EML document to be used to here in this context.		FALSE
+editor	id			TRUE
+editor	system			TRUE
+editor	scope			TRUE
+conferenceLocation	deliveryPoint	The location for postal deliveries.		FALSE
+conferenceLocation	city	The name of the city for the contact.		FALSE
+conferenceLocation	administrativeArea	The political area of a country.		FALSE
+conferenceLocation	postalCode	The postal code used for routing to an address.		FALSE
+conferenceLocation	country	The name of the country for the contact's address.		FALSE
+conferenceLocation	references	The id of another element in this EML document to be used to here in this context.		FALSE
+conferenceLocation	id			TRUE
+conferenceLocation	system			TRUE
+conferenceLocation	scope			TRUE
+institution	individualName	The full name of the person being described		FALSE
+institution	organizationName	The full name of the organization being described		FALSE
+institution	positionName	The name of the title or position associated with the resource.		FALSE
+institution	address	The full address information for a given responsible party entry.		FALSE
+institution	phone	Information about the contact's telephone		FALSE
+institution	electronicMailAddress	The email address of the contact.		FALSE
+institution	onlineUrl	A link to associated online information, usually a web site.		FALSE
+institution	userId	An identifier that links this party to a directory of personnel		FALSE
+institution	references	The id of another element in this EML document to be used to here in this context.		FALSE
+institution	id			TRUE
+institution	system			TRUE
+institution	scope			TRUE
+recipient	individualName	The full name of the person being described		FALSE
+recipient	organizationName	The full name of the organization being described		FALSE
+recipient	positionName	The name of the title or position associated with the resource.		FALSE
+recipient	address	The full address information for a given responsible party entry.		FALSE
+recipient	phone	Information about the contact's telephone		FALSE
+recipient	electronicMailAddress	The email address of the contact.		FALSE
+recipient	onlineUrl	A link to associated online information, usually a web site.		FALSE
+recipient	userId	An identifier that links this party to a directory of personnel		FALSE
+recipient	references	The id of another element in this EML document to be used to here in this context.		FALSE
+recipient	id			TRUE
+recipient	system			TRUE
+recipient	scope			TRUE
+performer	individualName	The full name of the person being described		FALSE
+performer	organizationName	The full name of the organization being described		FALSE
+performer	positionName	The name of the title or position associated with the resource.		FALSE
+performer	address	The full address information for a given responsible party entry.		FALSE
+performer	phone	Information about the contact's telephone		FALSE
+performer	electronicMailAddress	The email address of the contact.		FALSE
+performer	onlineUrl	A link to associated online information, usually a web site.		FALSE
+performer	userId	An identifier that links this party to a directory of personnel		FALSE
+performer	references	The id of another element in this EML document to be used to here in this context.		FALSE
+performer	id			TRUE
+performer	system			TRUE
+performer	scope			TRUE
+methodStep	description	Description of the methods employed in collecting or generating a data set or other resource or in quality control and assurance.		FALSE
+methodStep	citation	Literature citation relating to the methods used.		FALSE
+methodStep	protocol	Protocol description relating to the methods used.		FALSE
+methodStep	instrumentation	Instruments used for measurement and recording data.		FALSE
+methodStep	software	Software used in the processing of data.		FALSE
+methodStep	subStep			FALSE
+methodStep	dataSource	A source of data used by this methodStep.		FALSE
+dataSource	alternateIdentifier	A secondary identifier for this entity		FALSE
+dataSource	shortName	A short name that describes the resource, sometimes a filename.		FALSE
+dataSource	title	A brief description of the resource, providing enough detail to differentiate it from other similar resources.		FALSE
+dataSource	creator	The people or organizations who created this resource.		FALSE
+dataSource	metadataProvider	The people or organizations who created provided documentation and other metadata for this resource.		FALSE
+dataSource	associatedParty	Other people or organizations who should be associated with this resource.		FALSE
+dataSource	pubDate	The publication date of the resource.		FALSE
+dataSource	language	The language in which the resource is written.		FALSE
+dataSource	series	The series from which the resource came.		FALSE
+dataSource	abstract	A brief overview of the resource.		FALSE
+dataSource	keywordSet	Keyword information that describes the resource.		FALSE
+dataSource	additionalInfo	Any extra information pertitent to the resource.		FALSE
+dataSource	intellectualRights	Intellectual property rights regarding usage and licensing of this resource.		FALSE
+dataSource	distribution	Information on how the resource is distributed online and offline		FALSE
+dataSource	coverage	Extent of the coverage of the resource.		FALSE
+dataSource	purpose	A description of the purpose of this dataset.		FALSE
+dataSource	maintenance	A description of the maintenance of this data resource.		FALSE
+dataSource	contact	The contact for this dataset		FALSE
+dataSource	publisher	The publisher of this data set		FALSE
+dataSource	pubPlace	The location that the resource was published.		FALSE
+dataSource	methods	The methods field documents scientific methods used in the collection of this dataset.		FALSE
+dataSource	project	The project field contains information on the project in which this dataset was collected.		FALSE
+dataSource	dataTable	The dataTable field documents the dataTable(s) that make up this dataset.		FALSE
+dataSource	spatialRaster	The spatialRaster field describes any spatial raster images included in this dataset.		FALSE
+dataSource	spatialVector	The spatialVector field describes any spatial vectors included in this dataset.		FALSE
+dataSource	storedProcedure	The storedProcedure field contains information about any stored procedures included with this dataset.		FALSE
+dataSource	view	The view field contains information about any views included with this dataset.		FALSE
+dataSource	otherEntity	The otherEntity field contains information about any entity in the dataset that is not any of the preceding entities.		FALSE
+dataSource	references	The id of another element in this EML document to be used to here in this context.		FALSE
+dataSource	id			TRUE
+dataSource	system			TRUE
+dataSource	scope			TRUE
+sampling	studyExtent	A description of the geographic area sampled (geographic coverage), the sampling frequency (temporal coverage), and living organisms sampled (taxonomic coverage.		FALSE
+sampling	samplingDescription	A description of sampling methods and procedures		FALSE
+sampling	spatialSamplingUnits	Spatial sampling units represent the plots sampled.		FALSE
+sampling	citation	Literature citation relating to the sampling procedures used.		FALSE
+studyExtent	coverage	A description of the geographic area sampled (geographic coverage), the sampling frequency (temporal coverage), and living organisms sampled (taxonomic coverage.		FALSE
+studyExtent	description	A textual description of the specific areas sampled (geographic coverage), the sampling frequency (temporal coverage), and groups of living organisms sampled (taxonomic coverage).		FALSE
+samplingDescription	section	A section of related text.		FALSE
+samplingDescription	para	A simple paragraph of text.		FALSE
+samplingDescription	xml:lang			TRUE
+spatialSamplingUnits	referencedEntityId	The identifier of an entity described in the entity module. This is usually a GIS layer.		FALSE
+spatialSamplingUnits	coverage	Structured description of each sampling unit location		FALSE
+coverage	geographicDescription	Short text description of the geographic areal domain of the data set.		FALSE
+coverage	boundingCoordinates	The four margins (N, S, E, W) of a bounding box on the earth's surface, or when considered in lat-lon pairs, the corners of the box. To define a single point, use the same value in each lat or lon pair. These elements are meant to convey general information and are not for accurate mapping. More specific information may be included by using the elements in the spatialReference schema.		FALSE
+coverage	datasetGPolygon	This construct creates a spatial ring with a hollow center.		FALSE
+qualityControl	description	Description of the methods employed in collecting or generating a data set or other resource or in quality control and assurance.		FALSE
+qualityControl	citation	Literature citation relating to the methods used.		FALSE
+qualityControl	protocol	Protocol description relating to the methods used.		FALSE
+qualityControl	instrumentation	Instruments used for measurement and recording data.		FALSE
+qualityControl	software	Software used in the processing of data.		FALSE
+qualityControl	subStep			FALSE
+protocol	alternateIdentifier	A secondary identifier for this entity		FALSE
+protocol	shortName	A short name that describes the resource, sometimes a filename.		FALSE
+protocol	title	A brief description of the resource, providing enough detail to differentiate it from other similar resources.		FALSE
+protocol	creator	The people or organizations who created this resource.		FALSE
+protocol	metadataProvider	The people or organizations who created provided documentation and other metadata for this resource.		FALSE
+protocol	associatedParty	Other people or organizations who should be associated with this resource.		FALSE
+protocol	pubDate	The publication date of the resource.		FALSE
+protocol	language	The language in which the resource is written.		FALSE
+protocol	series	The series from which the resource came.		FALSE
+protocol	abstract	A brief overview of the resource.		FALSE
+protocol	keywordSet	Keyword information that describes the resource.		FALSE
+protocol	additionalInfo	Any extra information pertitent to the resource.		FALSE
+protocol	intellectualRights	Intellectual property rights regarding usage and licensing of this resource.		FALSE
+protocol	distribution	Information on how the resource is distributed online and offline		FALSE
+protocol	coverage	Extent of the coverage of the resource.		FALSE
+protocol	proceduralStep			FALSE
+protocol	references	The id of another element in this EML document to be used to here in this context.		FALSE
+protocol	id			TRUE
+protocol	system			TRUE
+protocol	scope			TRUE
+software	alternateIdentifier	A secondary identifier for this entity		FALSE
+software	shortName	A short name that describes the resource, sometimes a filename.		FALSE
+software	title	A brief description of the resource, providing enough detail to differentiate it from other similar resources.		FALSE
+software	creator	The people or organizations who created this resource.		FALSE
+software	metadataProvider	The people or organizations who created provided documentation and other metadata for this resource.		FALSE
+software	associatedParty	Other people or organizations who should be associated with this resource.		FALSE
+software	pubDate	The publication date of the resource.		FALSE
+software	language	The language in which the resource is written.		FALSE
+software	series	The series from which the resource came.		FALSE
+software	abstract	A brief overview of the resource.		FALSE
+software	keywordSet	Keyword information that describes the resource.		FALSE
+software	additionalInfo	Any extra information pertitent to the resource.		FALSE
+software	intellectualRights	Intellectual property rights regarding usage and licensing of this resource.		FALSE
+software	distribution	Information on how the resource is distributed online and offline		FALSE
+software	coverage	Extent of the coverage of the resource.		FALSE
+software	implementation	Describes the hardware and/or operating system requirements for one implementation of a package.		FALSE
+software	dependency	This fields documents any dependencies that this software package in general might have.		FALSE
+software	licenseURL	URL where the license can be found		FALSE
+software	license	Text of the license		FALSE
+software	version	Version of the software being packaged.		FALSE
+software	project			FALSE
+software	references	The id of another element in this EML document to be used to here in this context.		FALSE
+software	id			TRUE
+software	system			TRUE
+software	scope			TRUE
+subStep	description	Description of the methods employed in collecting or generating a data set or other resource or in quality control and assurance.		FALSE
+subStep	citation	Literature citation relating to the methods used.		FALSE
+subStep	protocol	Protocol description relating to the methods used.		FALSE
+subStep	instrumentation	Instruments used for measurement and recording data.		FALSE
+subStep	software	Software used in the processing of data.		FALSE
+subStep	subStep			FALSE
+individualName	salutation	The salutation used to address an individual		FALSE
+individualName	givenName	The given name of the individual.		FALSE
+individualName	surName	The last name of the individual.		FALSE
+organizationName	value			FALSE
+organizationName	xml:lang			TRUE
+positionName	value			FALSE
+positionName	xml:lang			TRUE
+address	deliveryPoint	The location for postal deliveries.		FALSE
+address	city	The name of the city for the contact.		FALSE
+address	administrativeArea	The political area of a country.		FALSE
+address	postalCode	The postal code used for routing to an address.		FALSE
+address	country	The name of the country for the contact's address.		FALSE
+address	references	The id of another element in this EML document to be used to here in this context.		FALSE
+address	id			TRUE
+address	system			TRUE
+address	scope			TRUE
+phone	phonetype	The type of the phone to which this number applies		TRUE
+electronicMailAddress	value			FALSE
+electronicMailAddress	xml:lang			TRUE
+userId	directory	The directory system within which the directoryId can be retrieved.		TRUE
+salutation	value			FALSE
+salutation	xml:lang			TRUE
+givenName	value			FALSE
+givenName	xml:lang			TRUE
+surName	value			FALSE
+surName	xml:lang			TRUE
+deliveryPoint	value			FALSE
+deliveryPoint	xml:lang			TRUE
+city	value			FALSE
+city	xml:lang			TRUE
+administrativeArea	value			FALSE
+administrativeArea	xml:lang			TRUE
+postalCode	value			FALSE
+postalCode	xml:lang			TRUE
+country	value			FALSE
+country	xml:lang			TRUE
+party	individualName	The full name of the person being described		FALSE
+party	organizationName	The full name of the organization being described		FALSE
+party	positionName	The name of the title or position associated with the resource.		FALSE
+party	address	The full address information for a given responsible party entry.		FALSE
+party	phone	Information about the contact's telephone		FALSE
+party	electronicMailAddress	The email address of the contact.		FALSE
+party	onlineUrl	A link to associated online information, usually a web site.		FALSE
+party	userId	An identifier that links this party to a directory of personnel		FALSE
+party	references	The id of another element in this EML document to be used to here in this context.		FALSE
+party	id			TRUE
+party	system			TRUE
+party	scope			TRUE
+size	unit	Unit of measurement for the entity size, by default byte		TRUE
+authentication	method	The method used to calculate an authentication checksum.		TRUE
+dataFormat	textFormat	Description of a text formatted object		FALSE
+dataFormat	externallyDefinedFormat	Information about a non-text or proprietary formatted object.		FALSE
+dataFormat	binaryRasterFormat	Contains binary raster data header parameters		FALSE
+textFormat	numHeaderLines	Number of header lines preceding data.		FALSE
+textFormat	numFooterLines	Number of footer lines following data.		FALSE
+textFormat	recordDelimiter	Character used to delimit records.		FALSE
+textFormat	physicalLineDelimiter	Character used to delimit physical lines.		FALSE
+textFormat	numPhysicalLinesPerRecord	The number of physical lines in the file spanned by a single logical data record.		FALSE
+textFormat	maxRecordLength	The maximum number of characters in any record in the physical file.		FALSE
+textFormat	attributeOrientation	Orientation of attributes.		FALSE
+textFormat	simpleDelimited	A simple delimited format.		FALSE
+textFormat	complex	A complex text format.		FALSE
+simpleDelimited	fieldDelimiter	Character used to delimit the end of an attribute		FALSE
+simpleDelimited	collapseDelimiters	Specification of how to handle consecutive delimiters while parsing		FALSE
+simpleDelimited	quoteCharacter	Character used to quote values for delimiter escaping		FALSE
+simpleDelimited	literalCharacter	Character used to escape other special characters		FALSE
+complex	textFixed	Describes the physical format of data sequences that use a fixed number of characters in a specified position in the stream to locate attribute values.		FALSE
+complex	textDelimited	Describes the physical format of data sequences that use delimiters in the stream to locate attribute values.		FALSE
+textFixed	fieldWidth	Field width in characters for fixed field length.		FALSE
+textFixed	lineNumber	The line on which the data field is found, when the data record is written over more than one physical line in the file.		FALSE
+textFixed	fieldStartColumn	The starting column number for a fixed format attribute.		FALSE
+textDelimited	fieldDelimiter	Character used to delimit the end of a particular attribute		FALSE
+textDelimited	collapseDelimiters	Specification of how to handle consecutive delimiters while parsing		FALSE
+textDelimited	lineNumber	The line on which the data field is found, when the data record is written over more than one physical line in the file.		FALSE
+textDelimited	quoteCharacter	Character used to quote values for delimiter escaping		FALSE
+textDelimited	literalCharacter	Character used to escape other special characters		FALSE
+externallyDefinedFormat	formatName	Name of the format of the data object		FALSE
+externallyDefinedFormat	formatVersion	Version of the format of the data object		FALSE
+externallyDefinedFormat	citation	Citation providing more details about the physical format.		FALSE
+binaryRasterFormat	rowColumnOrientation	Orientation for reading rows and columns.		FALSE
+binaryRasterFormat	multiBand	Multiple band image information.		FALSE
+binaryRasterFormat	nbits	The number of bits per pixel per band.		FALSE
+binaryRasterFormat	byteorder	The byte order in which values are stored.		FALSE
+binaryRasterFormat	skipbytes	The number of bytes of data in the image file to skip in order to reach the start of the image data.		FALSE
+binaryRasterFormat	bandrowbytes	The number of bytes per band per row.		FALSE
+binaryRasterFormat	totalrowbytes	The total number of bytes of data per row.		FALSE
+binaryRasterFormat	bandgapbytes	The number of bytes between bands in a BSQ format image.		FALSE
+multiBand	nbands	The number of spectral bands in the image.		FALSE
+multiBand	layout	The organization of the bands in the image file.		FALSE
+distribution	online	online		FALSE
+distribution	offline	offline		FALSE
+distribution	inline	inline		FALSE
+distribution	access	access		FALSE
+distribution	references	The id of another element in this EML document to be used to here in this context.		FALSE
+distribution	id			TRUE
+distribution	system			TRUE
+distribution	scope			TRUE
+online	onlineDescription	onlineDescription		FALSE
+online	url	url		FALSE
+online	connection	connection		FALSE
+offline	mediumName	Name of the medium that for this resource distribution		FALSE
+offline	mediumDensity	the density of the digital medium if this is relevant.		FALSE
+offline	mediumDensityUnits	a numerical density's units		FALSE
+offline	mediumVolume	total volume of the storage medium		FALSE
+offline	mediumFormat	format of the medium on which the resource is shipped.		FALSE
+offline	mediumNote	note about the media		FALSE
+url	function			TRUE
+connection	connectionDefinition	Connection Definition		FALSE
+connection	parameter	A parameter to be used to make this connection.		FALSE
+connection	references	The id of another element in this EML document to be used to here in this context.		FALSE
+connection	id			TRUE
+connection	system			TRUE
+connection	scope			TRUE
+researchProject	title	Title of the project.		FALSE
+researchProject	personnel	Contact and role information for people involved in the research project.		FALSE
+researchProject	abstract	Project Abstract.		FALSE
+researchProject	funding	Funding information.		FALSE
+researchProject	studyAreaDescription	Description of the physical area associated with the research project, potentially including coverage, climate, geology, disturbances, etc.		FALSE
+researchProject	designDescription	Description of the design of the research project		FALSE
+researchProject	relatedProject	This field is a recursive link to another project.		FALSE
+researchProject	references	The id of another element in this EML document to be used to here in this context.		FALSE
+researchProject	id			TRUE
+researchProject	system			TRUE
+researchProject	scope			TRUE
+personnel	individualName	The full name of the person being described		FALSE
+personnel	organizationName	The full name of the organization being described		FALSE
+personnel	positionName	The name of the title or position associated with the resource.		FALSE
+personnel	address	The full address information for a given responsible party entry.		FALSE
+personnel	phone	Information about the contact's telephone		FALSE
+personnel	electronicMailAddress	The email address of the contact.		FALSE
+personnel	onlineUrl	A link to associated online information, usually a web site.		FALSE
+personnel	userId	An identifier that links this party to a directory of personnel		FALSE
+personnel	references	The id of another element in this EML document to be used to here in this context.		FALSE
+personnel	id			TRUE
+personnel	system			TRUE
+personnel	scope			TRUE
+personnel	role	Role information for people involved in the research project.		FALSE
+abstract	section	A section of related text.		FALSE
+abstract	para	A simple paragraph of text.		FALSE
+abstract	xml:lang			TRUE
+funding	section	A section of related text.		FALSE
+funding	para	A simple paragraph of text.		FALSE
+funding	xml:lang			TRUE
+studyAreaDescription	descriptor	Description of non-coverage characteristics of the study area such as climate, geology, disturbances		FALSE
+studyAreaDescription	citation	The citation for this descriptor.		FALSE
+studyAreaDescription	coverage	The coverage of this descriptor.		FALSE
+descriptor	descriptorValue	Description of some aspect of the study area.		FALSE
+descriptor	citation	A citation for this descriptor.		FALSE
+descriptor	name	The name of the descriptor system.		TRUE
+descriptor	citableClassificationSystem	This boolean attribute defines whether this descriptor comes from a citable classification system or not.		TRUE
+descriptorValue	name_or_id	The name part of a name/value pair of a descriptor; or ID portion of a classification, if applicable.		TRUE
+designDescription	description	Textual description of research design.		FALSE
+designDescription	citation	Citation that describes the research design.		FALSE
+relatedProject	title	Title of the project.		FALSE
+relatedProject	personnel	Contact and role information for people involved in the research project.		FALSE
+relatedProject	abstract	Project Abstract.		FALSE
+relatedProject	funding	Funding information.		FALSE
+relatedProject	studyAreaDescription	Description of the physical area associated with the research project, potentially including coverage, climate, geology, disturbances, etc.		FALSE
+relatedProject	designDescription	Description of the design of the research project		FALSE
+relatedProject	relatedProject	This field is a recursive link to another project.		FALSE
+relatedProject	references	The id of another element in this EML document to be used to here in this context.		FALSE
+relatedProject	id			TRUE
+relatedProject	system			TRUE
+relatedProject	scope			TRUE
+proceduralStep	description	Description of the methods employed in collecting or generating a data set or other resource or in quality control and assurance.		FALSE
+proceduralStep	citation	Literature citation relating to the methods used.		FALSE
+proceduralStep	protocol	Protocol description relating to the methods used.		FALSE
+proceduralStep	instrumentation	Instruments used for measurement and recording data.		FALSE
+proceduralStep	software	Software used in the processing of data.		FALSE
+proceduralStep	subStep			FALSE
+alternateIdentifier	system			TRUE
+title	value			FALSE
+title	xml:lang			TRUE
+creator	individualName	The full name of the person being described		FALSE
+creator	organizationName	The full name of the organization being described		FALSE
+creator	positionName	The name of the title or position associated with the resource.		FALSE
+creator	address	The full address information for a given responsible party entry.		FALSE
+creator	phone	Information about the contact's telephone		FALSE
+creator	electronicMailAddress	The email address of the contact.		FALSE
+creator	onlineUrl	A link to associated online information, usually a web site.		FALSE
+creator	userId	An identifier that links this party to a directory of personnel		FALSE
+creator	references	The id of another element in this EML document to be used to here in this context.		FALSE
+creator	id			TRUE
+creator	system			TRUE
+creator	scope			TRUE
+metadataProvider	individualName	The full name of the person being described		FALSE
+metadataProvider	organizationName	The full name of the organization being described		FALSE
+metadataProvider	positionName	The name of the title or position associated with the resource.		FALSE
+metadataProvider	address	The full address information for a given responsible party entry.		FALSE
+metadataProvider	phone	Information about the contact's telephone		FALSE
+metadataProvider	electronicMailAddress	The email address of the contact.		FALSE
+metadataProvider	onlineUrl	A link to associated online information, usually a web site.		FALSE
+metadataProvider	userId	An identifier that links this party to a directory of personnel		FALSE
+metadataProvider	references	The id of another element in this EML document to be used to here in this context.		FALSE
+metadataProvider	id			TRUE
+metadataProvider	system			TRUE
+metadataProvider	scope			TRUE
+associatedParty	individualName	The full name of the person being described		FALSE
+associatedParty	organizationName	The full name of the organization being described		FALSE
+associatedParty	positionName	The name of the title or position associated with the resource.		FALSE
+associatedParty	address	The full address information for a given responsible party entry.		FALSE
+associatedParty	phone	Information about the contact's telephone		FALSE
+associatedParty	electronicMailAddress	The email address of the contact.		FALSE
+associatedParty	onlineUrl	A link to associated online information, usually a web site.		FALSE
+associatedParty	userId	An identifier that links this party to a directory of personnel		FALSE
+associatedParty	references	The id of another element in this EML document to be used to here in this context.		FALSE
+associatedParty	id			TRUE
+associatedParty	system			TRUE
+associatedParty	scope			TRUE
+associatedParty	role	The role the party played with respect to the resource.		FALSE
+language	value			FALSE
+language	xml:lang			TRUE
+keywordSet	keyword	A single keyword that describes the resource.		FALSE
+keywordSet	keywordThesaurus	The name of a thesaurus from which the keyword is derived.		FALSE
+keyword	value			FALSE
+keyword	xml:lang			TRUE
+keyword	keywordType	The type of each keyword.		TRUE
+intellectualRights	section	A section of related text.		FALSE
+intellectualRights	para	A simple paragraph of text.		FALSE
+intellectualRights	xml:lang			TRUE
+distribution	online	Online distribution information		FALSE
+distribution	offline	data are available offline		FALSE
+distribution	inline	data distributed inline in the metadata.		FALSE
+references	system			TRUE
+online	onlineDescription	Brief description of the the content of online		FALSE
+online	url	A URL or this resource.		FALSE
+online	connection	A connection to a data service		FALSE
+online	connectionDefinition	The definition of a connection that will be used in another location in the EML document		FALSE
+schemeName	system	The system in which this scheme name is relevant		TRUE
+parameterDefinition	name	The Name of a parameter that is needed to properly use this connection scheme.		FALSE
+parameterDefinition	definition	The definition of a parameter that is needed to properly use this connection scheme.		FALSE
+parameterDefinition	defaultValue	The default value for a parameter that is needed to properly use this connection scheme.		FALSE
+onlineDescription	value			FALSE
+onlineDescription	xml:lang			TRUE
+connectionDefinition	schemeName	The name of the scheme used to identify this connection.		FALSE
+connectionDefinition	description	The description of the scheme used to identify this connection.		FALSE
+connectionDefinition	parameterDefinition	The definition of a parameter that is needed to properly use this connection scheme.		FALSE
+connectionDefinition	references	The id of another element in this EML document to be used to here in this context.		FALSE
+connectionDefinition	id			TRUE
+connectionDefinition	system			TRUE
+connectionDefinition	scope			TRUE
+parameter	name	Name of the parameter to be used to make this connection.		FALSE
+parameter	value	The value of the parameter to be used to make this connection.		FALSE
+value	xml:lang			TRUE
+implementation	distribution	Information on how the resource is distributed online and offline		FALSE
+implementation	size	Physical size of an implementation.		FALSE
+implementation	language	The International Language of the software implementation.		FALSE
+implementation	operatingSystem	The operating system(s) an implementation runs on.		FALSE
+implementation	machineProcessor	The machine processor(s) required for executing the implementation.		FALSE
+implementation	virtualMachine	The virtual machine that the implementation requires.		FALSE
+implementation	diskUsage	The minimum amount of Disk Space required to install this implementation.		FALSE
+implementation	runtimeMemoryUsage	The minimum amount of memory required to run an implementation.		FALSE
+implementation	programmingLanguage	The computer programming language the software package was programmed in.		FALSE
+implementation	checksum	The generated checksum value of a software package that is a self-contained module.		FALSE
+implementation	dependency	This fields documents any dependencies that this implementation might have.		FALSE
+language	LanguageValue	The actual value for the language or a code for the language.		FALSE
+language	LanguageCodeStandard	The International Language Code being used in the field languageValue.		FALSE
+dependency	action	Describes what action needs to be undertaken (if any) for a software dependency at either the software package or implementation level.		FALSE
+dependency	software			FALSE
+spatialReference	horizCoordSysName	The name of a predefined coordinate system		FALSE
+spatialReference	horizCoordSysDef	The definition of a coordinate system		FALSE
+spatialReference	vertCoordSys	The reference frame or system from which vertical distances (altitudes or depths) are measured.		FALSE
+spatialReference	references	The id of another element in this EML document to be used to here in this context.		FALSE
+spatialReference	id			TRUE
+spatialReference	system			TRUE
+spatialReference	scope			TRUE
+georeferenceInfo	cornerPoint	Location of a corner on a rectified grid within the coordinate system.		FALSE
+georeferenceInfo	controlPoint	A point defined in both grid cell and georeferenced coordinates that is used to position the raster grid within the coordinate system defined in the spatialReference modoule.		FALSE
+georeferenceInfo	bilinearFit	Terms of a bilinear model to fit the grid to the coordinate system.		FALSE
+cornerPoint	xCoordinate	X Location of the georeferencing point in the X diminsion of the coordinate system.		FALSE
+cornerPoint	yCoordinate	Location of the georeferencing point in the Y dimension of the coordinate system.		FALSE
+cornerPoint	pointInPixel	Location within the pixel of the georeferencing point.		FALSE
+cornerPoint	corner	Identification of the corner in the grid corresponding to the coordinates provided.		FALSE
+controlPoint	column	Column location of the georeferencing point in the grid.		FALSE
+controlPoint	row	Row location of the georeferencing point in the grid.		FALSE
+controlPoint	xCoordinate	X Location of the georeferencing point in the X diminsion of the coordinate system.		FALSE
+controlPoint	yCoordinate	Location of the georeferencing point in the Y dimension of the coordinate system.		FALSE
+controlPoint	pointInPixel	Location within the pixel of the georeferencing point.		FALSE
+bilinearFit	xIntercept	Location of the rasterOrigin point on the x axis of the the coordinate system.		FALSE
+bilinearFit	xSlope	Slope describing transformation of grid cell distances into x coordinates.		FALSE
+bilinearFit	yIntercept	Location of the rasterOrigin point on the y axis of the the coordinate system.		FALSE
+bilinearFit	ySlope	Slope describing transformation of grid cell distances into y axis coordinates.		FALSE
+horizontalAccuracy	accuracyReport	A qualitative statement about the accuracy of the data.		FALSE
+horizontalAccuracy	quantitativeAccuracyReport	A quantitative assessment of the data quality.		FALSE
+verticalAccuracy	accuracyReport	A qualitative statement about the accuracy of the data.		FALSE
+verticalAccuracy	quantitativeAccuracyReport	A quantitative assessment of the data quality.		FALSE
+imageDescription	illuminationElevationAngle	Illumination elevation measured in degrees clockwise from the target plane at intersection of the optical line of sight with the earth's surface.		FALSE
+imageDescription	illuminationAzimuthAngle	Illumination azimuth measured in degrees clockwise from true north at the time the image is taken.		FALSE
+imageDescription	imageOrientationAngle	Angle from the first row of the image to true north in degrees, clockwise.		FALSE
+imageDescription	imagingCondition	Code which indicates conditions which affect the quality of the image.		FALSE
+imageDescription	imageQualityCode	Specifies the image quality.		FALSE
+imageDescription	cloudCoverPercentage	Area of the dataset obscured by clouds, expressed as a percentage of the spatial extent.		FALSE
+imageDescription	preProcessingTypeCode	Image distributor's code that identifies the level of radiometric and geometric processing applied against the image.		FALSE
+imageDescription	compressionGenerationQuality	Counts the number of lossy compression cycles performed on the image.		FALSE
+imageDescription	triangulationIndicator	Code which indicates whether or not triangulation has been performed upon the image.		FALSE
+imageDescription	radiometricDataAvailability	Code which indicates whether or not Standard Radiometric Product data is available.		FALSE
+imageDescription	cameraCalibrationInformationAvailability	Code which indicates whether or not constants are available which allow for camera calibration corrections.		FALSE
+imageDescription	filmDistortionInformationAvailability	Code which indicates whether or not Calibration Reseau information is available		FALSE
+imageDescription	lensDistortionInformationAvailability	Code which indicates whether or not lens aberration correction information is available		FALSE
+imageDescription	bandDescription	Description of the wavelength domain that the sensor operates in.		FALSE
+bandDescription	sequenceIdentifier	Number that uniquely identifies instances of bands of wavelengths on which a sensor operates.		FALSE
+bandDescription	highWavelength	Highest wavelength that the sensor is capable of collecting within a designated band in metres.		FALSE
+bandDescription	lowWaveLength	Lowest wavelength that the sensor is capable of collecting within a designated band in metres.		FALSE
+bandDescription	waveLengthUnits	Units in which the sensor wavelegths are expressed.		FALSE
+bandDescription	peakResponse	Wavelength at which the response is the highest.		FALSE
+quantitativeAccuracyReport	quantitativeAccuracyValue	The value resulting from the accuracy test.		FALSE
+quantitativeAccuracyReport	quantitativeAccuracyMethod	The method used to calculate the accuracy value.		FALSE
+horizCoordSysDef	geogCoordSys	The coodinate system used to express the geographic coordinates.		FALSE
+horizCoordSysDef	projCoordSys	The coodinate system used to express planar coordinates.		FALSE
+horizCoordSysDef	name			TRUE
+vertCoordSys	altitudeSysDef	the reference frame or system from which altitudes (elevations) are measured.		FALSE
+vertCoordSys	depthSysDef	The reference frame or system from which depths are measured.		FALSE
+altitudeSysDef	altitudeDatumName	The identification given to the surface taken as the surface of reference from which altitudes are measured.		FALSE
+altitudeSysDef	altitudeResolution	The minimum distance possible between two adjacent altitude values, expressed in Altitude Distance Units of measure.		FALSE
+altitudeSysDef	altitudeDistanceUnits	Units in which altitude is measured.		FALSE
+altitudeSysDef	altitudeEncodingMethod	The means used to encode the altitudes.		FALSE
+depthSysDef	depthDatumName	The identification given to surface of reference from which depths are measured.		FALSE
+depthSysDef	depthResolution	The minimum distance possible between two adjacent depth values, expressed in Depth Distance Units of measure.		FALSE
+depthSysDef	depthDistanceUnits	The units in which depths are recorded.		FALSE
+depthSysDef	depthEncodingMethod	The means used to encode depths.		FALSE
+datum	name			TRUE
+spheroid	name	The name of the spheroid.		TRUE
+spheroid	semiAxisMajor	The larger of two orthogonal axes that define the ellipse		TRUE
+spheroid	denomFlatRatio			TRUE
+primeMeridian	name	The name of the Prime Meridian		TRUE
+primeMeridian	longitude	The longitude of the Prime Meridian		TRUE
+unit	name	The name of the unit of measure .		TRUE
+geogCoordSys	datum	The point on the earth representing the origin for the geographic coordinates to which the coorinate system is related to.		FALSE
+geogCoordSys	spheroid	An ellipse that is used to model the earth's surface.		FALSE
+geogCoordSys	primeMeridian			FALSE
+geogCoordSys	unit	The unit of angle by which coordinates are expressed.		FALSE
+geogCoordSys	name			TRUE
+projCoordSys	geogCoordSys	The coodinate system used to express the geographic coordinates.		FALSE
+projCoordSys	projection	The method used to tranform between geographic and planar coordinates.		FALSE
+projection	parameter	A parameter required by the projection method.		FALSE
+projection	unit	The unit of measure coordinates are expressed in.		FALSE
+projection	name	The name of the projection method.		TRUE
+parameter	name	The name of the parameter.		TRUE
+parameter	description	A description of the Parameter.		TRUE
+parameter	value	The value supplied for the parameter		TRUE
+unit	name	The name of the unit of measure.		TRUE
+projectionList	horizCoordSysDef	The definition of a coordinate system		FALSE
+parameter	name	The name of the parameter.		FALSE
+parameter	domainDescription	A description of domain of valid values for the parameter.		FALSE
+parameter	required	Whether or not the parameter is required.		FALSE
+parameter	repeats	Whether or not the parameter repeats.		FALSE
+text	section	A section of related text.		FALSE
+text	para	A simple paragraph of text.		FALSE
+text	xml:lang			TRUE
+section	title	The optional title of the section.		FALSE
+section	para	A simple paragraph of text.		FALSE
+section	section	A section of related text.		FALSE
+section	xml:lang			TRUE
+para	value	Language translation for the paragraph		FALSE
+para	itemizedlist	A list of items in a text paragraph.		FALSE
+para	orderedlist	An ordered list of items in a text paragraph.		FALSE
+para	emphasis	A span of emphasized text in a paragraph.		FALSE
+para	subscript	A subscript in a text paragraph.		FALSE
+para	superscript	A superscript in a text paragraph.		FALSE
+para	literalLayout	The equivalent to <pre> in html.		FALSE
+para	ulink	a link that addresses its target by means of a URL		FALSE
+para	xml:lang			TRUE
+value	xml:lang	language code for element content		TRUE
+itemizedlist	listitem	An item in a list of items.		FALSE
+orderedlist	listitem	An item in a list of items.		FALSE
+emphasis	value			FALSE
+emphasis	xml:lang			TRUE
+subscript	value	Language translation for the sub/superscript		FALSE
+subscript	subscript	A subscript in a text paragraph.		FALSE
+subscript	superscript	A superscript in a text paragraph.		FALSE
+subscript	xml:lang			TRUE
+superscript	value	Language translation for the sub/superscript		FALSE
+superscript	subscript	A subscript in a text paragraph.		FALSE
+superscript	superscript	A superscript in a text paragraph.		FALSE
+superscript	xml:lang			TRUE
+literalLayout	value			FALSE
+ulink	citetitle	the title of the cited work		FALSE
+ulink	url	the Uniform Resource Locator for the cited work		TRUE
+citetitle	xml:lang	language code for element content		TRUE
+title	xml:lang	language code for element content		TRUE
+listitem	para	A simple paragraph of text.		FALSE
+listitem	itemizedlist	A list of items in a text paragraph.		FALSE
+listitem	orderedlist	An ordered list of items in a text paragraph.		FALSE
+eml	access	Access control rules for the entire resource, which can be overridden by access rules in distribution trees		FALSE
+eml	dataset	A resource that describes a data set, which can include one or more data entities such as data tables.		FALSE
+eml	citation	A resource that describes a literature citation that one might find in a bibliography.		FALSE
+eml	software	A resource that describes a software package, which can include commercial and non-commercial software as well as data processing programs.		FALSE
+eml	protocol	A resource that describes a scientific protocol, which can include one or more descriptions of methods and procedures.		FALSE
+eml	additionalMetadata	A flexible field for including any other relevant metadata that pertains to the resource being described.		FALSE
+eml	packageId	A unique identifier for this entire EML metadata document that can be used to reference it elsewhere.		TRUE
+eml	system			TRUE
+eml	scope	The scope of the identifier.		TRUE
+eml	xml:lang			TRUE
+additionalMetadata	describes	A pointer to the id attribute for the sub-portion of the resource that is described by this additional metadata.		FALSE
+additionalMetadata	metadata	This element contains the additional metadata that is to be included in the document. The content of this field can be any well-formed XML fragment.		FALSE
+additionalMetadata	id			TRUE
