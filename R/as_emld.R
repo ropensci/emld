@@ -130,6 +130,7 @@ as_emld.list <- function(x, from = "list"){
   } else if(is(x, "json")){
     return(as_emld.json(x))
   } else {
+    x <- add_context(x)
     class(x) <- c("emld", "list")
     return(x)
   }

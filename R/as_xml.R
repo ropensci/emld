@@ -31,6 +31,7 @@ as_xml.list <- function(x, file=NULL, root = "eml", ns = "eml",
                         schemaLocation = paste0("eml://ecoinformatics.org/",
                           getOption("emld_db", "eml-2.2.0"),
                           "/ eml.xsd")){
+  x <- as_emld.list(x)
   as_xml.emld(x, file)
 }
 
