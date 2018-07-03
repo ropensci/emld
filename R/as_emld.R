@@ -167,7 +167,9 @@ add_context <- function(json){
   con <- c(con, additional_ns)
 
   xmlns <- grepl("^xmlns", names(json))
-  json <- json[!xmlns]
+  if(length(xmlns) > 0){
+    json <- json[!xmlns]
+  }
   json$`@context` <- con
 
   # order names so @context shows up first
