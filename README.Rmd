@@ -102,7 +102,7 @@ as_emld(f) %>%
 as_json("hf205.json")
 
 sparql <- 
-  'PREFIX eml: <http://ecoinformatics.org/>
+  'PREFIX eml: <eml://ecoinformatics.org/eml-2.1.1/>
 
   SELECT ?genus ?species ?northLat ?southLat ?eastLong ?westLong 
 

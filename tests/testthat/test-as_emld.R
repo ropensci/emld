@@ -11,7 +11,7 @@ ex <- system.file("extdata/example.xml", package="emld")
 test_that("we can convert example.xml into complete JSON-LD", {
   X <- as_emld(ex)
   expect_true("dataset" %in% names(X))
-  expect_length(unlist(X), 17)
+  expect_length(unlist(X), 18)
 })
 
 test_that("we can round-trip and validate a simple example", {

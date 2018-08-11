@@ -129,12 +129,14 @@ context_namespaces <- function(context, xml){
     }))}
   ## Drop terms that aren't namespaces (don't end in / or #); e.g. drop
   context <- as.list(context[grepl(".*(#$|/$)",context)])
-  ## add to the xml
+
+
+  ## add to the xml. No base, no default namespace
   root <- xml2::xml_root(xml)
   for(ns in names(context)){
     switch(ns,
            "@vocab" = NULL, #xml2::xml_set_attr(root, "xmlns", context[[ns]]),
-           "@base" = xml2::xml_set_attr(root, "xml:base", context[[ns]]),
+           "@base" = NULL, # xml2::xml_set_attr(root, "xml:base", context[[ns]]),
            xml2::xml_set_attr(root, paste("xmlns", ns, sep=":"),
                               gsub("/$", "", context[[ns]])))
   }
