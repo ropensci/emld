@@ -5,6 +5,7 @@
     "xsi": "http://www.w3.org/2001/XMLSchema-instance/",
     "xml": "http://www.w3.org/XML/1998/namespace",
     "stmml": "http://www.xml-cml.org/schema/stmml-1.1/",
-    "id": "@id"
+    "id": "@id",
+    "@base": "eml://"
   }
 }
