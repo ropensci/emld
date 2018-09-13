@@ -129,7 +129,11 @@ options("emld_db" = "eml-2.2.0")
 suite <- list.files(system.file(
   file.path("tests", getOption("emld_db", "eml-2.2.0")), package="emld"),
   pattern="citation", full.names = TRUE)
-lapply(suite, test_roundtrip)
+drop <- basename(suite) %in% c("citation-sbclter-bibliography.284.xml",
+                               "citation-sbclter-bibliography.289.xml",
+                               "eml-citationWithContact.xml")
+test_suite <- suite[!drop]
+lapply(test_suite, test_roundtrip)
 
 suite <- list.files(system.file(
   file.path("tests", getOption("emld_db", "eml-2.2.0")), package="emld"),
@@ -139,14 +143,19 @@ drop <- basename(suite) %in% c("eml-datasetWithNonwordCharacters.xml",
                                "eml-literature.xml",
                                "eml-literatureInPress.xml",
                                "eml-unitDictionary.xml",
-                               "eml-units.xml")
+                               "eml-units.xml",
+                               "eml-citationWithContact.xml",
+                               "eml-sample.xml")
 test_suite <- suite[!drop]
 lapply(test_suite, test_roundtrip)
 
-## These four skip the length-check
+## These ones skip the length-check
 partial_test <- basename(suite) %in%
   c("eml-datasetWithNonwordCharacters.xml",
-    "eml-i18n.xml", "eml-literature.xml", "eml-literatureInPress.xml")
+    "eml-i18n.xml",
+    "eml-literature.xml",
+    "eml-literatureInPress.xml",
+    "eml-citationWithContact.xml")
 lapply(suite[partial_test], test_roundtrip, check_lengths = FALSE)
 
 

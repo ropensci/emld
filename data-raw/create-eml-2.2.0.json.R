@@ -3,6 +3,9 @@ library(glue)
 library(xml2)
 library(jsonlite)
 
+## Sync inst/xsd/eml-2.2.0 first!
+
+
 
 # test case
 #xsd <- xsd_files[[4]]
@@ -86,7 +89,8 @@ xsd_recursion <- function(node, grouplist = NULL, typelist=NULL){
   ## complexContent extension of a complexType
   complexContent <- xml_select(nodeset, "complexContent")
   if(length(complexContent) > 0){
-    extension <- xml_child(nodeset[[complexContent]])  # extension (can't have restriction of a complexContent?)
+    # extension (can't have restriction of a complexContent?)
+    extension <- xml_child(nodeset[[complexContent]])
     ## insert the base type
     type <- drop_prefix(xml_attr(extension, "base"))
     nodeset <- list_insert(nodeset, typelist[[type]], complexContent)
@@ -194,6 +198,9 @@ function(xsd_files){
   out[who]
 }
 
+
+
+####### HERE WE GO
 
 eml_def <-
 list.files("inst/xsd/eml-2.2.0", full.names = TRUE) %>%
