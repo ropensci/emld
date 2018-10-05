@@ -38,20 +38,17 @@ solr_df <- function(q){
 }
 
 df <- map_dfr(query, solr_df)
-readr::write_csv(df, "eml-solrs.csv.bz2")
 
-#eml <- df %>%
-#  filter(grepl("eml://", formatId)) %>%
-#  mutate(fileName = paste0("emls/", basename(identifier), ".xml"))
+eml <- df %>%
+  mutate(name = paste0("emls/", gsub("[\\/\\.]", "_", identifier), ".xml"))
 
-#base <- "https://cn.dataone.org/cn/v2/resolve/"
-#eml2 <- eml %>% mutate(resolve = gsub(base, "", dataUrl))
+readr::write_csv(eml, "eml-solrs.csv.bz2")
 
 
-safe_down <- function(url, dest){
+safe_down <- safely(function(url, dest){
   if(!file.exists(dest))
-    safely(download.file(url, dest))
-}
+    download.file(url, dest)
+})
 
 dir.create("emls", FALSE)
-map2(df$fileName, df$dataUrl, ~safe_down(.y, .x))
+map2(eml$name, eml$dataUrl, ~safe_down(.y, .x))
