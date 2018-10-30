@@ -2,13 +2,16 @@ library("httr")
 library("jsonlite")
 library("jsonld")
 library("tidyverse")
+library("xml2")
 source(system.file("examples/solr_functions.R", package="emld"))
 
-## See: https://cn.dataone.org/cn/v2/query/solr
+## See: https://cn.dataone.org/cn/v2/query/solr/
+
+eml_solr_query <-
+"http://cn.dataone.org/cn/v2/query/solr/?q=formatId:eml*+AND+-obsoletedBy:*"
 
 numFound <-
-  GET(paste0("https://knb.ecoinformatics.org/knb/d1/mn/v2/query/solr",
-             "?q=-obsoletedBy:*&fl=identifier&rows=1")) %>%
+  GET(eml_solr_query) %>%
   content() %>%
   xml2::xml_find_first("//result") %>%
   xml2::xml_attr("numFound") %>%
@@ -20,13 +23,9 @@ n_calls <- numFound %/% rows
 
 
 query <-
-  paste0(
-    "https://knb.ecoinformatics.org/knb/d1/mn/v2/query/solr?",
-    "q=*:*&fl=identifier,",
-    "formatId,dataUrl,fileName",
-    "&formatType=METADATA",
+  paste0(eml_solr_query,
+    "&fl=identifier,formatId,dataUrl,fileName",
     "&wt=json",
-    "&-obsoletedBy:*",
     "&start=", rows*(0:n_calls), "&rows=", rows)
 
 solr_df <- function(q){
@@ -41,10 +40,15 @@ solr_df <- function(q){
 df <- map_dfr(query, solr_df)
 
 eml <- df %>%
-  filter(grepl("eml://", formatId)) %>%
-  mutate(fileName = paste0("emls/", basename(identifier), ".xml"))
+  mutate(name = paste0("emls/", gsub("[\\/\\.]", "_", identifier), ".xml"))
 
-safe_down <- safely(download.file)
+readr::write_csv(eml, "eml-solrs.csv.bz2")
 
-dir.create("emls")
-map2(eml$fileName, eml$dataUrl, ~safe_down(.y, .x))
+
+safe_down <- safely(function(url, dest){
+  if(!file.exists(dest))
+    download.file(url, dest)
+})
+
+dir.create("emls", FALSE)
+map2(eml$name, eml$dataUrl, ~safe_down(.y, .x))
