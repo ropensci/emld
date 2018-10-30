@@ -2,6 +2,7 @@ library(tidyverse)
 library(glue)
 library(xml2)
 library(jsonlite)
+library(purrr)
 
 ## Sync inst/xsd/eml-2.2.0 first!
 
@@ -59,7 +60,8 @@ xml_attr_or <- function(x, A, B){
 xsd_recursion <- function(node, grouplist = NULL, typelist=NULL){
   nodeset <- xml_children(node)
   ## drop docs
-  nodeset <- xml_drop(nodeset, "annotation")
+  #nodeset <- xml_drop(nodeset, "annotation")
+  docs <- xml_select(nodeset, "annotation")
 
   simpleContent <- xml_select(nodeset, "simpleContent")
   if(length(simpleContent) > 0){
