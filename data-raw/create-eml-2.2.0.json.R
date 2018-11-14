@@ -60,8 +60,7 @@ xml_attr_or <- function(x, A, B){
 xsd_recursion <- function(node, grouplist = NULL, typelist=NULL){
   nodeset <- xml_children(node)
   ## drop docs
-  #nodeset <- xml_drop(nodeset, "annotation")
-  docs <- xml_select(nodeset, "annotation")
+  nodeset <- xml_drop(nodeset, "annotation")
 
   simpleContent <- xml_select(nodeset, "simpleContent")
   if(length(simpleContent) > 0){
@@ -164,6 +163,19 @@ get_element_nodes <- function(xsd_files, group_nodes, type_nodes){
 
 ## convert nodesets to a simple list naming child elements and attributes
 nodes_to_listdefs <- function(element_nodes){
+  map(element_nodes, function(nodeset){
+    names <- map_chr(nodeset, xml_attr_or, "name", "ref")
+    drop <- map_lgl(names, is.na)
+    names <- names[!drop]
+    type <- map_lgl(nodeset[!drop], function(n) xml_name(n) == "attribute")
+    names[type] <- map_chr(names[type], ~ paste0("#", .x))
+    names
+  })
+}
+
+
+## convert nodesets to a simple list naming child elements and attributes
+nodes_to_json_defs <- function(element_nodes){
   map(element_nodes, function(nodeset){
     names <- map_chr(nodeset, xml_attr_or, "name", "ref")
     drop <- map_lgl(names, is.na)
