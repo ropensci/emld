@@ -38,7 +38,7 @@ as_jsonlist.xml_node <- function(x, ns = character()) {
     if (type != "element" && type != "document"){
       return(paste("[", type, "]"))
     }
-    out = list()
+    out <- list()
    ## content length == 1
    }  else if(length(contents) == 1){
      if(xml_type(contents[[1]]) == "text"){
