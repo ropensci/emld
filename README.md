@@ -2,6 +2,8 @@
 [![stability-experimental](https://img.shields.io/badge/stability-experimental-orange.svg)](https://github.com/joethorley/stability-badges#experimental)
 [![Travis-CI Build
 Status](https://travis-ci.org/cboettig/emld.svg?branch=master)](https://travis-ci.org/cboettig/emld)
+[![AppVeyor build
+status](https://ci.appveyor.com/api/projects/status/github/cboettig/emld?branch=master&svg=true)](https://ci.appveyor.com/project/cboettig/emld)
 [![Coverage
 Status](https://img.shields.io/codecov/c/github/cboettig/emld/master.svg)](https://codecov.io/github/cboettig/emld?branch=master)
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/emld)](https://cran.r-project.org/package=emld)
@@ -16,16 +18,12 @@ an EML XML document into JSON-LD and be able to reverse this so that any
 semantically equivalent JSON-LD file can be serialized into EML-schema
 valid XML. The package has only three core functions:
 
-  - `as_emld()` Convert EML from `xml` (or `json`) into a native R
-    object, `emld` (list / S3 class).  
+  - `as_emld()` Convert EML’s `xml` files (or the `json` version created
+    by this package) into a native R object (an S3 class called `emld`,
+    essentially just a `list`).
   - `as_xml()` Convert the native R format, `emld`, back into XML-schema
     valid EML.
   - `as_json()` Convert the native R format, `emld`, into `json`(LD).
-
-This is very much **work in progress** The outline below illustrates
-things we can do or will be able to do with this package. The examples
-below are just a sketch of ideas so far, I hope to replace these with
-richer examples that will probably be developed more fully as vignettes.
 
 ## Installation
 
@@ -43,7 +41,12 @@ package](https://ropensci.github.io/EML), this package aims to a very
 light-weight implementation that seeks to provide both an intuitive data
 format and make maximum use of existing technology to work with that
 format. In particular, this package emphasizes tools for working with
-linked data through the JSON-LD format.
+linked data through the JSON-LD format. This package is not meant to
+replace `EML`, as it does not support the more complex operations found
+in that package. Rather, it provides a minimalistic but powerful way of
+working with EML documents that can be used by itself or as a backend
+for those complex operations. The next release of the EML R package will
+use `emld` under the hood.
 
 Note that the JSON-LD format is considerably less rigid than the EML
 schema. This means that there are many valid, semantically equivalent
@@ -79,8 +82,6 @@ extracting and manipulating existing metadata in highly nested EML
 files. The `emld` approach can leverage a rich array of tools for
 reading, extracting, and manipulating existing EML files.
 
-### Parse & serialize
-
 We can parse a simple example and manipulate is as a familiar list
 object (S3 object):
 
@@ -91,35 +92,94 @@ eml$dataset$title
 #> [1] "Data from Cedar Creek LTER on productivity and species richness\n  for use in a workshop titled \"An Analysis of the Relationship between\n  Productivity and Diversity using Experimental Results from the Long-Term\n  Ecological Research Network\" held at NCEAS in September 1996."
 ```
 
-``` r
-eml$dataset$title <- "A new title"
-as_xml(eml, "test.xml")
-```
+## Writing EML
 
-We can prove that writing the list back into XML still creates a valid
-EML file.
+Becuase `emld` objects are just nested lists, we can create EML just by
+writing lists:
 
 ``` r
-eml_validate("test.xml")
-#> [1] TRUE
-#> attr(,"errors")
-#> character(0)
+
+me <- list(individualName = list(givenName = "Carl", surName = "Boettiger"))
+
+eml <- list(dataset = list(
+              title = "dataset title",
+              contact = me,
+              creator = me),
+              system = "doi",
+              packageId = "10.xxx")
+
+as_xml(eml, "ex.xml")
+testthat::expect_true(eml_validate("ex.xml") )
 ```
 
-### Query
+Note that we don’t have to worry about the order of the elements here,
+`as_xml` will re-order if necessary to validate. (For instance, in valid
+EML the `creator` becomes listed before `contact`.) Of course this is a
+very low-level interface that does not help the user know what an EML
+looks like. Creating EML from scratch without knowledge of the schema is
+a job for the `EML` package and beyond the scope of the lightweight
+`emld`.
 
-We can query it with SPARQL, a rich, semantic way to extract data from
-one or many EML files. (The [W3C standard for
-SPARQL-RDF](https://www.w3.org/TR/rdf-sparql-query/) provides a passable
-introduction to the query syntax; haven’t found a more readable
-alternative that is still reasonably feature-complete).
+# Working with EML as JSON-LD
+
+For many applications, it is useful to merely treat EML as a list
+object, as seen above, allowing the R user to leverage a standard tools
+and intutition in workign with these files. However, `emld` also opens
+the door to new possible directions by thinking of EML data in terms of
+a JSON-LD serialization rather than an XML serialization. First, owing
+to it’s comparative simplicity and native data typing (e.g. of
+boolean/string/numeric data), JSON is often easier for many developers
+to work with than EML’s native XML format.
+
+## As JSON: Query with JQ
+
+For example, JSON can be queried with with JQ, a [simple and powerful
+query language](https://stedolan.github.io/jq/manual/) that also gives
+us a lot of flexibility over the return structure of our results. JQ
+syntax is both intuitive and well documented, and often easier than the
+typical munging of JSON/list data using `purrr`. Here’s an example query
+that turns EML to JSON and then extracts the north and south bounding
+coordinates:
+
+``` r
+library(jqr)
+hf205 <- system.file("extdata/hf205.xml", package="emld")
+
+as_emld(hf205) %>% 
+  as_json() %>% 
+  jq('.dataset.coverage.geographicCoverage.boundingCoordinates | 
+       { northLat: .northBoundingCoordinate, 
+         southLat: .southBoundingCoordinate }') %>%
+  fromJSON()
+#> $northLat
+#> [1] "+42.55"
+#> 
+#> $southLat
+#> [1] "+42.42"
+```
+
+Nice features of JQ include the ability to do recursive descent (common
+to XPATH but not possible in `purrr`) and specify the shape of the
+return object. Some prototype examples of how we can use this to
+translate between EML and <http://schema.org/Dataset> representations of
+the same metadata can be found in
+<https://github.com/cboettig/emld/blob/master/notebook/jq_maps.md>
+
+## As semantic data: SPARQL queries
+
+Another side-effect of the JSON-LD representation is that we can treat
+EML as “semantic” data. This can provide a way to integrate EML records
+with other data sources, and means we can query the EML using semantic
+SPARQL queries. One nice thing about SPARQL queries is that, in contrast
+to XPATH, JQ, or other graph queries, SPARQL always returns a
+`data.frame` which is a particularly convenient format. SPARQL queries
+look like SQL queries in that we name the columns we want with a
+`SELECT` command. Unlike SQL, these names are act as variables. We then
+use a WHERE block to define how these variables relate to each other.
 
 ``` r
 library(rdflib)
 ```
-
-FIXME replace with an example(s) that makes better use of semantic
-relationships.
 
 ``` r
 f <- system.file("extdata/hf205.xml", package="emld")
@@ -153,143 +213,3 @@ df
 #>   <chr>      <chr>       <dbl>    <dbl>    <dbl>    <dbl>
 #> 1 Sarracenia purpurea     42.6     42.4    -72.1    -72.3
 ```
-
-We can also create queries with JQ, a [simple and powerful query
-language](https://stedolan.github.io/jq/manual/) that also gives us a
-lot of flexibility over the return structure of our results. JQ syntax
-is both intuitive and well documented, and quite a bit easier than the
-popular iterative strategies for rectangling JSON/list data using
-`purrr`. Here’s an example query:
-
-``` r
-library(jqr)
-
-as_emld(f) %>%
-  as_json() %>% 
-  as.character() %>%
-  jq('.dataset.coverage.geographicCoverage.boundingCoordinates | 
-       { northLat: .northBoundingCoordinate, 
-         southLat: .southBoundingCoordinate }')
-#> {
-#>     "northLat": "+42.55",
-#>     "southLat": "+42.42"
-#> }
-```
-
-Some prototype examples of how we can use this to translate between EML
-and <http://schema.org/Dataset> representations of the same metadata can
-be found in
-<https://github.com/cboettig/emld/blob/master/notebook/jq_maps.md>
-
-### Flatten and Compact.
-
-We can flatten it, so we don’t have to do quite so much sub-setting.
-When we’re done editing, we can compact it back into valid EML.
-
-``` r
-library(jsonld)
-flat <- as_emld(f) %>%
-  as_json() %>% 
-  jsonld_flatten('{"@vocab": "http://ecoinformatics.org/"}') %>%
-  fromJSON(simplifyVector = FALSE)
-flat <- flat[["@graph"]]
-```
-
-FIXME this would be way more useful if nodes all had `@type` and were
-named by that type. Then we could do `flat$boundingCoordinates`.
-Currently flattened objects are unnamed and untyped, so this is less
-useful.
-
-## Writing EML
-
-This section is even more experimental currently, and may not be a good
-direction for development. Nevertheless, it can illustrate some of the
-convenience (and risk) of a simple S3 class.
-
-Remember that `emld` objects are just nested lists, so you can create
-EML just by writing lists:
-
-``` r
-
-me <- list(individualName = list(givenName = "Carl", surName = "Boettiger"))
-
-eml <- list(dataset = list(
-              title = "dataset title",
-              contact = me,
-              creator = me),
-              system = "doi",
-              packageId = "10.xxx")
-
-as_xml(eml, "ex.xml")
-testthat::expect_true(eml_validate("ex.xml") )
-```
-
-Note that we don’t have to worry about the order of the elements here,
-`as_xml` will re-order if necessary to validate. (For instance, in valid
-EML the `creator` becomes listed before `contact`.)
-
-Clearly most users are unlikely to remember what the possible properties
-are for each element, or which ones are attributes (which currently need
-the `#` prefix). The `template()` function offers a quick way to address
-this issue:
-
-``` r
-template("creator")
-#> individualName: {}
-#> organizationName: ~
-#> positionName: ~
-#> address: {}
-#> phone: ~
-#> electronicMailAddress: ~
-#> onlineUrl: ~
-#> userId: ~
-#> id: ~
-#> system: ~
-#> scope: ~
-```
-
-returns a simple list object, cast as an `emld` S3 class so that it
-prints cleanly. Note that properties which take other objects are
-indicated by `{}` while properties taking text values are indicated by
-`~`. If we assignt it to a variable instead of merely printing the
-output of `template()`, we can then fill out values as needed (making
-use of tab completion):
-
-``` r
-scott <- template("creator")
-scott$individualName <- template("individualName")
-scott$individualName$givenName <- list("Scott", "A")
-scott$individualName$surName <- "Chamberlain"
-scott$electronicMailAddress <- "scott@ropensci.org"
-```
-
-We can add this element to the EML list we already created:
-
-``` r
-eml$dataset$creator <- list(me, scott)
-```
-
-and confirm the file validates with this additional creator:
-
-``` r
-as_xml(eml, "ex.xml")
-testthat::expect_true(eml_validate("ex.xml") )
-```
-
-It remains to be seen if this proves substantially easier than EML
-creation with the S4-based constructors. Some things are certainly more
-convienent: no `new`, no `ListOf` types, no remembering to index
-repeated elements, no `.Data` slots, etc. On the other hand, S4 system
-prevents assigning to a slot an object that is of the wrong type. The
-list approach does not have this safeguard.
-
-Ultimately it might be more useful as a developer tool to construct
-helper functions that can streamline creation of EML.
-
-### Going deeper
-
-Several basic steps still to do: in particular, haven’t yet expanded out
-`references` or EML’s semantic annotations into more native JSON-LD (and
-vice-versa back into EML). The latter in particular might be a
-convenient way to serialize additional semantic annotations onto an EML
-description.
