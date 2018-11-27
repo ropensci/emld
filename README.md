@@ -213,3 +213,9 @@ df
 #>   <chr>      <chr>       <dbl>    <dbl>    <dbl>    <dbl>
 #> 1 Sarracenia purpurea     42.6     42.4    -72.1    -72.3
 ```
+
+-----
+
+Please note that the `emld` project is released with a [Contributor Code
+of Conduct](CODE_OF_CONDUCT.md). By contributing to this project, you
+agree to abide by its terms.
