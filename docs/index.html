@@ -15,7 +15,7 @@
              and back into EML.  Doing so creates a natural list-based representation
              of EML in R, so that EML data can easily be manipulated using standard
              R tools. This makes this package an effective backend for other tools
-             for working with EML.  Additioally, the JSON-LD representation enables
+             for working with EML.  Additionally, the JSON-LD representation enables
              the use of developer-friendly JSON parsing and informatics-friendly
              serializations such as RDF and SPARQL queries. This package is targeted
              primarily at developers. By abstracting away the complexity of EML's
@@ -115,7 +115,7 @@
 <div id="motivation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#motivation" class="anchor"></a>Motivation</h2>
-<p>In contrast to the existing <a href="https://ropensci.github.io/EML">EML package</a>, this package aims to a very light-weight implementation that seeks to provide both an intuitive data format and make maximum use of existing technology to work with that format. In particular, this package emphasizes tools for working with linked data through the JSON-LD format. This package is not meant to replace <code>EML</code>, as it does not support the more complex operations found in that package. Rather, it provides a minimalistic but powerful way of working with EML documents that can be used by itself or as a backend for those complex operations. The next release of the EML R package will use <code>emld</code> under the hood.</p>
+<p>In contrast to the existing <a href="https://ropensci.github.io/EML">EML package</a>, this package aims to a very light-weight implementation that seeks to provide both an intuitive data format and make maximum use of existing technology to work with that format. In particular, this package emphasizes tools for working with linked data through the JSON-LD format. This package is not meant to replace <code>EML</code>, as it does not support the more complex operations found in that package. Rather, it provides a minimalist but powerful way of working with EML documents that can be used by itself or as a backend for those complex operations. The next release of the EML R package will use <code>emld</code> under the hood.</p>
 <p>Note that the JSON-LD format is considerably less rigid than the EML schema. This means that there are many valid, semantically equivalent representations on the JSON-LD side that must all map into the same or nearly the same XML format. At the extreme end, the JSON-LD format can be serialized into RDF, where everything is flat set of triples (e.g. essentially a tabular representation), which we can query directly with semantic tools like SPARQL, and also automatically coerce back into the rigid nesting and ordering structure required by EML. This ability to “flatten” EML files can be particularly convenient for applications consuming and parsing large numbers of EML files. This package may also make it easier for other developers to build on the EML, since the S3/list and JSON formats used here have proven more appealing to many R developers than S4 and XML serializations.</p>
 <p>JSON-LD also makes it easier to extend EML with other existing semantic vocabularies. The standard JSON-LD operations (e.g. framing, compaction) make it easy for developers to specify desired data structures, filter unnecessary terms and provide defaults for needed ones, or even define custom property names, rather than working with the often cumbersome prefixes or URIs of linked data.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">library</span>(emld)</a>
@@ -135,7 +135,7 @@
 <div id="writing-eml" class="section level2">
 <h2 class="hasAnchor">
 <a href="#writing-eml" class="anchor"></a>Writing EML</h2>
-<p>Becuase <code>emld</code> objects are just nested lists, we can create EML just by writing lists:</p>
+<p>Because <code>emld</code> objects are just nested lists, we can create EML just by writing lists:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"></a>
 <a class="sourceLine" id="cb4-2" data-line-number="2">me &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">individualName =</span> <span class="kw">list</span>(<span class="dt">givenName =</span> <span class="st">"Carl"</span>, <span class="dt">surName =</span> <span class="st">"Boettiger"</span>))</a>
 <a class="sourceLine" id="cb4-3" data-line-number="3"></a>
@@ -154,7 +154,7 @@
 <div id="working-with-eml-as-json-ld" class="section level1">
 <h1 class="hasAnchor">
 <a href="#working-with-eml-as-json-ld" class="anchor"></a>Working with EML as JSON-LD</h1>
-<p>For many applications, it is useful to merely treat EML as a list object, as seen above, allowing the R user to leverage a standard tools and intutition in workign with these files. However, <code>emld</code> also opens the door to new possible directions by thinking of EML data in terms of a JSON-LD serialization rather than an XML serialization. First, owing to it’s comparative simplicity and native data typing (e.g. of boolean/string/numeric data), JSON is often easier for many developers to work with than EML’s native XML format.</p>
+<p>For many applications, it is useful to merely treat EML as a list object, as seen above, allowing the R user to leverage a standard tools and intuition in working with these files. However, <code>emld</code> also opens the door to new possible directions by thinking of EML data in terms of a JSON-LD serialization rather than an XML serialization. First, owing to it’s comparative simplicity and native data typing (e.g. of Boolean/string/numeric data), JSON is often easier for many developers to work with than EML’s native XML format.</p>
 <div id="as-json-query-with-jq" class="section level2">
 <h2 class="hasAnchor">
 <a href="#as-json-query-with-jq" class="anchor"></a>As JSON: Query with JQ</h2>

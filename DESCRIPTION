@@ -9,7 +9,7 @@ Description: Transform Ecological Metadata Language (EML) files into JSON-LD
              and back into EML.  Doing so creates a natural list-based representation
              of EML in R, so that EML data can easily be manipulated using standard
              R tools. This makes this package an effective backend for other tools
-             for working with EML.  Additioally, the JSON-LD representation enables
+             for working with EML.  Additionally, the JSON-LD representation enables
              the use of developer-friendly JSON parsing and informatics-friendly
              serializations such as RDF and SPARQL queries. This package is targeted
              primarily at developers. By abstracting away the complexity of EML's

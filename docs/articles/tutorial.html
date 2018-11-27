@@ -81,7 +81,7 @@
       <h1>emld Tutorial</h1>
                         <h4 class="author">Carl Boettiger</h4>
             
-            <h4 class="date">2018-11-26</h4>
+            <h4 class="date">2018-11-27</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/cboettig/emld/blob/master/vignettes/tutorial.Rmd"><code>vignettes/tutorial.Rmd</code></a></small>
       <div class="hidden name"><code>tutorial.Rmd</code></div>
@@ -90,6 +90,9 @@
 
     
     
+<div id="emld" class="section level1">
+<h1 class="hasAnchor">
+<a href="#emld" class="anchor"></a>emld</h1>
 <p>The goal of emld is to provide a way to work with EML metadata in the JSON-LD format. At it’s heart, the package is simply a way to translate an EML XML document into JSON-LD and be able to reverse this so that any semantically equivalent JSON-LD file can be serialized into EML-schema valid XML. The package has only three core functions:</p>
 <ul>
 <li>
@@ -109,7 +112,7 @@
 <div id="motivation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#motivation" class="anchor"></a>Motivation</h2>
-<p>In contrast to the existing <a href="https://ropensci.github.io/EML">EML package</a>, this package aims to a very light-weight implementation that seeks to provide both an intuitive data format and make maximum use of existing technology to work with that format. In particular, this package emphasizes tools for working with linked data through the JSON-LD format. This package is not meant to replace <code>EML</code>, as it does not support the more complex operations found in that package. Rather, it provides a minimalistic but powerful way of working with EML documents that can be used by itself or as a backend for those complex operations. The next release of the EML R package will use <code>emld</code> under the hood.</p>
+<p>In contrast to the existing <a href="https://ropensci.github.io/EML">EML package</a>, this package aims to a very light-weight implementation that seeks to provide both an intuitive data format and make maximum use of existing technology to work with that format. In particular, this package emphasizes tools for working with linked data through the JSON-LD format. This package is not meant to replace <code>EML</code>, as it does not support the more complex operations found in that package. Rather, it provides a minimalist but powerful way of working with EML documents that can be used by itself or as a backend for those complex operations. The next release of the EML R package will use <code>emld</code> under the hood.</p>
 <p>Note that the JSON-LD format is considerably less rigid than the EML schema. This means that there are many valid, semantically equivalent representations on the JSON-LD side that must all map into the same or nearly the same XML format. At the extreme end, the JSON-LD format can be serialized into RDF, where everything is flat set of triples (e.g. essentially a tabular representation), which we can query directly with semantic tools like SPARQL, and also automatically coerce back into the rigid nesting and ordering structure required by EML. This ability to “flatten” EML files can be particularly convenient for applications consuming and parsing large numbers of EML files. This package may also make it easier for other developers to build on the EML, since the S3/list and JSON formats used here have proven more appealing to many R developers than S4 and XML serializations.</p>
 <p>JSON-LD also makes it easier to extend EML with other existing semantic vocabularies. The standard JSON-LD operations (e.g. framing, compaction) make it easy for developers to specify desired data structures, filter unnecessary terms and provide defaults for needed ones, or even define custom property names, rather than working with the often cumbersome prefixes or URIs of linked data.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">library</span>(emld)</a>
@@ -129,7 +132,7 @@
 <div id="writing-eml" class="section level2">
 <h2 class="hasAnchor">
 <a href="#writing-eml" class="anchor"></a>Writing EML</h2>
-<p>Becuase <code>emld</code> objects are just nested lists, we can create EML just by writing lists:</p>
+<p>Because <code>emld</code> objects are just nested lists, we can create EML just by writing lists:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"></a>
 <a class="sourceLine" id="cb4-2" data-line-number="2">me &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">individualName =</span> <span class="kw">list</span>(<span class="dt">givenName =</span> <span class="st">"Carl"</span>, <span class="dt">surName =</span> <span class="st">"Boettiger"</span>))</a>
 <a class="sourceLine" id="cb4-3" data-line-number="3"></a>
@@ -144,10 +147,11 @@
 <a class="sourceLine" id="cb4-12" data-line-number="12">testthat<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/testthat/topics/logical-expectations">expect_true</a></span>(<span class="kw"><a href="../reference/eml_validate.html">eml_validate</a></span>(<span class="st">"ex.xml"</span>) )</a></code></pre></div>
 <p>Note that we don’t have to worry about the order of the elements here, <code>as_xml</code> will re-order if necessary to validate. (For instance, in valid EML the <code>creator</code> becomes listed before <code>contact</code>.) Of course this is a very low-level interface that does not help the user know what an EML looks like. Creating EML from scratch without knowledge of the schema is a job for the <code>EML</code> package and beyond the scope of the lightweight <code>emld</code>.</p>
 </div>
+</div>
 <div id="working-with-eml-as-json-ld" class="section level1">
 <h1 class="hasAnchor">
 <a href="#working-with-eml-as-json-ld" class="anchor"></a>Working with EML as JSON-LD</h1>
-<p>For many applications, it is useful to merely treat EML as a list object, as seen above, allowing the R user to leverage a standard tools and intutition in workign with these files. However, <code>emld</code> also opens the door to new possible directions by thinking of EML data in terms of a JSON-LD serialization rather than an XML serialization. First, owing to it’s comparative simplicity and native data typing (e.g. of boolean/string/numeric data), JSON is often easier for many developers to work with than EML’s native XML format.</p>
+<p>For many applications, it is useful to merely treat EML as a list object, as seen above, allowing the R user to leverage a standard tools and intuition in working with these files. However, <code>emld</code> also opens the door to new possible directions by thinking of EML data in terms of a JSON-LD serialization rather than an XML serialization. First, owing to it’s comparative simplicity and native data typing (e.g. of Boolean/string/numeric data), JSON is often easier for many developers to work with than EML’s native XML format.</p>
 <div id="as-json-query-with-jq" class="section level2">
 <h2 class="hasAnchor">
 <a href="#as-json-query-with-jq" class="anchor"></a>As JSON: Query with JQ</h2>
@@ -212,10 +216,14 @@
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+<li>
+<a href="#emld">emld</a><ul class="nav nav-pills nav-stacked">
 <li><a href="#installation">Installation</a></li>
       <li><a href="#motivation">Motivation</a></li>
       <li><a href="#reading-eml">Reading EML</a></li>
       <li><a href="#writing-eml">Writing EML</a></li>
+      </ul>
+</li>
       <li>
 <a href="#working-with-eml-as-json-ld">Working with EML as JSON-LD</a><ul class="nav nav-pills nav-stacked">
 <li><a href="#as-json-query-with-jq">As JSON: Query with JQ</a></li>

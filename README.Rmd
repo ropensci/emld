@@ -41,7 +41,7 @@ devtools::install_github("cboettig/emld")
 ## Motivation
 
 
-In contrast to the existing [EML package](https://ropensci.github.io/EML), this package aims to a very light-weight implementation that seeks to provide both an intuitive data format and make maximum use of existing technology to work with that format.  In particular, this package emphasizes tools for working with linked data through the JSON-LD format.  This package is not meant to replace `EML`, as it does not support the more complex operations found in that package.  Rather, it provides a minimalistic but powerful way of working with EML documents that can be used by itself or as a backend for those complex operations.  The next release of the EML R package will use `emld` under the hood.  
+In contrast to the existing [EML package](https://ropensci.github.io/EML), this package aims to a very light-weight implementation that seeks to provide both an intuitive data format and make maximum use of existing technology to work with that format.  In particular, this package emphasizes tools for working with linked data through the JSON-LD format.  This package is not meant to replace `EML`, as it does not support the more complex operations found in that package.  Rather, it provides a minimalist but powerful way of working with EML documents that can be used by itself or as a backend for those complex operations.  The next release of the EML R package will use `emld` under the hood.  
 
 Note that the JSON-LD format is considerably less rigid than the EML schema.  This means that there are many valid, semantically equivalent representations on the JSON-LD side that must all map into the same or nearly the same XML format.  At the extreme end, the JSON-LD format can be serialized into RDF, where everything is flat set of triples (e.g. essentially a tabular representation), which we can query directly with semantic tools like SPARQL, and also automatically coerce back into the rigid nesting and ordering structure required by EML.  This ability to "flatten" EML files can be particularly convenient for applications consuming and parsing large numbers of EML files.  This package may also make it easier for other developers to build on the EML, since the S3/list and JSON formats used here have proven more appealing to many R developers than S4 and XML serializations.
 
@@ -71,7 +71,7 @@ eml$dataset$title
 
 ## Writing EML
 
-Becuase `emld` objects are just nested lists, we can create EML just by writing lists: 
+Because `emld` objects are just nested lists, we can create EML just by writing lists: 
 
 ```{r}
 
@@ -93,7 +93,7 @@ Note that we don't have to worry about the order of the elements here, `as_xml` 
 
 # Working with EML as JSON-LD 
 
-For many applications, it is useful to merely treat EML as a list object, as seen above, allowing the R user to leverage a standard tools and intutition in workign with these files.  However, `emld` also opens the door to new possible directions by thinking of EML data in terms of a JSON-LD serialization rather than an XML serialization.  First, owing to it's comparative simplicity and native data typing (e.g. of boolean/string/numeric data), JSON is often easier for many developers to work with than EML's native XML format.  
+For many applications, it is useful to merely treat EML as a list object, as seen above, allowing the R user to leverage a standard tools and intuition in working with these files.  However, `emld` also opens the door to new possible directions by thinking of EML data in terms of a JSON-LD serialization rather than an XML serialization.  First, owing to it's comparative simplicity and native data typing (e.g. of Boolean/string/numeric data), JSON is often easier for many developers to work with than EML's native XML format.  
 
 
 ## As JSON: Query with JQ 
