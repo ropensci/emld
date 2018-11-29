@@ -1,3 +1,6 @@
+## Experimental re-write of eml_schema_parser
+## Aims to get documentation information as well
+
 library(tidyverse)
 library(glue)
 library(xml2)
