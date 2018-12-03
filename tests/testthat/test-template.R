@@ -11,6 +11,13 @@ test_that("template knows about internal classes too", {
   expect_output(print(template("ResponsibleParty")), "individualName: \\{\\}")
 })
 
+test_that("template knows about internal classes too", {
+  options(emld_print =  "json")
+  expect_output(print(template("creator")), '"individualName": \\{\\}')
+  options(emld_print =  "yaml")
+
+})
+
 
 
 
