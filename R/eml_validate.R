@@ -77,10 +77,11 @@ generalized_parser <- function(eml, encoding = "UTF-8"){
     }
   } else if (is(eml, "xml_document")) {
     doc <- eml
-  } else if (is(eml, "list")){
+  } else if (is.list(eml)){
     ##  FIXME shouldn't have to write to tempfile,
     ## but  `doc <- as_xml(eml)` fails to drop xsi prefix on "schemaLocation"
     f <- tempfile()
+    as_xml(eml, f)
     doc <- xml2::read_xml(f)
     unlink(f)
   } else {

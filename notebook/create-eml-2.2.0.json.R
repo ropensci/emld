@@ -220,7 +220,7 @@ function(xsd_files){
 ####### HERE WE GO
 
 eml_def <-
-list.files("inst/xsd/eml-2.2.0", full.names = TRUE) %>%
+list.files("inst/xsd/eml-2.2.0", pattern = "[.]xsd", full.names = TRUE) %>%
   classes_from_schema()
 
 
@@ -245,8 +245,23 @@ eml_def$parameter <- c("name", "domainDescription", "required", "repeats")
 c(eml_def, stmml) %>%
   write_json("data-raw/eml-2.2.0.json", pretty=TRUE)
 
-eml_db <- list("eml-2.1.1" = jsonlite::read_json("data-raw/eml-2.1.1.json"),
-               "eml-2.2.0" = jsonlite::read_json("data-raw/eml-2.2.0.json"))
-devtools::use_data(eml_db, overwrite = TRUE, internal = TRUE)
+###
+eml_def_2.1.1 <-
+  list.files("inst/xsd/eml-2.1.1", pattern = "[.]xsd", full.names = TRUE) %>%
+  classes_from_schema()
+## Fix duplicates / namespace collisions
+eml_def_2.1.1$unit <- stmml$unit
+eml_def_2.1.1$parameter <- c("name", "domainDescription", "required", "repeats")
+
+c(eml_def_2.1.1, stmml) %>%
+  write_json("data-raw/eml-2.1.1.json", pretty=TRUE)
+
+
+
+
+
+#eml_db <- list("eml-2.1.1" = jsonlite::read_json("data-raw/eml-2.1.1.json"),
+#               "eml-2.2.0" = jsonlite::read_json("data-raw/eml-2.2.0.json"))
+#devtools::use_data(eml_db, overwrite = TRUE, internal = TRUE)
 
 

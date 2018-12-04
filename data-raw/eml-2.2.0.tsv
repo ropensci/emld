@@ -70,9 +70,7 @@ methods	methodStep	Information about the methods employed in collecting or gener
 methods	sampling	Description of sampling procedures including the geographic, temporal and taxonomic coverage of the study.		FALSE
 methods	qualityControl	Information on possible errors or on the quality of a data set.		FALSE
 annotation	propertyURI	The persistent URI used to identify a property from a vocabulary.		FALSE
-annotation	propertyLabel	A human readable representation of the controlled property.		FALSE
 annotation	valueURI	The persistent URI used to identify a value from a vocabulary.		FALSE
-annotation	valueLabel	A human readable representation of the controlled value.		FALSE
 quantitativeAttributeAccuracyAssessment	attributeAccuracyValue	A value assigned to estimate the accuracy of the attribute.		FALSE
 quantitativeAttributeAccuracyAssessment	attributeAccuracyExplanation	The test which yields the Attribute Accuracy Value.		FALSE
 attributeList	attribute			FALSE
@@ -360,9 +358,12 @@ originator	id			TRUE
 originator	system			TRUE
 originator	scope			TRUE
 taxonomicClassification	taxonRankName	The name of the taxonomic rank for which the Taxon rank value is provided.		FALSE
-taxonomicClassification	taxonRankValue	The name representing the taxonomic rank of the taxon being described.		FALSE
+taxonomicClassification	taxonRankValue	The taxonomic rank name being described.		FALSE
 taxonomicClassification	commonName	Specification of applicable common names.		FALSE
+taxonomicClassification	taxonId	Element holds an ID and ID-provider for this taxon.		FALSE
 taxonomicClassification	taxonomicClassification	Information about the range of taxa addressed in the data set or collection.		FALSE
+taxonomicClassification	id			TRUE
+taxonId	provider	The taxonomic authority or catalog from which the taxonId can be retrieved, defined as the namespace URI for the provider.		TRUE
 dataset	alternateIdentifier	A secondary identifier for this entity		FALSE
 dataset	shortName	A short name that describes the resource, sometimes a filename.		FALSE
 dataset	title	A brief description of the resource, providing enough detail to differentiate it from other similar resources.		FALSE
@@ -1226,6 +1227,8 @@ connectionDefinition	scope			TRUE
 parameter	name	Name of the parameter to be used to make this connection.		FALSE
 parameter	value	The value of the parameter to be used to make this connection.		FALSE
 value	xml:lang			TRUE
+propertyURI	label	A human readable representation of the controlled property.		TRUE
+valueURI	label	A human readable representation of the controlled value.		TRUE
 implementation	distribution	Information on how the resource is distributed online and offline		FALSE
 implementation	size	Physical size of an implementation.		FALSE
 implementation	language	The International Language of the software implementation.		FALSE
@@ -1371,11 +1374,14 @@ eml	dataset	A resource that describes a data set, which can include one or more 
 eml	citation	A resource that describes a literature citation that one might find in a bibliography.		FALSE
 eml	software	A resource that describes a software package, which can include commercial and non-commercial software as well as data processing programs.		FALSE
 eml	protocol	A resource that describes a scientific protocol, which can include one or more descriptions of methods and procedures.		FALSE
+eml	annotations	A list of precisely-defined semantic statements about this resource.		FALSE
 eml	additionalMetadata	A flexible field for including any other relevant metadata that pertains to the resource being described.		FALSE
 eml	packageId	A unique identifier for this entire EML metadata document that can be used to reference it elsewhere.		TRUE
 eml	system			TRUE
 eml	scope	The scope of the identifier.		TRUE
 eml	xml:lang			TRUE
+annotations	annotation	A precisely-defined semantic statement about an element in the EML document.		FALSE
+annotation	references			TRUE
 additionalMetadata	describes	A pointer to the id attribute for the sub-portion of the resource that is described by this additional metadata.		FALSE
 additionalMetadata	metadata	This element contains the additional metadata that is to be included in the document. The content of this field can be any well-formed XML fragment.		FALSE
 additionalMetadata	id			TRUE
