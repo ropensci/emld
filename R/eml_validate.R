@@ -46,12 +46,15 @@ eml_validate <- function(eml,
     xml2::xml_attr(xml2::xml_root(doc),
     "schemaLocation"), "\\s+")[[1]], collapse = " "))
 
+  ## defaults
+  id_valid <- TRUE
+  unit_valid <- TRUE
   if(full){
-    result <- eml_additional_validation(doc, encoding = encoding)
-    if(!result) return(result)
+    id_valid <- eml_additional_validation(doc, encoding = encoding)
+    unit_valid <- validate_units(doc, encoding = encoding)
   }
 
-  result <- tryCatch(
+  schema_valid <- tryCatch(
     xml2::xml_validate(doc, schema_doc),
     error = function(e) {
       warning("The document could not be validated.")
@@ -60,6 +63,10 @@ eml_validate <- function(eml,
            warnings = c(e))
     }
   )
+  result <- schema_valid & id_valid & unit_valid
+  attr(result, "errors") <- c(attr(id_valid, "errors"),
+                              attr(unit_valid, "errors"),
+                              attr(schema_valid, "errors"))
   result
 }
 
