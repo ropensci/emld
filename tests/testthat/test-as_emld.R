@@ -29,12 +29,33 @@ test_that("we can round-trip and validate a simple example", {
 
 
 
-test_that("we can convert hf205.xml into JSON-LD", {
+test_that("explict 'from' types", {
+  f <- system.file("extdata/example.xml", package="emld")
+  x <- as_emld(f, from="xml")
+  as_json(x, "ex.json")
+  json <- jsonlite::read_json("ex.json")
+  my_eml <- as_emld(json, "guess")
+  my_eml2 <- as_emld(json, "json")
+  my_eml3 <- as_emld(my_eml2, "list")
+  expect_true(file.exists("ex.json"))
+
+  class(x) <- "list"
+  json2 <- as_json(x)
+
+
+  f2 <- xml2::read_xml(f)
+  my_eml4 <- as_emld(f, from="xml")
+  expect_identical(my_eml, my_eml2)
+  unlink("ex.json")
+})
+
+test_that("we can convert SON-LD into xml", {
   f <- system.file("extdata/hf205.xml", package="emld")
   as_json(as_emld(f), "ex.json")
   expect_true(file.exists("ex.json"))
   unlink("ex.json")
 })
+
 
 test_that(
   "We can parse an EML <url> element with an attribute into JSON",

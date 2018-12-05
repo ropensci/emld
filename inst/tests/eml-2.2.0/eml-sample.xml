@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <eml:eml
-    packageId="eml.1.1" system="knb"
+    packageId="doi:10.xxxx/eml.1.1" system="knb"
     xmlns:eml="eml://ecoinformatics.org/eml-2.2.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.1"
     xsi:schemaLocation="eml://ecoinformatics.org/eml-2.2.0 xsd/eml.xsd">
 
-<dataset>
+<dataset id="doi:10.xxxx/eml.1.1">
   <title>Data from Cedar Creek LTER on productivity and species richness
   for use in a workshop titled "An Analysis of the Relationship between
   Productivity and Diversity using Experimental Results from the Long-Term
@@ -183,6 +183,10 @@
             </numericDomain>
           </ratio>
         </measurementScale>
+        <annotation>
+            <propertyURI label="contains measurements of type">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType</propertyURI>
+            <valueURI label="Plant Cover Percentage">http://purl.dataone.org/odo/ECSO_00001197</valueURI>
+        </annotation>
       </attribute>
       <attribute  id="att.5">
         <attributeName>avesr91</attributeName>
@@ -316,6 +320,10 @@
         <annotation>
             <propertyURI label="of entity">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#ofEntity</propertyURI>
             <valueURI label="Plant Sample">http://example.com/example-vocab-1.owl#PlantSample</valueURI>
+        </annotation>
+        <annotation>
+            <propertyURI label="contains measurements of type">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType</propertyURI>
+            <valueURI label="Plant Material Biomass">http://purl.dataone.org/odo/ECSO_00001148</valueURI>
         </annotation>
       </attribute>
       <attribute id="att.13">

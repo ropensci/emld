@@ -1,3 +1,9 @@
+## 2018-11-28
+## This is still the most current official script for creating:
+##
+## - eml-2.1.1.json, eml-2.1.1.tsv
+## - eml-2.2.0.json, eml-2.2.0.tsv
+
 library(tidyverse)
 library(glue)
 library(xml2)
