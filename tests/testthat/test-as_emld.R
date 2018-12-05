@@ -30,7 +30,7 @@ test_that("we can round-trip and validate a simple example", {
 
 
 test_that("explict 'from' types", {
-  f <- system.file("extdata/hf205.xml", package="emld")
+  f <- system.file("extdata/example.xml", package="emld")
   x <- as_emld(f, from="xml")
   as_json(x, "ex.json")
   json <- jsonlite::read_json("ex.json")
