@@ -7,6 +7,7 @@ status](https://ci.appveyor.com/api/projects/status/github/cboettig/emld?branch=
 [![Coverage
 Status](https://img.shields.io/codecov/c/github/cboettig/emld/master.svg)](https://codecov.io/github/cboettig/emld?branch=master)
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/emld)](https://cran.r-project.org/package=emld)
+[![](https://badges.ropensci.org/269_status.svg)](https://github.com/ropensci/software-review/issues/269)
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
@@ -43,7 +44,7 @@ format and make maximum use of existing technology to work with that
 format. In particular, this package emphasizes tools for working with
 linked data through the JSON-LD format. This package is not meant to
 replace `EML`, as it does not support the more complex operations found
-in that package. Rather, it provides a minimalistic but powerful way of
+in that package. Rather, it provides a minimalist but powerful way of
 working with EML documents that can be used by itself or as a backend
 for those complex operations. The next release of the EML R package will
 use `emld` under the hood.
@@ -94,7 +95,7 @@ eml$dataset$title
 
 ## Writing EML
 
-Becuase `emld` objects are just nested lists, we can create EML just by
+Because `emld` objects are just nested lists, we can create EML just by
 writing lists:
 
 ``` r
@@ -124,11 +125,11 @@ a job for the `EML` package and beyond the scope of the lightweight
 
 For many applications, it is useful to merely treat EML as a list
 object, as seen above, allowing the R user to leverage a standard tools
-and intutition in workign with these files. However, `emld` also opens
+and intuition in working with these files. However, `emld` also opens
 the door to new possible directions by thinking of EML data in terms of
 a JSON-LD serialization rather than an XML serialization. First, owing
 to it’s comparative simplicity and native data typing (e.g. of
-boolean/string/numeric data), JSON is often easier for many developers
+Boolean/string/numeric data), JSON is often easier for many developers
 to work with than EML’s native XML format.
 
 ## As JSON: Query with JQ
@@ -208,10 +209,7 @@ sparql <-
 rdf <- rdf_parse("hf205.json", "jsonld")
 df <- rdf_query(rdf, sparql)
 df
-#> # A tibble: 1 x 6
-#>   genus      species  northLat southLat eastLong westLong
-#>   <chr>      <chr>       <dbl>    <dbl>    <dbl>    <dbl>
-#> 1 Sarracenia purpurea     42.6     42.4    -72.1    -72.3
+#> # A tibble: 0 x 0
 ```
 
 -----
