@@ -1,6 +1,5 @@
-#' as_emld
+#' Coerce an EML file or object into an emld object.
 #'
-#' Parse an EML file into an emld object.
 #' @param x path to an EML file
 #' @param from explicit type for the input format. By default, will
 #' attempt to guess the format, but it always safer to specify the
@@ -10,7 +9,10 @@
 #' @importFrom xml2 read_xml xml_find_all xml_remove
 #' @importFrom methods is
 #' @importFrom jsonld jsonld_compact jsonld_frame
-#'
+#' @examples
+#'  hf205 <- system.file("extdata/hf205.xml", package="emld")
+#'  as_emld(hf205)
+#' @return an emld object
 #' @export
 as_emld <- function(x, from = c("guess", "xml", "json", "list"))
 {

@@ -11,9 +11,9 @@ template(object)
 }
 \value{
 a list with elements named according to the properties of the object.
-        This can be coerced into EML, see vignettes. NULL-valued elements (~)
-        can take a data entry directly, while empty list()-valued elements ({})
-        indicate properties that take other eml objects as values.
+This can be coerced into EML, see vignettes. NULL-valued elements (~)
+can take a data entry directly, while empty list()-valued elements ({})
+indicate properties that take other eml objects as values.
 }
 \description{
 template

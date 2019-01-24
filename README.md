@@ -189,7 +189,7 @@ as_emld(f) %>%
 as_json("hf205.json")
 
 sparql <- 
-  'PREFIX eml: <eml://ecoinformatics.org/eml-2.1.1/>
+  'PREFIX eml: <eml://ecoinformatics.org/eml-2.2.0/>
 
   SELECT ?genus ?species ?northLat ?southLat ?eastLong ?westLong 
 
@@ -209,7 +209,10 @@ sparql <-
 rdf <- rdf_parse("hf205.json", "jsonld")
 df <- rdf_query(rdf, sparql)
 df
-#> # A tibble: 0 x 0
+#> # A tibble: 1 x 6
+#>   genus      species  northLat southLat eastLong westLong
+#>   <chr>      <chr>       <dbl>    <dbl>    <dbl>    <dbl>
+#> 1 Sarracenia purpurea     42.6     42.4    -72.1    -72.3
 ```
 
 -----

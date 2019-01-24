@@ -194,12 +194,12 @@ eml_additional_validation <- function(eml,
 #' @return fully qualified path to the XSD schema for the appropriate version of EML
 #'
 #' @examples \donttest{
-#' f <- system.file("examples", "example-eml-2.1.1.xml", package = "EML")
+#' f <- system.file("extdata", "example.xml", package = "emld")
 #' eml <- xml2::read_xml(f)
 #' schema <- eml_locate_schema(eml)
 #' }
 #' @importFrom xml2 xml_ns xml_attr xml_root
-#' @export
+#' @noRd
 eml_locate_schema <- function(eml, ns = NA) {
 
 

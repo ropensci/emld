@@ -1,4 +1,4 @@
-#' as_json
+#' Coerce an emld object into JSON
 #'
 #' @param x an emld object
 #' @param file optional path to write out to file.
@@ -11,7 +11,11 @@
 #' f <- system.file("extdata/example.xml", package = "emld")
 #' emld <- as_emld(f)
 #' json <- as_json(emld)
-#'
+#' ## can also write a json file to disk:
+#' json_file <- tempfile()
+#' as_json(emld, json_file)
+#' @return a json object. Or if a file path is provided, the metadata
+#' is written out in JSON file and the function returns `NULL` invisibly.
 as_json <- function(x, file=NULL){ UseMethod("as_json") }
 
 #' @export
