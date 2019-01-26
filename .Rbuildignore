@@ -11,6 +11,7 @@
 ^\.travis\.yml$
 ^codecov\.yml$
 ^test\.sh$
+^paper\.Rmd$
 ^paper\.md$
 ^paper\.bib$
 ^onboarding-submission\.md$
