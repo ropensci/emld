@@ -85,7 +85,7 @@ generalized_parser <- function(eml, encoding = "UTF-8"){
   } else if (is(eml, "xml_document")) {
     doc <- eml
   } else if (is.list(eml)){
-    ##  FIXME shouldn't have to write to tempfile,
+    ## Shouldn't have to write to tempfile,
     ## but  `doc <- as_xml(eml)` fails to drop xsi prefix on "schemaLocation"
     f <- tempfile()
     as_xml(eml, f)
@@ -129,7 +129,6 @@ eml_additional_validation <- function(eml,
     error_log <- c(error_log, "Annotation elements with ids cannot contain references elements")
 
   # ID attributes must be unique
-  # FIXME technically must be unique inside parent system only...
   id <- xml_attr(xml2::xml_find_all(doc, "//*[@id]"), "id")
   if(any(duplicated(id)))
     error_log <- c(error_log, "all id attributes must be unique")

@@ -46,14 +46,14 @@ In contrast to the existing [EML package](https://ropensci.github.io/EML), this 
 
 Note that the JSON-LD format is considerably less rigid than the EML schema.  This means that there are many valid, semantically equivalent representations on the JSON-LD side that must all map into the same or nearly the same XML format.  At the extreme end, the JSON-LD format can be serialized into RDF, where everything is flat set of triples (e.g. essentially a tabular representation), which we can query directly with semantic tools like SPARQL, and also automatically coerce back into the rigid nesting and ordering structure required by EML.  This ability to "flatten" EML files can be particularly convenient for applications consuming and parsing large numbers of EML files.  This package may also make it easier for other developers to build on the EML, since the S3/list and JSON formats used here have proven more appealing to many R developers than S4 and XML serializations.
 
-JSON-LD also makes it easier to extend EML with other existing semantic vocabularies.  The standard JSON-LD operations (e.g. framing, compaction) make it easy for developers to specify desired data structures, filter unnecessary terms and provide defaults for needed ones, or even define custom property names, rather than working with the often cumbersome prefixes or URIs of linked data. 
-
-
 
 ```{r}
 library(emld)
 library(jsonlite)
-library(magrittr)
+library(magrittr) # for pipes
+library(jqr)      # for JQ examples only
+library(rdflib)   # for RDf examples only
+
 ```
 
 
@@ -103,7 +103,6 @@ For example, JSON can be queried with with JQ, a [simple and powerful query lang
 
 
 ```{r}
-library(jqr)
 hf205 <- system.file("extdata/hf205.xml", package="emld")
 
 as_emld(hf205) %>% 
@@ -121,20 +120,14 @@ Nice features of JQ include the ability to do recursive descent (common to XPATH
 ## As semantic data: SPARQL queries
 
 
-Another side-effect of the JSON-LD representation is that we can treat EML as "semantic" data.  This can provide a way to integrate EML records with other data sources, and means we can query the EML using semantic SPARQL queries.  One nice thing about SPARQL queries is that, in contrast to XPATH, JQ, or other graph queries, SPARQL always returns a `data.frame` which is a particularly convenient format. SPARQL queries look like SQL queries in that we name the columns we want with a `SELECT` command.  Unlike SQL, these names are act as variables.  We then use a WHERE block to define how these variables relate to each other.  
-
-
-
-```{r}
-library(rdflib)
-```
+Another side-effect of the JSON-LD representation is that we can treat EML as "semantic" data.  This can provide a way to integrate EML records with other data sources, and means we can query the EML using semantic SPARQL queries.  One nice thing about SPARQL queries is that, in contrast to XPATH, JQ, or other graph queries, SPARQL always returns a `data.frame` which is a particularly convenient format. SPARQL queries look like SQL queries in that we name the columns we want with a `SELECT` command.  Unlike SQL, these names act as variables.  We then use a WHERE block to define how these variables relate to each other.  
 
 
 ```{r}
 f <- system.file("extdata/hf205.xml", package="emld")
 
 as_emld(f) %>%
-as_json("hf205.json")
+  as_json("hf205.json")
 
 sparql <- 
   'PREFIX eml: <eml://ecoinformatics.org/eml-2.2.0/>

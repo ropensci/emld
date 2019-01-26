@@ -84,7 +84,7 @@ as_emld.character <- function(x, from = c("guess", "xml", "json", "list")){
 as_emld.json <- function(x, from = "json"){
   ## Convert json to the S3 emld object
 
-    ## FIXME technically this assumes only our context
+    ## This assumes only our context
     frame <- system.file(paste0("frame/",
                               getOption("emld_db", "eml-2.2.0"),
                               "/eml-frame.json"), package = "emld")

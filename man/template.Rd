@@ -2,7 +2,7 @@
 % Please edit documentation in R/template.R
 \name{template}
 \alias{template}
-\title{template}
+\title{Create a template for an EML object}
 \usage{
 template(object)
 }
@@ -16,12 +16,11 @@ can take a data entry directly, while empty list()-valued elements ({})
 indicate properties that take other eml objects as values.
 }
 \description{
-template
+Create a template for an EML object
 }
 \details{
 Note: while this function can be called in recursions, doing so may be a bad idea.
 }
 \examples{
 template("creator")
-
 }

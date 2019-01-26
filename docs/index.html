@@ -118,10 +118,11 @@
 <a href="#motivation" class="anchor"></a>Motivation</h2>
 <p>In contrast to the existing <a href="https://ropensci.github.io/EML">EML package</a>, this package aims to a very light-weight implementation that seeks to provide both an intuitive data format and make maximum use of existing technology to work with that format. In particular, this package emphasizes tools for working with linked data through the JSON-LD format. This package is not meant to replace <code>EML</code>, as it does not support the more complex operations found in that package. Rather, it provides a minimalist but powerful way of working with EML documents that can be used by itself or as a backend for those complex operations. The next release of the EML R package will use <code>emld</code> under the hood.</p>
 <p>Note that the JSON-LD format is considerably less rigid than the EML schema. This means that there are many valid, semantically equivalent representations on the JSON-LD side that must all map into the same or nearly the same XML format. At the extreme end, the JSON-LD format can be serialized into RDF, where everything is flat set of triples (e.g. essentially a tabular representation), which we can query directly with semantic tools like SPARQL, and also automatically coerce back into the rigid nesting and ordering structure required by EML. This ability to “flatten” EML files can be particularly convenient for applications consuming and parsing large numbers of EML files. This package may also make it easier for other developers to build on the EML, since the S3/list and JSON formats used here have proven more appealing to many R developers than S4 and XML serializations.</p>
-<p>JSON-LD also makes it easier to extend EML with other existing semantic vocabularies. The standard JSON-LD operations (e.g. framing, compaction) make it easy for developers to specify desired data structures, filter unnecessary terms and provide defaults for needed ones, or even define custom property names, rather than working with the often cumbersome prefixes or URIs of linked data.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(emld)</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(jsonlite)</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(magrittr)</a></code></pre></div>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(magrittr) <span class="co"># for pipes</span></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(jqr)      <span class="co"># for JQ examples only</span></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(rdflib)   <span class="co"># for RDf examples only</span></a></code></pre></div>
 </div>
 <div id="reading-eml" class="section level2">
 <h2 class="hasAnchor">
@@ -160,57 +161,55 @@
 <h2 class="hasAnchor">
 <a href="#as-json-query-with-jq" class="anchor"></a>As JSON: Query with JQ</h2>
 <p>For example, JSON can be queried with with JQ, a <a href="https://stedolan.github.io/jq/manual/">simple and powerful query language</a> that also gives us a lot of flexibility over the return structure of our results. JQ syntax is both intuitive and well documented, and often easier than the typical munging of JSON/list data using <code>purrr</code>. Here’s an example query that turns EML to JSON and then extracts the north and south bounding coordinates:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(jqr)</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2">hf205 &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">"extdata/hf205.xml"</span>, <span class="dt">package=</span><span class="st">"emld"</span>)</a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="kw"><a href="reference/as_emld.html">as_emld</a></span>(hf205) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="reference/as_json.html">as_json</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/jqr/topics/jq">jq</a></span>(<span class="st">'.dataset.coverage.geographicCoverage.boundingCoordinates | </span></a>
-<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="st">       { northLat: .northBoundingCoordinate, </span></a>
-<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="st">         southLat: .southBoundingCoordinate }'</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb5-9" data-line-number="9"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/jsonlite/topics/fromJSON">fromJSON</a></span>()</a>
-<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="co">#&gt; $northLat</span></a>
-<a class="sourceLine" id="cb5-11" data-line-number="11"><span class="co">#&gt; [1] "+42.55"</span></a>
-<a class="sourceLine" id="cb5-12" data-line-number="12"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb5-13" data-line-number="13"><span class="co">#&gt; $southLat</span></a>
-<a class="sourceLine" id="cb5-14" data-line-number="14"><span class="co">#&gt; [1] "+42.42"</span></a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">hf205 &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">"extdata/hf205.xml"</span>, <span class="dt">package=</span><span class="st">"emld"</span>)</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="kw"><a href="reference/as_emld.html">as_emld</a></span>(hf205) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="reference/as_json.html">as_json</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/jqr/topics/jq">jq</a></span>(<span class="st">'.dataset.coverage.geographicCoverage.boundingCoordinates | </span></a>
+<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="st">       { northLat: .northBoundingCoordinate, </span></a>
+<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="st">         southLat: .southBoundingCoordinate }'</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/jsonlite/topics/fromJSON">fromJSON</a></span>()</a>
+<a class="sourceLine" id="cb5-9" data-line-number="9"><span class="co">#&gt; $northLat</span></a>
+<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="co">#&gt; [1] "+42.55"</span></a>
+<a class="sourceLine" id="cb5-11" data-line-number="11"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb5-12" data-line-number="12"><span class="co">#&gt; $southLat</span></a>
+<a class="sourceLine" id="cb5-13" data-line-number="13"><span class="co">#&gt; [1] "+42.42"</span></a></code></pre></div>
 <p>Nice features of JQ include the ability to do recursive descent (common to XPATH but not possible in <code>purrr</code>) and specify the shape of the return object. Some prototype examples of how we can use this to translate between EML and <a href="http://schema.org/Dataset" class="uri">http://schema.org/Dataset</a> representations of the same metadata can be found in <a href="https://github.com/cboettig/emld/blob/master/notebook/jq_maps.md" class="uri">https://github.com/cboettig/emld/blob/master/notebook/jq_maps.md</a></p>
 </div>
 <div id="as-semantic-data-sparql-queries" class="section level2">
 <h2 class="hasAnchor">
 <a href="#as-semantic-data-sparql-queries" class="anchor"></a>As semantic data: SPARQL queries</h2>
-<p>Another side-effect of the JSON-LD representation is that we can treat EML as “semantic” data. This can provide a way to integrate EML records with other data sources, and means we can query the EML using semantic SPARQL queries. One nice thing about SPARQL queries is that, in contrast to XPATH, JQ, or other graph queries, SPARQL always returns a <code>data.frame</code> which is a particularly convenient format. SPARQL queries look like SQL queries in that we name the columns we want with a <code>SELECT</code> command. Unlike SQL, these names are act as variables. We then use a WHERE block to define how these variables relate to each other.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(rdflib)</a></code></pre></div>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">f &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">"extdata/hf205.xml"</span>, <span class="dt">package=</span><span class="st">"emld"</span>)</a>
-<a class="sourceLine" id="cb7-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="kw"><a href="reference/as_emld.html">as_emld</a></span>(f) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="kw"><a href="reference/as_json.html">as_json</a></span>(<span class="st">"hf205.json"</span>)</a>
-<a class="sourceLine" id="cb7-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb7-6" data-line-number="6">sparql &lt;-<span class="st"> </span></a>
-<a class="sourceLine" id="cb7-7" data-line-number="7"><span class="st">  'PREFIX eml: &lt;eml://ecoinformatics.org/eml-2.2.0/&gt;</span></a>
-<a class="sourceLine" id="cb7-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb7-9" data-line-number="9"><span class="st">  SELECT ?genus ?species ?northLat ?southLat ?eastLong ?westLong </span></a>
-<a class="sourceLine" id="cb7-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb7-11" data-line-number="11"><span class="st">  WHERE { </span></a>
-<a class="sourceLine" id="cb7-12" data-line-number="12"><span class="st">    ?y eml:taxonRankName "genus" .</span></a>
-<a class="sourceLine" id="cb7-13" data-line-number="13"><span class="st">    ?y eml:taxonRankValue ?genus .</span></a>
-<a class="sourceLine" id="cb7-14" data-line-number="14"><span class="st">    ?y eml:taxonomicClassification ?s .</span></a>
-<a class="sourceLine" id="cb7-15" data-line-number="15"><span class="st">    ?s eml:taxonRankName "species" .</span></a>
-<a class="sourceLine" id="cb7-16" data-line-number="16"><span class="st">    ?s eml:taxonRankValue ?species .</span></a>
-<a class="sourceLine" id="cb7-17" data-line-number="17"><span class="st">    ?x eml:northBoundingCoordinate ?northLat .</span></a>
-<a class="sourceLine" id="cb7-18" data-line-number="18"><span class="st">    ?x eml:southBoundingCoordinate ?southLat .</span></a>
-<a class="sourceLine" id="cb7-19" data-line-number="19"><span class="st">    ?x eml:eastBoundingCoordinate ?eastLong .</span></a>
-<a class="sourceLine" id="cb7-20" data-line-number="20"><span class="st">    ?x eml:westBoundingCoordinate ?westLong .</span></a>
-<a class="sourceLine" id="cb7-21" data-line-number="21"><span class="st">  }</span></a>
-<a class="sourceLine" id="cb7-22" data-line-number="22"><span class="st">'</span></a>
-<a class="sourceLine" id="cb7-23" data-line-number="23">  </a>
-<a class="sourceLine" id="cb7-24" data-line-number="24">rdf &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/rdflib/topics/rdf_parse">rdf_parse</a></span>(<span class="st">"hf205.json"</span>, <span class="st">"jsonld"</span>)</a>
-<a class="sourceLine" id="cb7-25" data-line-number="25">df &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/rdflib/topics/rdf_query">rdf_query</a></span>(rdf, sparql)</a>
-<a class="sourceLine" id="cb7-26" data-line-number="26">df</a>
-<a class="sourceLine" id="cb7-27" data-line-number="27"><span class="co">#&gt; # A tibble: 1 x 6</span></a>
-<a class="sourceLine" id="cb7-28" data-line-number="28"><span class="co">#&gt;   genus      species  northLat southLat eastLong westLong</span></a>
-<a class="sourceLine" id="cb7-29" data-line-number="29"><span class="co">#&gt;   &lt;chr&gt;      &lt;chr&gt;       &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;</span></a>
-<a class="sourceLine" id="cb7-30" data-line-number="30"><span class="co">#&gt; 1 Sarracenia purpurea     42.6     42.4    -72.1    -72.3</span></a></code></pre></div>
+<p>Another side-effect of the JSON-LD representation is that we can treat EML as “semantic” data. This can provide a way to integrate EML records with other data sources, and means we can query the EML using semantic SPARQL queries. One nice thing about SPARQL queries is that, in contrast to XPATH, JQ, or other graph queries, SPARQL always returns a <code>data.frame</code> which is a particularly convenient format. SPARQL queries look like SQL queries in that we name the columns we want with a <code>SELECT</code> command. Unlike SQL, these names act as variables. We then use a WHERE block to define how these variables relate to each other.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">f &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">"extdata/hf205.xml"</span>, <span class="dt">package=</span><span class="st">"emld"</span>)</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="kw"><a href="reference/as_emld.html">as_emld</a></span>(f) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="reference/as_json.html">as_json</a></span>(<span class="st">"hf205.json"</span>)</a>
+<a class="sourceLine" id="cb6-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb6-6" data-line-number="6">sparql &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="st">  'PREFIX eml: &lt;eml://ecoinformatics.org/eml-2.2.0/&gt;</span></a>
+<a class="sourceLine" id="cb6-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb6-9" data-line-number="9"><span class="st">  SELECT ?genus ?species ?northLat ?southLat ?eastLong ?westLong </span></a>
+<a class="sourceLine" id="cb6-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb6-11" data-line-number="11"><span class="st">  WHERE { </span></a>
+<a class="sourceLine" id="cb6-12" data-line-number="12"><span class="st">    ?y eml:taxonRankName "genus" .</span></a>
+<a class="sourceLine" id="cb6-13" data-line-number="13"><span class="st">    ?y eml:taxonRankValue ?genus .</span></a>
+<a class="sourceLine" id="cb6-14" data-line-number="14"><span class="st">    ?y eml:taxonomicClassification ?s .</span></a>
+<a class="sourceLine" id="cb6-15" data-line-number="15"><span class="st">    ?s eml:taxonRankName "species" .</span></a>
+<a class="sourceLine" id="cb6-16" data-line-number="16"><span class="st">    ?s eml:taxonRankValue ?species .</span></a>
+<a class="sourceLine" id="cb6-17" data-line-number="17"><span class="st">    ?x eml:northBoundingCoordinate ?northLat .</span></a>
+<a class="sourceLine" id="cb6-18" data-line-number="18"><span class="st">    ?x eml:southBoundingCoordinate ?southLat .</span></a>
+<a class="sourceLine" id="cb6-19" data-line-number="19"><span class="st">    ?x eml:eastBoundingCoordinate ?eastLong .</span></a>
+<a class="sourceLine" id="cb6-20" data-line-number="20"><span class="st">    ?x eml:westBoundingCoordinate ?westLong .</span></a>
+<a class="sourceLine" id="cb6-21" data-line-number="21"><span class="st">  }</span></a>
+<a class="sourceLine" id="cb6-22" data-line-number="22"><span class="st">'</span></a>
+<a class="sourceLine" id="cb6-23" data-line-number="23">  </a>
+<a class="sourceLine" id="cb6-24" data-line-number="24">rdf &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/rdflib/topics/rdf_parse">rdf_parse</a></span>(<span class="st">"hf205.json"</span>, <span class="st">"jsonld"</span>)</a>
+<a class="sourceLine" id="cb6-25" data-line-number="25">df &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/rdflib/topics/rdf_query">rdf_query</a></span>(rdf, sparql)</a>
+<a class="sourceLine" id="cb6-26" data-line-number="26">df</a>
+<a class="sourceLine" id="cb6-27" data-line-number="27"><span class="co">#&gt; # A tibble: 1 x 6</span></a>
+<a class="sourceLine" id="cb6-28" data-line-number="28"><span class="co">#&gt;   genus      species  northLat southLat eastLong westLong</span></a>
+<a class="sourceLine" id="cb6-29" data-line-number="29"><span class="co">#&gt;   &lt;chr&gt;      &lt;chr&gt;       &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb6-30" data-line-number="30"><span class="co">#&gt; 1 Sarracenia purpurea     42.6     42.4    -72.1    -72.3</span></a></code></pre></div>
 <hr>
 <p>Please note that the <code>emld</code> project is released with a <a href="CODE_OF_CONDUCT.html">Contributor Code of Conduct</a>. By contributing to this project, you agree to abide by its terms.</p>
 </div>

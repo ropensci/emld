@@ -16,4 +16,7 @@
 ^onboarding-submission\.md$
 LICENSE.md
 ^CONDUCT\.md$
+^CONTRIBUTING\.md$
+^\.github$
+.*-review.md$
 

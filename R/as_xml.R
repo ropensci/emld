@@ -152,7 +152,6 @@ context_namespaces <- function(context, xml){
 
 
 
-## FIXME drop NAs too?
 drop_nulls <- function(x){
   if(is.atomic(x))
     return(x)
