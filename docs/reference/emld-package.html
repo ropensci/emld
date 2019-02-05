@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>References • emld</title>
+<title>emld: Ecological Metadata as Linked Data — emld-package • emld</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -25,12 +25,19 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
-<link href="pkgdown.css" rel="stylesheet">
-<script src="pkgdown.js"></script>
+<link href="../pkgdown.css" rel="stylesheet">
+<script src="../pkgdown.js"></script>
 
 
 
-<meta property="og:title" content="References" />
+<meta property="og:title" content="emld: Ecological Metadata as Linked Data — emld-package" />
+
+<meta property="og:description" content="The goal of emld is to provide a way to work with EML metadata
+in the JSON-LD format. At it's heart, the package is simply a
+way to translate an EML XML document into JSON-LD and be able
+to reverse this so that any semantically equivalent JSON-LD
+file can be serialized into EML-schema valid XML." />
+<meta name="twitter:card" content="summary" />
 
 
 
@@ -47,7 +54,7 @@
   </head>
 
   <body>
-    <div class="container template-title-body">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -59,7 +66,7 @@
         <span class="icon-bar"></span>
       </button>
       <span class="navbar-brand">
-        <a class="navbar-link" href="index.html">emld</a>
+        <a class="navbar-link" href="../index.html">emld</a>
         <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.2</span>
       </span>
     </div>
@@ -67,13 +74,13 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="index.html">
+  <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="reference/index.html">Reference</a>
+  <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -83,7 +90,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="articles/tutorial.html">emld Tutorial</a>
+      <a href="../articles/tutorial.html">emld Tutorial</a>
     </li>
   </ul>
 </li>
@@ -106,37 +113,57 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>References</h1>
+    <h1>emld: Ecological Metadata as Linked Data</h1>
+    <small class="dont-index">Source: <a href='https://github.com/cboettig/emld/blob/master/R/emld.R'><code>R/emld.R</code></a></small>
+    <div class="hidden name"><code>emld-package.Rd</code></div>
     </div>
 
+    <div class="ref-description">
+    
+    <p>The goal of emld is to provide a way to work with EML metadata
+in the JSON-LD format. At it's heart, the package is simply a
+way to translate an EML XML document into JSON-LD and be able
+to reverse this so that any semantically equivalent JSON-LD
+file can be serialized into EML-schema valid XML.</p>
+    
+    </div>
 
-<hr>
-<p>title: ‘Ecological Metadata as Linked Data’ tags:</p>
-<ul>
-<li>linked data</li>
-<li>EML</li>
-<li>JSON-LD</li>
-<li>RDF</li>
-<li>Ecology</li>
+        
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>The package has only three core functions:</p><ul>
+<li><p><code><a href='as_emld.html'>as_emld()</a></code> Convert EML's <code>xml</code> files (or the <code>json</code> version created
+by this package) into a native R object (an S3 class called <code>emld</code>,
+essentially just a <code>list</code>).</p></li>
+<li><p><code><a href='as_xml.html'>as_xml()</a></code> Convert the native R format, <code>emld</code>, back into
+XML-schema valid EML.</p></li>
+<li><p><code><a href='as_json.html'>as_json()</a></code> Convert the native R format, <code>emld</code>, into <code>json</code>(LD).</p></li>
 </ul>
-<p>authors:</p>
-<ul>
-<li>name: Carl Boettiger orcid: 0000-0002-1642-628X affiliation: 1 affiliations:</li>
-<li>name: University of California, Berkeley index: 1 date: 2018-05-30 bibliography: paper.bib —</li>
-</ul>
-<p>The Ecological Metadata Language, (EML), is a widely used metadata standard in the ecological and environmental sciences [@Michener1997; @Jones2006; @Leinfelder2010]. Efforts such as the Long Term Ecological Research (LTER) and the National Center for Ecological Analysis and Synthesis (NCEAS) have used and driven the development of EML over the past two decades, and now major efforts such as the NSF-sponsored National Ecological Observatory Network (NEON), the DataONE Network, are making an unprecedented amount of ecological data available with rich, machine-readable metadata descriptions using EML [@NEON; @Keller2008; @Overpeck2011]. EML defines a strict XML schema that ensures metadata are machine readable and inter-operable through an XML-schema validation process.</p>
-<p>While this provides a predictable but extensible format, it also poses a significant technical barrier to many researchers seeking to analyze existing EML documents or create their own. The creation of EML in the late 1990s also pre-dated the advent of more developer-friendly and user-friendly technologies such as the popular JSON serialization, as well as the advent of semantic or linked data model and it’s application in ecoinformatics [@Michener2012]. More recently still, the creation of the W3C JSON-LD [@jsonld-w3c] has brought combined the developer-friendly JSON format with the powerful semantics of the Resource Description Format (RDF) popular in informatics [@rdf-w3c]. This package seeks to bring both of these advantages to bear on the rich-but-clunky XML structure used by EML. By automatically mapping EML into JSON-LD, we are able to realize the benefits easier creation and manipulation of EML structures as JSON objects or R list objects, while relying on the power of JSON-LD semantics (in particular, context, compaction and framing, [@jsonld]) to transform that data to and from EML-schema-compliant XML. This approach opens numerous research applications, ranging from the simple parsing or creation of EML files as R list objects to complex queries and semantic reasoning over large numbers of EML documents with semantic SPARQL queries [@sparql-w3c]. The package vignette provides scripted examples of each of these.</p>
-<div id="references" class="section level1">
+    
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-</div>
-
+    <div class='dont-index'><p>Useful links:</p><ul>
+<li><p><a href='https://github.com/cboettig/emld'>https://github.com/cboettig/emld</a></p></li>
+<li><p>Report bugs at <a href='https://github.com/cboettig/emld/issues'>https://github.com/cboettig/emld/issues</a></p></li>
+</ul></div>
+    
 
   </div>
+  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+    <h2>Contents</h2>
+    <ul class="nav nav-pills nav-stacked">
+      
+      <li><a href="#details">Details</a></li>
 
+      <li><a href="#see-also">See also</a></li>
+          </ul>
+
+    <h2>Author</h2>
+    <p><strong>Maintainer</strong>: Carl Boettiger <a href='mailto:cboettig@gmail.com'>cboettig@gmail.com</a> (http://orcid.org/0000-0002-1642-628X) [copyright holder]</p>
+  </div>
 </div>
-
 
       <footer>
       <div class="copyright">

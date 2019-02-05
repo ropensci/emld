@@ -12,7 +12,3 @@ print.emld <- function(x, ...){
          "json" = cat(jsonlite::toJSON(x, auto_unbox = TRUE, pretty = TRUE))
   )
 }
-
-
-## FIXME: Print method should drop context
-## Consider crayon?

@@ -6,22 +6,20 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>as_emld — as_emld • emld</title>
-
-<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+<title>Coerce an EML file or object into an emld object. — as_emld • emld</title>
 
 <!-- jquery -->
-<script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
 <!-- sticky kit -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
@@ -32,15 +30,16 @@
 
 
 
-<meta property="og:title" content="as_emld — as_emld" />
+<meta property="og:title" content="Coerce an EML file or object into an emld object. — as_emld" />
 
-<meta property="og:description" content="Parse an EML file into an emld object." />
+<meta property="og:description" content="Coerce an EML file or object into an emld object." />
 <meta name="twitter:card" content="summary" />
 
 
 
 <!-- mathjax -->
-<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -64,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">emld</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.2</span>
       </span>
     </div>
 
@@ -112,18 +111,18 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>as_emld</h1>
+    <h1>Coerce an EML file or object into an emld object.</h1>
     <small class="dont-index">Source: <a href='https://github.com/cboettig/emld/blob/master/R/as_emld.R'><code>R/as_emld.R</code></a></small>
     <div class="hidden name"><code>as_emld.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Parse an EML file into an emld object.</p>
+    <p>Coerce an EML file or object into an emld object.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>as_emld</span>(<span class='no'>x</span>, <span class='kw'>from</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"guess"</span>, <span class='st'>"xml"</span>, <span class='st'>"json"</span>, <span class='st'>"list"</span>))</pre>
+    <pre class="usage"><span class='fu'>as_emld</span>(<span class='no'>x</span>, <span class='kw'>from</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"guess"</span>, <span class='st'>"xml"</span>, <span class='st'>"json"</span>, <span class='st'>"list"</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -142,13 +141,346 @@ or file extension of the input.</p></td>
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
+    <p>an emld object</p>
+    
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'> <span class='no'>hf205</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"extdata/hf205.xml"</span>, <span class='kw'>package</span><span class='kw'>=</span><span class='st'>"emld"</span>)
+ <span class='fu'>as_emld</span>(<span class='no'>hf205</span>)</div><div class='output co'>#&gt; access:
+#&gt;   authSystem: knb
+#&gt;   order: allowFirst
+#&gt;   scope: document
+#&gt;   allow:
+#&gt;   - principal: uid=HFR,o=lter,dc=ecoinformatics,dc=org
+#&gt;     permission: all
+#&gt;   - principal: public
+#&gt;     permission: read
+#&gt; additionalMetadata:
+#&gt; - metadata:
+#&gt;     additionalClassifications:
+#&gt;       status: ongoing
+#&gt;       researchTopic: community
+#&gt;       studyType:
+#&gt;       - short-term measurement
+#&gt;       - modeling
+#&gt; - metadata:
+#&gt;     additionalLinks:
+#&gt;       url:
+#&gt;       - name: Ecophysiology of Carnivorous Plants Worldwide 1980-2011
+#&gt;         url: http://harvardforest.fas.harvard.edu:8080/exist/xquery/data.xq?id=hf168
+#&gt;       - name: Effects of Prey Availability on Sarracenia Physiology at Harvard Forest
+#&gt;           2005
+#&gt;         url: http://harvardforest.fas.harvard.edu:8080/exist/xquery/data.xq?id=hf109
+#&gt;       - name: Food Web of Sarracenia Purpurea in United States and Canada since 1999
+#&gt;         url: http://harvardforest.fas.harvard.edu:8080/exist/xquery/data.xq?id=hf193
+#&gt;       - name: Thresholds and Regime Shifts at Four LTER Sites (CCE, JRN, PAL, SBC)
+#&gt;           1951-2009
+#&gt;         url: http://harvardforest.fas.harvard.edu:8080/exist/xquery/data.xq?id=hf170
+#&gt;       - name: Nitrogen Cycling Dynamics in Sarracenia Purpurea at Harvard Forest 2004-2005
+#&gt;         url: http://harvardforest.fas.harvard.edu:8080/exist/xquery/data.xq?id=hf096
+#&gt;       - name: Organic and Inorganic Nitrogen Uptake by Sarracenia Purpurea at Harvard
+#&gt;           Forest and Fort Albany ON 2007
+#&gt;         url: http://harvardforest.fas.harvard.edu:8080/exist/xquery/data.xq?id=hf146
+#&gt;       - name: Prey Capture by Carnivorous Plants Worldwide 1923-2007
+#&gt;         url: http://harvardforest.fas.harvard.edu:8080/exist/xquery/data.xq?id=hf111
+#&gt;       - name: Sarracenia Purpurea Prey Capture at Harvard Forest 2008
+#&gt;         url: http://harvardforest.fas.harvard.edu:8080/exist/xquery/data.xq?id=hf114
+#&gt;       - name: Allochthonous Nutrients in the Sarracenia Microecosystem at Harvard
+#&gt;           Forest 2005-2007
+#&gt;         url: http://harvardforest.fas.harvard.edu:8080/exist/xquery/data.xq?id=hf098
+#&gt; dataset:
+#&gt;   id: HF205
+#&gt;   alternateIdentifier: HF205
+#&gt;   title: Thresholds and Tipping Points in a Sarracenia Microecosystem at Harvard Forest
+#&gt;     since 2012
+#&gt;   pubDate: '2012'
+#&gt;   abstract:
+#&gt;     section: '&lt;para&gt;The primary goal of this project is to determine experimentally
+#&gt;       the amount of lead time required to prevent a state change. To achieve this
+#&gt;       goal, we will (1) experimentally induce state changes in a natural aquatic ecosystem
+#&gt;       - the Sarracenia microecosystem; (2) use proteomic analysis to identify potential
+#&gt;       indicators of states and state changes; and (3) test whether we can forestall
+#&gt;       state changes by experimentally intervening in the system. This work uses state-of-the
+#&gt;       art molecular tools to identify early warning indicators in the field of aerobic
+#&gt;       to anaerobic state changes driven by nutrient enrichment in an aquatic ecosystem.
+#&gt;       The study tests two general hypotheses: (1) proteomic biomarkers can function
+#&gt;       as reliable indicators of impending state changes and may give early warning
+#&gt;       before increasing variances and statistical flickering of monitored variables;
+#&gt;       and (2) well-timed intervention based on proteomic biomarkers can avert future
+#&gt;       state changes in ecological systems.&lt;/para&gt;'
+#&gt;   intellectualRights:
+#&gt;     section: '&lt;para&gt;This dataset is released to the public and may be freely downloaded.
+#&gt;       Please keep the designated Contact person informed of any plans to use the dataset.
+#&gt;       Consultation or collaboration with the original investigators is strongly encouraged.
+#&gt;       Publications and data products that make use of the dataset must include proper
+#&gt;       acknowledgement. For more information on LTER Network data access and use policies,
+#&gt;       please see: http://www.lternet.edu/data/netpolicy.html.&lt;/para&gt;'
+#&gt;   distribution:
+#&gt;     online:
+#&gt;       url:
+#&gt;         function: information
+#&gt;         url: http://harvardforest.fas.harvard.edu:8080/exist/xquery/data.xq?id=hf205
+#&gt;   coverage:
+#&gt;     geographicCoverage:
+#&gt;       geographicDescription: Harvard Forest Greenhouse, Tom Swamp Tract (Harvard Forest)
+#&gt;       boundingCoordinates:
+#&gt;         westBoundingCoordinate: '-72.29'
+#&gt;         eastBoundingCoordinate: '-72.10'
+#&gt;         northBoundingCoordinate: '+42.55'
+#&gt;         southBoundingCoordinate: '+42.42'
+#&gt;         boundingAltitudes:
+#&gt;           altitudeMinimum: '160'
+#&gt;           altitudeMaximum: '330'
+#&gt;           altitudeUnits: meter
+#&gt;     temporalCoverage:
+#&gt;       rangeOfDates:
+#&gt;         beginDate:
+#&gt;           calendarDate: '2012-06-01'
+#&gt;         endDate:
+#&gt;           calendarDate: '2013-12-31'
+#&gt;     taxonomicCoverage:
+#&gt;       taxonomicClassification:
+#&gt;         taxonRankName: genus
+#&gt;         taxonRankValue: Sarracenia
+#&gt;         taxonomicClassification:
+#&gt;           taxonRankName: species
+#&gt;           taxonRankValue: purpurea
+#&gt;   contact:
+#&gt;     individualName:
+#&gt;       givenName: Aaron
+#&gt;       surName: Ellison
+#&gt;     organizationName: Harvard Forest
+#&gt;     address:
+#&gt;       deliveryPoint: 324 North Main Street
+#&gt;       city: Petersham
+#&gt;       administrativeArea: MA
+#&gt;       postalCode: '01366'
+#&gt;       country: USA
+#&gt;     phone:
+#&gt;       phonetype: voice
+#&gt;       phone: (978) 724-3302
+#&gt;     electronicMailAddress: aellison@fas.harvard.edu
+#&gt;   publisher:
+#&gt;     organizationName: Harvard Forest
+#&gt;     address:
+#&gt;       deliveryPoint: 324 North Main Street
+#&gt;       city: Petersham
+#&gt;       administrativeArea: MA
+#&gt;       postalCode: '01366'
+#&gt;       country: USA
+#&gt;     onlineUrl: http://harvardforest.fas.harvard.edu
+#&gt;     phone:
+#&gt;     - phonetype: voice
+#&gt;       phone: (978) 724-3302
+#&gt;     - phonetype: fax
+#&gt;       phone: (978) 724-3595
+#&gt;   methods:
+#&gt;     methodStep:
+#&gt;       description:
+#&gt;         section:
+#&gt;         - |-
+#&gt;           &lt;title&gt;General Protocols&lt;/title&gt;
+#&gt;           &lt;para&gt;1. Field methods. All experiments will be carried out in the greenhouse at Harvard Forest. We have developed an instrumentation system that allows us to collect continuous dissolved [O2] measurements: dedicated micro-probes (DO-166MT; Lazar Research Laboratories: http://www.shelfscientific.com/) connected to multiplexers and data loggers (AM16/32B multiplexer, CR-1000 datalogger and control system [Campbell Scientific: http://www.cambellsci.com]). The initial ecosystem composition in all experimental plants will be standardized by seeding each pitcher with a 10-ml inoculum of liquid collected from pitchers growing at Tom Swamp.  In all experiments, prey will be supplied to pitchers as standardized aliquots of dried and finely ground bald-faced hornets (Dolichovespula maculata; Hymenoptera: Vespidae), which we collect in quantity throughout New England. Both hornets and ants (the latter are the dominant prey of S. purpurea) are hymenoptera, and have nearly identical C:N ratios (hornets: 3.97; common bog-dwelling ants [Tapinoma sessile and Myrmica lobifrons]: 3.37), but on average hornets have greater than 100 times the dry mass of these ants, and are easier to collect and process as a standardized food source. Additions of prey, either as large "pulses" or chronic "presses" are analogous to the enrichment and eutrophication that occur in aquatic "green" food webs in which phytoplankton abundance is boosted through addition of limiting nutrients. In "brown" food webs such as the Sarracenia microecosystem, detritus - not primary production - is at the base of the web, and our treatments boost this material as would happen through increases in arthropod prey capture78 or through nitrogen-enriched precipitation.&lt;/para&gt;
+#&gt;           &lt;para&gt;2. Proteomic analysis. Proteomic profiles of microbial communities are determined after separating the microbial fraction from the pitcher fluid, prey, and other detritus. The microbial "pellet" is subjected to SDS-PAGE (sodium dodecyl sulfate polyacrylamide gel) electrophoresis; bands are cut out and digested in-gel with trypsin. Tryptic peptides are subjected to LC-MS/MS (liquid chromatography tandem mass spectrometry) for peptide and protein identification. Absolute abundance of peptides and proteins are quantified using AQUA (Absolute QUAntification) analysis109.&lt;/para&gt;
+#&gt;         - |-
+#&gt;           &lt;title&gt;Specific Experiments&lt;/title&gt;
+#&gt;           &lt;para&gt;Experiment #1. Effects of nutrient enrichment on state changes and [O2] profiles. This experiment alters nutrient enrichment rates to characterize the [O2] profile and the transition to the anaerobic state. The experimental design is a one-way layout with 5 treatment groups: one control (no enrichment) and 4 enrichment levels (0.125, 0.25, 0.5, 1.0 mg prey added ml-1 d-1). One plant is assigned to each treatment group, and the entire set is replicated 6 times over successive weeks. [O2] is monitored continuously for 4 days to characterize state changes and tipping points under different enrichment rates. This experiment tracks a continuous [O2] profile but does not include proteomic analysis. The purpose of Experiment #1 is to identify an enrichment rate E that generates a long pre-tipping period before transition time T to the anaerobic state. This enrichment rate will be used in Experiments #2 - #4.&lt;/para&gt;
+#&gt;           &lt;para&gt;Experiment #2. Identification of early intervention time and characterization of aerobic and anaerobic proteomes. This experiment will use the single enrichment rate E determined from Experiment #1 and impose different intervention times I at which nutrient enrichment will be terminated. Thus, this experiment will identify the latest time I* at which it is possible to intervene and stop the transition to the anaerobic state by halting enrichment. The [O2] profile will again be monitored continuously over 10 days to measure the state of the system. From Experiment #1, the transition time T to the anaerobic state with no intervention will be known. We will use one control group (no prey addition) and ten levels of intervention time (all with the same enrichment rate E) as a proportion of T (0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0). Six plants will be assigned randomly to each of the 11 treatments in a randomized one-way layout and [O2] profiles will be monitored continuously. In addition to the [O2] profiles, we will also characterize the protein profiles of aerobic and anaerobic pitchers in all 11 treatment groups at the end of the experiment.&lt;/para&gt;
+#&gt;           &lt;para&gt;After the plants are harvested, we will create proteomic profiles of the predominantly bacterial portion (centrifuged pellet) of the pitcher fluid from each plant, as described in General Protocols. Thus, 66 separate pellet-fraction samples will be analyzed by SDS-PAGE. After examining the SDS-PAGE profiles, approximately ten proteins that show dynamic patterns consistent with state change and five that do not change will be cut from the gel, subjected to in-gel tryptic digestion and a portion of the tryptic peptides will be analyzed by LC-MS/MS. Using these data, we will choose three identified peptides from each protein for peptide synthesis such that each synthesized peptide contains stable isotope labels (AQUA peptides) to distinguish them by mass from the native peptides. We will then quantify all 45 of the native peptides from the original samples using a known amount of each AQUA peptide spiked into the tryptic digest. The AQUA analysis of proteins that do not show changes will be used for normalization between samples. These data will be used to independently identify the current state of the system and forecast the time-to-transition.&lt;/para&gt;
+#&gt;           &lt;para&gt;We will use Sequest searches for initial identification of peptides; relevant scores including Xcorr and Delta Cn values will be given for each peptide. Other peptides will be identified by de novo sequencing using PepNovo; all PepNovo scores will likewise be given including any N- or C-terminal gaps. Mass error in ppm will be reported for each precursor ion. We will use standard multivariate analysis to search for distinctive proteomic profiles114 that characterize aerobic and anaerobic ecosystems, as well as ecosystems that developed with and without inputs of photosynthetic O2 and plant metabolites.&lt;/para&gt;
+#&gt;           &lt;para&gt;Experiment #3. Identification of diagnostic proteins. Using Experiments #1 and 2, we will have identified an enrichment rate E with a long pre-tipping period and an intervention time I* before which mitigation and termination of enrichment will prevent eutrophication. Experiment #3 will characterize the mean and variance of the protein profile before and after I*. We are especially interested in identifying proteins that increase rapidly in abundance (or variance) well before the onset of flickering in [O2] and before the transition time T from the aerobic to the anaerobic state.&lt;/para&gt;
+#&gt;           &lt;para&gt;A cohort of 100 plants all will be fed at rate E (determined from Experiment #1), with intervention time I* determined from Experiment #2, although no intervention will be used in this "press" experiment so that we can contrast proteins before and after the state change. At seven times before I* and three times after I*, we will harvest 10 randomly chosen plants. At each prescribed harvest time, we will measure [O2] and collect samples from each plant for proteomic screening using both SDS-PAGE and AQUA analysis. This experiment will identify proteins that rise quickly in abundance during the pre- I* period and can be used as early indicators of a future tipping point. Because different plants will be harvested at each time period, this is a one-way ANOVA design, with pre-and post- I* a priori contrasts. A randomization test will be used to determine whether variances in protein expression differ through time. During these analyses we will use the data from the AQUA peptides and from known amounts of protein standards, such as bovine serum albumin, to approximate the amount of protein in a given coomassie-stained SDS-PAGE gel band. The reason for doing this is to provide a fast "real-time" assay based just on expression in the SDS-PAGE. This rapid assay will be used in Experiment #4.&lt;/para&gt;
+#&gt;           &lt;para&gt;Experiment # 4. Proof-of-application. This experiment will provide a benchmark test of our methods and their ability to correctly identify tipping points. A cohort of 100 plants will each be fitted with [O2] probes and started on the enrichment regime. Two times per day, we will collect 3 plants each, pool their contents, and conduct a rapid screen in the lab with SDS-PAGE for the diagnostic proteins that were identified in Experiment #3. We will use the protein expression in the gel to delineate an "early" and a "late" mitigation strategy. As soon as diagnostic proteins measured in the SDS-gels are at abundances that signal we are at 0.5×I* - approximately one-half of the way to the latest intervention time - we will randomly select one third of the remaining plants for mitigation and termination of enrichment (the "early" mitigation strategy). We will continue to harvest plants from the remainder of the cohort and monitor proteins. As soon as diagnostic proteins signal we are at 0.75 times I*, we will randomly select one half of the remaining plants for mitigation and termination of enrichment (the "late" mitigation strategy). The remaining plants (approximately one sixth to one third of the original cohort) will continue to be enriched. We will monitor [O2] in all 3 groups (no-mitigation control, early mitigation, late mitigation) until all plants reach a new [O2] equilibrium. If the protein markers are successful, the proportion of food webs that remain aerobic will be significantly higher in the two mitigation treatments than in the no-mitigation control.&lt;/para&gt;
+#&gt;   dataTable:
+#&gt;     id: hf205-01
+#&gt;     entityName: hf205-01-TPexp1.csv
+#&gt;     entityDescription: tipping point experiment 1
+#&gt;     physical:
+#&gt;       id: '1354212701790'
+#&gt;       objectName: hf205-01-TPexp1.csv
+#&gt;       dataFormat:
+#&gt;         textFormat:
+#&gt;           numHeaderLines: '1'
+#&gt;           recordDelimiter: \r\n
+#&gt;           attributeOrientation: column
+#&gt;           simpleDelimited:
+#&gt;             fieldDelimiter: ','
+#&gt;       distribution:
+#&gt;         online:
+#&gt;           url:
+#&gt;             function: download
+#&gt;             url: http://harvardforest.fas.harvard.edu/data/p20/hf205/hf205-01-TPexp1.csv
+#&gt;     attributeList:
+#&gt;       attribute:
+#&gt;       - id: '1354213311470'
+#&gt;         attributeName: run.num
+#&gt;         attributeDefinition: 'which run number (=block). Range: 1 – 6. (integer)'
+#&gt;         measurementScale:
+#&gt;           nominal:
+#&gt;             nonNumericDomain:
+#&gt;               textDomain:
+#&gt;                 definition: which run number
+#&gt;       - id: '1354213311471'
+#&gt;         attributeName: year
+#&gt;         attributeDefinition: year, 2012
+#&gt;         measurementScale:
+#&gt;           dateTime:
+#&gt;             formatString: YYYY
+#&gt;       - id: '1354213311472'
+#&gt;         attributeName: day
+#&gt;         attributeDefinition: 'Julian day. Range: 170 – 209.'
+#&gt;         measurementScale:
+#&gt;           dateTime:
+#&gt;             formatString: DDD
+#&gt;       - id: '1354213311473'
+#&gt;         attributeName: hour.min
+#&gt;         attributeDefinition: hour and minute of observation. Range 1 – 2400 (integer)
+#&gt;         measurementScale:
+#&gt;           dateTime:
+#&gt;             formatString: hhmm
+#&gt;       - id: '1354213311474'
+#&gt;         attributeName: i.flag
+#&gt;         attributeDefinition: is variable Real, Interpolated or Bad (character/factor)
+#&gt;         measurementScale:
+#&gt;           nominal:
+#&gt;             nonNumericDomain:
+#&gt;               enumeratedDomain:
+#&gt;                 codeDefinition:
+#&gt;                 - code: R
+#&gt;                   definition: real
+#&gt;                 - code: I
+#&gt;                   definition: interpolated
+#&gt;                 - code: B
+#&gt;                   definition: bad
+#&gt;       - id: '1354213311475'
+#&gt;         attributeName: variable
+#&gt;         attributeDefinition: what variable being measured in what treatment (character/factor).
+#&gt;         measurementScale:
+#&gt;           nominal:
+#&gt;             nonNumericDomain:
+#&gt;               enumeratedDomain:
+#&gt;                 codeDefinition:
+#&gt;                 - code: control
+#&gt;                   definition: no prey added
+#&gt;                 - code: low
+#&gt;                   definition: 0.125 mg prey added ml-1 d-1
+#&gt;                 - code: med.low
+#&gt;                   definition: 0,25 mg prey added ml-1 d-1
+#&gt;                 - code: med.high
+#&gt;                   definition: 0.5 mg prey added ml-1 d-1
+#&gt;                 - code: high
+#&gt;                   definition: 1.0 mg prey added ml-1 d-1
+#&gt;                 - code: air.temp
+#&gt;                   definition: air temperature measured just above all plants (1 thermocouple)
+#&gt;                 - code: water.temp
+#&gt;                   definition: water temperature measured within each pitcher
+#&gt;                 - code: par
+#&gt;                   definition: photosynthetic active radiation (PAR) measured just
+#&gt;                     above all plants (1 sensor)
+#&gt;       - id: '1354213311476'
+#&gt;         attributeName: value.i
+#&gt;         attributeDefinition: value of measured variable for run.num on year/day/hour.min.
+#&gt;         measurementScale:
+#&gt;           nominal:
+#&gt;             nonNumericDomain:
+#&gt;               enumeratedDomain:
+#&gt;                 codeDefinition:
+#&gt;                 - code: control
+#&gt;                   definition: '% dissolved oxygen'
+#&gt;                 - code: low
+#&gt;                   definition: '% dissolved oxygen'
+#&gt;                 - code: med.low
+#&gt;                   definition: '% dissolved oxygen'
+#&gt;                 - code: med.high
+#&gt;                   definition: '% dissolved oxygen'
+#&gt;                 - code: high
+#&gt;                   definition: '% dissolved oxygen'
+#&gt;                 - code: air.temp
+#&gt;                   definition: degrees C
+#&gt;                 - code: water.temp
+#&gt;                   definition: degrees C
+#&gt;                 - code: par
+#&gt;                   definition: micromoles m-1 s-1
+#&gt;     numberOfRecords: '9999'
+#&gt;   creator:
+#&gt;   - individualName:
+#&gt;       givenName: Aaron
+#&gt;       surName: Ellison
+#&gt;   - individualName:
+#&gt;       givenName: Nicholas
+#&gt;       surName: Gotelli
+#&gt;   associatedParty:
+#&gt;   - individualName:
+#&gt;       givenName: Benjamin
+#&gt;       surName: Baiser
+#&gt;     role: Researcher
+#&gt;   - individualName:
+#&gt;       givenName: Jennifer
+#&gt;       surName: Sirota
+#&gt;     role: Researcher
+#&gt;   keywordSet:
+#&gt;   - keywordThesaurus: LTER controlled vocabulary
+#&gt;     keyword:
+#&gt;     - bacteria
+#&gt;     - carnivorous plants
+#&gt;     - genetics
+#&gt;     - thresholds
+#&gt;   - keywordThesaurus: LTER core area
+#&gt;     keyword:
+#&gt;     - populations
+#&gt;     - inorganic nutrients
+#&gt;     - disturbance
+#&gt;   - keywordThesaurus: HFR default
+#&gt;     keyword:
+#&gt;     - Harvard Forest
+#&gt;     - HFR
+#&gt;     - LTER
+#&gt;     - USA
+#&gt;   otherEntity:
+#&gt;   - id: hf205-02
+#&gt;     entityName: hf205-02-mathematica-oxygen.nb
+#&gt;     entityDescription: Mathematica code for oxygen model (nb)
+#&gt;     physical:
+#&gt;       objectName: hf205-02-mathematica-oxygen.nb
+#&gt;       dataFormat:
+#&gt;         externallyDefinedFormat:
+#&gt;           formatName: Mathematica notebook
+#&gt;       distribution:
+#&gt;         online:
+#&gt;           url:
+#&gt;             function: download
+#&gt;             url: http://harvardforest.fas.harvard.edu/data/p20/hf205/hf205-02-mathematica-oxygen.nb
+#&gt;     entityType: Mathematica code
+#&gt;   - id: hf205-03
+#&gt;     entityName: hf205-03-mathematica-oxygen.pdf
+#&gt;     entityDescription: Mathematica code for oxygen model (pdf)
+#&gt;     physical:
+#&gt;       objectName: hf205-03-mathematica-oxygen.pdf
+#&gt;       dataFormat:
+#&gt;         externallyDefinedFormat:
+#&gt;           formatName: pdf
+#&gt;       distribution:
+#&gt;         online:
+#&gt;           url:
+#&gt;             function: download
+#&gt;             url: http://harvardforest.fas.harvard.edu/data/p20/hf205/hf205-03-mathematica-oxygen.pdf
+#&gt;     entityType: Mathematica code
+#&gt; packageId: knb-lter-hfr.205.4
+#&gt; schemaLocation: eml://ecoinformatics.org/eml-2.1.0 http://nis.lternet.edu/schemas/EML/eml-2.1.0/eml.xsd
+#&gt; scope: system
+#&gt; system: hfr</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-                </ul>
+      
+      <li><a href="#value">Value</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>
@@ -159,9 +491,8 @@ or file extension of the input.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9000.</p>
 </div>
-
       </footer>
    </div>
 

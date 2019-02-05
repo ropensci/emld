@@ -73,7 +73,9 @@ prefixes or URIs of linked data.
 ``` r
 library(emld)
 library(jsonlite)
-library(magrittr)
+library(magrittr) # for pipes
+library(jqr)      # for JQ examples only
+library(rdflib)   # for RDf examples only
 ```
 
 ## Reading EML
@@ -143,7 +145,6 @@ that turns EML to JSON and then extracts the north and south bounding
 coordinates:
 
 ``` r
-library(jqr)
 hf205 <- system.file("extdata/hf205.xml", package="emld")
 
 as_emld(hf205) %>% 
@@ -175,8 +176,8 @@ SPARQL queries. One nice thing about SPARQL queries is that, in contrast
 to XPATH, JQ, or other graph queries, SPARQL always returns a
 `data.frame` which is a particularly convenient format. SPARQL queries
 look like SQL queries in that we name the columns we want with a
-`SELECT` command. Unlike SQL, these names are act as variables. We then
-use a WHERE block to define how these variables relate to each other.
+`SELECT` command. Unlike SQL, these names act as variables. We then use
+a WHERE block to define how these variables relate to each other.
 
 ``` r
 library(rdflib)
@@ -189,7 +190,7 @@ as_emld(f) %>%
 as_json("hf205.json")
 
 sparql <- 
-  'PREFIX eml: <eml://ecoinformatics.org/eml-2.1.1/>
+  'PREFIX eml: <eml://ecoinformatics.org/eml-2.2.0/>
 
   SELECT ?genus ?species ?northLat ?southLat ?eastLong ?westLong 
 
@@ -209,7 +210,10 @@ sparql <-
 rdf <- rdf_parse("hf205.json", "jsonld")
 df <- rdf_query(rdf, sparql)
 df
-#> # A tibble: 0 x 0
+#> # A tibble: 1 x 6
+#>   genus      species  northLat southLat eastLong westLong
+#>   <chr>      <chr>       <dbl>    <dbl>    <dbl>    <dbl>
+#> 1 Sarracenia purpurea     42.6     42.4    -72.1    -72.3
 ```
 
 -----

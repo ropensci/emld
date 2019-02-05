@@ -2,7 +2,7 @@
 ## Warning: do not attempt to request `recursive` on high-level objects
 
 
-#' template
+#' Create a template for an EML object
 #'
 #' @param object the name of an eml object to create
 #'
@@ -15,7 +15,6 @@
 #'
 #' @examples
 #' template("creator")
-#'
 template <- function(object){
   properties <- gsub("^(@|#)", "", eml_db[[getOption("emld_db", "eml-2.2.0")]][[object]])
 

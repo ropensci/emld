@@ -2,7 +2,7 @@
 % Please edit documentation in R/as_json.R
 \name{as_json}
 \alias{as_json}
-\title{as_json}
+\title{Coerce an emld object into JSON}
 \usage{
 as_json(x, file = NULL)
 }
@@ -12,8 +12,12 @@ as_json(x, file = NULL)
 \item{file}{optional path to write out to file.
 Otherwise, defaults to NULL and will return a json object.}
 }
+\value{
+a json object. Or if a file path is provided, the metadata
+is written out in JSON file and the function returns \code{NULL} invisibly.
+}
 \description{
-as_json
+Coerce an emld object into JSON
 }
 \details{
 Note: since emld list object maintains a 1:1 correspondence with JSON,
@@ -24,5 +28,7 @@ only purpose is to default to auto_unbox = TRUE in serializing lists to JSON.
 f <- system.file("extdata/example.xml", package = "emld")
 emld <- as_emld(f)
 json <- as_json(emld)
-
+## can also write a json file to disk:
+json_file <- tempfile()
+as_json(emld, json_file)
 }

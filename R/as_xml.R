@@ -1,4 +1,4 @@
-#' as_xml
+#' Coerce an emld object into XML (EML's standard format)
 #'
 #' @param x an emld object
 #' @param file optional path to write out to file.
@@ -19,6 +19,11 @@
 #' emld <- as_emld(f)
 #' xml <- as_xml(emld)
 #'
+#' ## can also write directly to a file:
+#' xml_file <- tempfile()
+#' as_xml(emld, xml_file)
+#' @return a xml_document object. Or if a file path is provided, the metadata
+#' is written out in XML file and the function returns `NULL` invisibly.
 as_xml <- function(x, file=NULL, root = "eml", ns = "eml",
   schemaLocation = paste0("eml://ecoinformatics.org/",
   getOption("emld_db", "eml-2.2.0"), "/ eml.xsd"))
@@ -147,7 +152,6 @@ context_namespaces <- function(context, xml){
 
 
 
-## FIXME drop NAs too?
 drop_nulls <- function(x){
   if(is.atomic(x))
     return(x)
