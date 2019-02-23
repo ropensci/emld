@@ -18,8 +18,8 @@ Description: This is a utility for transforming Ecological Metadata Language
         serialization that may facilitate the use of EML in contexts outside of R,
         as well as the informatics-friendly serializations such as RDF and
         SPARQL queries.
-URL: https://github.com/cboettig/emld
-BugReports: https://github.com/cboettig/emld/issues
+URL: https://github.com/ropensci/emld
+BugReports: https://github.com/ropensci/emld/issues
 Depends: R (>= 3.1.0)
 License: MIT + file LICENSE
 Encoding: UTF-8

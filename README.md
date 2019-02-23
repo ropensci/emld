@@ -1,11 +1,11 @@
 
 [![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 [![Travis-CI Build
-Status](https://travis-ci.org/cboettig/emld.svg?branch=master)](https://travis-ci.org/cboettig/emld)
+Status](https://travis-ci.org/ropensci/emld.svg?branch=master)](https://travis-ci.org/ropensci/emld)
 [![AppVeyor build
 status](https://ci.appveyor.com/api/projects/status/github/cboettig/emld?branch=master&svg=true)](https://ci.appveyor.com/project/cboettig/emld)
 [![Coverage
-Status](https://img.shields.io/codecov/c/github/cboettig/emld/master.svg)](https://codecov.io/github/cboettig/emld?branch=master)
+Status](https://img.shields.io/codecov/c/github/ropensci/emld/master.svg)](https://codecov.io/github/ropensci/emld?branch=master)
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/emld)](https://cran.r-project.org/package=emld)
 [![](https://badges.ropensci.org/269_status.svg)](https://github.com/ropensci/software-review/issues/269)
 
@@ -32,7 +32,7 @@ You can install emld from github with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("cboettig/emld")
+devtools::install_github("ropensci/emld")
 ```
 
 ## Motivation
@@ -62,13 +62,6 @@ applications consuming and parsing large numbers of EML files. This
 package may also make it easier for other developers to build on the
 EML, since the S3/list and JSON formats used here have proven more
 appealing to many R developers than S4 and XML serializations.
-
-JSON-LD also makes it easier to extend EML with other existing semantic
-vocabularies. The standard JSON-LD operations (e.g. framing, compaction)
-make it easy for developers to specify desired data structures, filter
-unnecessary terms and provide defaults for needed ones, or even define
-custom property names, rather than working with the often cumbersome
-prefixes or URIs of linked data.
 
 ``` r
 library(emld)
@@ -165,7 +158,7 @@ to XPATH but not possible in `purrr`) and specify the shape of the
 return object. Some prototype examples of how we can use this to
 translate between EML and <http://schema.org/Dataset> representations of
 the same metadata can be found in
-<https://github.com/cboettig/emld/blob/master/notebook/jq_maps.md>
+<https://github.com/ropensci/emld/blob/master/notebook/jq_maps.md>
 
 ## As semantic data: SPARQL queries
 
@@ -180,17 +173,13 @@ look like SQL queries in that we name the columns we want with a
 a WHERE block to define how these variables relate to each other.
 
 ``` r
-library(rdflib)
-```
-
-``` r
 f <- system.file("extdata/hf205.xml", package="emld")
 
 as_emld(f) %>%
-as_json("hf205.json")
+  as_json("hf205.json")
 
-sparql <- 
-  'PREFIX eml: <eml://ecoinformatics.org/eml-2.2.0/>
+prefix <- paste0("PREFIX eml: <eml://ecoinformatics.org/", eml_version(), "/>\n")
+sparql <- paste0(prefix, '
 
   SELECT ?genus ?species ?northLat ?southLat ?eastLong ?westLong 
 
@@ -205,7 +194,7 @@ sparql <-
     ?x eml:eastBoundingCoordinate ?eastLong .
     ?x eml:westBoundingCoordinate ?westLong .
   }
-'
+')
   
 rdf <- rdf_parse("hf205.json", "jsonld")
 df <- rdf_query(rdf, sparql)
@@ -220,4 +209,7 @@ df
 
 Please note that the `emld` project is released with a [Contributor Code
 of Conduct](CODE_OF_CONDUCT.md). By contributing to this project, you
-agree to abide by its terms.
+agree to abide by its
+terms.
+
+[![ropensci\_footer](https://ropensci.org/public_images/ropensci_footer.png)](https://ropensci.org)
