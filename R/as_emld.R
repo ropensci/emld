@@ -86,10 +86,10 @@ as_emld.json <- function(x, from = "json"){
 
     ## This assumes only our context
     frame <- system.file(paste0("frame/",
-                              getOption("emld_db", "eml-2.2.0"),
+                              eml_version(),
                               "/eml-frame.json"), package = "emld")
     context <- system.file(paste0("context/",
-                           getOption("emld_db", "eml-2.2.0"),
+                           eml_version(),
                            "/eml-context.json"), package = "emld")
 
     framed <- jsonld::jsonld_frame(x, frame)
@@ -116,7 +116,7 @@ as_emld.xml_document <- function(x, from = "xml_document"){
     ## Set up the JSON-LD context
     if(is.null(emld[["xmlns"]])){
       emld[["xmlns"]] <- paste0("eml://ecoinformatics.org/",
-                                getOption("emld_db", "eml-2.2.0"),"/")
+                                eml_version(),"/")
     }
     emld <- add_context(emld)
     class(emld) <- c("emld", "list")
@@ -143,7 +143,7 @@ as_emld.list <- function(x, from = "list"){
 add_context <- function(json){
   ## Set up the JSON-LD context
   context <- system.file(paste0("context/",
-                                getOption("emld_db", "eml-2.2.0"),
+                                eml_version(),
                                 "/eml-context.json"), package = "emld")
   con <- jsonlite::read_json(context)[["@context"]]
   if ("base" %in% names(json)) {

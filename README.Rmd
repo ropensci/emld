@@ -129,8 +129,8 @@ f <- system.file("extdata/hf205.xml", package="emld")
 as_emld(f) %>%
   as_json("hf205.json")
 
-sparql <- 
-  'PREFIX eml: <eml://ecoinformatics.org/eml-2.2.0/>
+prefix <- paste0("PREFIX eml: <eml://ecoinformatics.org/", eml_version(), "/>\n")
+sparql <- paste0(prefix, '
 
   SELECT ?genus ?species ?northLat ?southLat ?eastLong ?westLong 
 
@@ -145,7 +145,7 @@ sparql <-
     ?x eml:eastBoundingCoordinate ?eastLong .
     ?x eml:westBoundingCoordinate ?westLong .
   }
-'
+')
   
 rdf <- rdf_parse("hf205.json", "jsonld")
 df <- rdf_query(rdf, sparql)
