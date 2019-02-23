@@ -28,10 +28,3 @@ test_that("we can roundtrip JSON-LD expansion and compaction", {
 
 })
 
-
-test_that("test .onLoad just for coverage", {
-  # This is called by `library(emld)` directly, not any point
-  # to this test I think.
-  emld:::.onLoad("emld", "emld")
-
-})

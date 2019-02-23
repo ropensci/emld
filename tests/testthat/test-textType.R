@@ -36,7 +36,7 @@ testthat::test_that("We can add abstract with multiple paragraphs", {
 
 
 testthat::test_that("We can round-trip text test file", {
-  f <- system.file(file.path("tests", getOption("emld_db", "eml-2.2.0")),
+  f <- system.file(file.path("tests", eml_version()),
                    "eml-text.xml", package = "emld")
   text <- as_emld(f)
   as_xml(text, "text.xml", "text", "txt") # Note custom root & ns

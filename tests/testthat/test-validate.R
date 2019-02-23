@@ -42,12 +42,12 @@ options("emld_db" = "eml-2.1.1")
 
 ## Test all citation-* examples:
 suite <- list.files(system.file(
-  file.path("tests", getOption("emld_db", "eml-2.2.0")), package="emld"),
+  file.path("tests", eml_version()), package="emld"),
                     pattern="citation", full.names = TRUE)
 lapply(suite, test_roundtrip)
 
 suite <- list.files(system.file(
-  file.path("tests", getOption("emld_db", "eml-2.2.0")), package="emld"),
+  file.path("tests", eml_version()), package="emld"),
                     pattern="eml-", full.names = TRUE)
 drop <- basename(suite) %in% c("eml-datasetWithNonwordCharacters.xml",
                        "eml-i18n.xml",
@@ -127,7 +127,7 @@ options("emld_db" = "eml-2.2.0")
 
 ## Test all citation-* examples:
 suite <- list.files(system.file(
-  file.path("tests", getOption("emld_db", "eml-2.2.0")), package="emld"),
+  file.path("tests", eml_version()), package="emld"),
   pattern="citation", full.names = TRUE)
 drop <- basename(suite) %in% c("citation-sbclter-bibliography.284.xml",
                                "citation-sbclter-bibliography.289.xml",
@@ -136,7 +136,7 @@ test_suite <- suite[!drop]
 lapply(test_suite, test_roundtrip)
 
 suite <- list.files(system.file(
-  file.path("tests", getOption("emld_db", "eml-2.2.0")), package="emld"),
+  file.path("tests", eml_version()), package="emld"),
   pattern="eml-", full.names = TRUE)
 drop <- basename(suite) %in% c("eml-datasetWithNonwordCharacters.xml",
                                "eml-i18n.xml",

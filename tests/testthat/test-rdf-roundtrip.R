@@ -7,7 +7,7 @@ library(magrittr)
 library(testthat)
 
 f <- system.file(file.path("tests",
-                           getOption("emld_db", "eml-2.2.0"),
+                           eml_version(),
                            "eml.xml"), package="emld")
 
 test_that("We can roundtrip into rdf and validate", {
@@ -20,10 +20,10 @@ test_that("We can roundtrip into rdf and validate", {
 
 ## frame & compact explicitly, even though as_emld should now do this on json input
 frame <- system.file(paste0("frame/",
-                            getOption("emld_db", "eml-2.2.0"),
+                            eml_version(),
                             "/eml-frame.json"), package = "emld")
 context <- system.file(paste0("context/",
-                       getOption("emld_db", "eml-2.2.0"),
+                       eml_version(),
                        "/eml-context.json"), package = "emld")
 jsonld_frame("eml.json", frame) %>%
   jsonld_compact(context) %>%

@@ -26,7 +26,7 @@
 #' is written out in XML file and the function returns `NULL` invisibly.
 as_xml <- function(x, file=NULL, root = "eml", ns = "eml",
   schemaLocation = paste0("eml://ecoinformatics.org/",
-  getOption("emld_db", "eml-2.2.0"), "/ eml.xsd"))
+  eml_version(), "/ eml.xsd"))
   {
     UseMethod("as_xml")
   }
@@ -34,7 +34,7 @@ as_xml <- function(x, file=NULL, root = "eml", ns = "eml",
 #' @export
 as_xml.list <- function(x, file=NULL, root = "eml", ns = "eml",
                         schemaLocation = paste0("eml://ecoinformatics.org/",
-                          getOption("emld_db", "eml-2.2.0"),
+                          eml_version(),
                           "/ eml.xsd")){
   x <- as_emld.list(x)
   as_xml.emld(x, file)
@@ -43,7 +43,7 @@ as_xml.list <- function(x, file=NULL, root = "eml", ns = "eml",
 #' @export
 as_xml.emld <- function(x, file=NULL, root = "eml", ns = "eml",
                         schemaLocation = paste0("eml://ecoinformatics.org/",
-                          getOption("emld_db", "eml-2.2.0"),
+                          eml_version(),
                           "/ eml.xsd")){
 
   ## Frame/compact into original context for a standardized structure
@@ -93,7 +93,7 @@ eml_frame <- function(x){
   ## choose the context we compact into later
   if(is.null(x[["@context"]])){
     context <- system.file(paste0("context/",
-                                  getOption("emld_db", "eml-2.2.0"),
+                                  eml_version(),
                                   "/eml-context.json"), package = "emld")
   } else {
     context <- jsonlite::toJSON(x[["@context"]], auto_unbox = TRUE)
@@ -103,7 +103,7 @@ eml_frame <- function(x){
   if(!is_jsonld.list(x)){
     x[["@context"]] <-
       list("@vocab" = paste0("eml://ecoinformatics.org/",
-                             getOption("emld_db", "eml-2.2.0"),"/"))
+                             eml_version(),"/"))
   }
 
   ## set a type for framing
@@ -112,7 +112,7 @@ eml_frame <- function(x){
   }
   json <- jsonlite::toJSON(x, auto_unbox = TRUE)
   frame <- system.file(paste0("frame/",
-                              getOption("emld_db", "eml-2.2.0"),
+                              eml_version(),
                               "/eml-frame.json"), package = "emld")
   framed <- jsonld::jsonld_frame(json, frame)
   compacted <- jsonld::jsonld_compact(framed, context)
