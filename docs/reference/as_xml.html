@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">emld</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -90,11 +90,14 @@
     </li>
   </ul>
 </li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/cboettig/emld">
+  <a href="https://github.com/ropensci/emld">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -112,7 +115,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Coerce an emld object into XML (EML's standard format)</h1>
-    <small class="dont-index">Source: <a href='https://github.com/cboettig/emld/blob/master/R/as_xml.R'><code>R/as_xml.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/ropensci/emld/blob/master/R/as_xml.R'><code>R/as_xml.R</code></a></small>
     <div class="hidden name"><code>as_xml.Rd</code></div>
     </div>
 
@@ -123,8 +126,8 @@
     </div>
 
     <pre class="usage"><span class='fu'>as_xml</span>(<span class='no'>x</span>, <span class='kw'>file</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>root</span> <span class='kw'>=</span> <span class='st'>"eml"</span>, <span class='kw'>ns</span> <span class='kw'>=</span> <span class='st'>"eml"</span>,
-  <span class='kw'>schemaLocation</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(<span class='st'>"eml://ecoinformatics.org/"</span>,
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/options'>getOption</a></span>(<span class='st'>"emld_db"</span>, <span class='st'>"eml-2.2.0"</span>), <span class='st'>"/ eml.xsd"</span>))</pre>
+  <span class='kw'>schemaLocation</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(<span class='st'>"eml://ecoinformatics.org/"</span>, <span class='fu'><a href='eml_version.html'>eml_version</a></span>(),
+  <span class='st'>"/ eml.xsd"</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">

@@ -26,8 +26,8 @@ XML-schema valid EML.
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/cboettig/emld}
-  \item Report bugs at \url{https://github.com/cboettig/emld/issues}
+  \item \url{https://github.com/ropensci/emld}
+  \item Report bugs at \url{https://github.com/ropensci/emld/issues}
 }
 
 }

@@ -1,5 +1,8 @@
 {
-  "@context": ["https://doi.org/10.5063/schema/codemeta-2.0", "http://schema.org"],
+  "@context": [
+    "https://doi.org/10.5063/schema/codemeta-2.0",
+    "http://schema.org"
+  ],
   "@type": "SoftwareSourceCode",
   "identifier": "emld",
   "description": "This is a utility for transforming Ecological Metadata Language\n        (EML) files into JSON-LD and back into EML.  Doing so creates a\n        list-based representation of EML in R, so that EML data can easily\n        be manipulated using standard R tools. This makes this package an\n        effective backend for other R-based tools  working with EML. By\n        abstracting away the complexity of EML's XML Schema, developers can\n        build around native R list objects and not have to worry about satisfying\n        many of the additional constraints of set by the schema (such as element\n        ordering, which is handled automatically). Additionally, the JSON-LD \n        representation enables the use of developer-friendly JSON parsing and\n        serialization that may facilitate the use of EML in contexts outside of R,\n        as well as the informatics-friendly serializations such as RDF and\n        SPARQL queries.",
@@ -7,7 +10,7 @@
   "codeRepository": "https://github.com/ropensci/emld",
   "issueTracker": "https://github.com/ropensci/emld/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "0.0.2",
+  "version": "0.2.0",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -203,7 +206,11 @@
   ],
   "releaseNotes": "https://github.com/cboettig/emld/blob/master/NEWS.md",
   "readme": "https://github.com/ropensci/emld/blob/master/README.md",
-  "fileSize": "651.943KB",
-  "contIntegration": ["https://travis-ci.org/ropensci/emld", "https://ci.appveyor.com/project/cboettig/emld", "https://codecov.io/github/ropensci/emld?branch=master"],
+  "fileSize": "651.945KB",
+  "contIntegration": [
+    "https://travis-ci.org/ropensci/emld",
+    "https://ci.appveyor.com/project/cboettig/emld",
+    "https://codecov.io/github/ropensci/emld?branch=master"
+  ],
   "developmentStatus": "https://www.tidyverse.org/lifecycle/#maturing"
 }
