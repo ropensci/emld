@@ -8,6 +8,7 @@ status](https://ci.appveyor.com/api/projects/status/github/cboettig/emld?branch=
 Status](https://img.shields.io/codecov/c/github/ropensci/emld/master.svg)](https://codecov.io/github/ropensci/emld?branch=master)
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/emld)](https://cran.r-project.org/package=emld)
 [![](https://badges.ropensci.org/269_status.svg)](https://github.com/ropensci/software-review/issues/269)
+[![DOI](https://zenodo.org/badge/108223439.svg)](https://zenodo.org/badge/latestdoi/108223439)
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 

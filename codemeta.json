@@ -206,7 +206,7 @@
   ],
   "releaseNotes": "https://github.com/cboettig/emld/blob/master/NEWS.md",
   "readme": "https://github.com/ropensci/emld/blob/master/README.md",
-  "fileSize": "651.945KB",
+  "fileSize": "651.941KB",
   "contIntegration": [
     "https://travis-ci.org/ropensci/emld",
     "https://ci.appveyor.com/project/cboettig/emld",
