@@ -1,0 +1,23 @@
+
+citEntry(
+  entry = 'article',
+  title = 'Ecological Metadata as Linked Data. Journal of Open Source Software',
+  author = c(
+    person( "Carl",
+            "Boettiger",
+            role = c("cre", "aut"),
+            email = "cboettig@gmail.com",
+            comment = c(ORCID = "http://orcid.org/0000-0002-1642-628X")
+          )),
+  month = 'feb',
+  year = '2019',
+  publisher = 'The Open Journals',
+  journal = 'The Journal of Open Source Software',
+  number = 34,
+  volume = 4,
+  pages = 1276,
+  doi = '10.21105/joss.01276',
+  url = 'https://doi.org/10.21105/joss.01276',
+   textVersion = paste('Boettiger, (2019). Ecological Metadata as Linked Data.',
+   'Journal of Open Source Software, 4(34), 1276, https://doi.org/10.21105/joss.01276')
+  )

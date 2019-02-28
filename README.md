@@ -9,6 +9,7 @@ Status](https://img.shields.io/codecov/c/github/ropensci/emld/master.svg)](https
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/emld)](https://cran.r-project.org/package=emld)
 [![](https://badges.ropensci.org/269_status.svg)](https://github.com/ropensci/software-review/issues/269)
 [![DOI](https://zenodo.org/badge/108223439.svg)](https://zenodo.org/badge/latestdoi/108223439)
+[![DOI](http://joss.theoj.org/papers/10.21105/joss.01276/status.svg)](https://doi.org/10.21105/joss.01276)
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
