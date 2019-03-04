@@ -106,8 +106,13 @@ eml <- list(dataset = list(
               system = "doi",
               packageId = "10.xxx")
 
-as_xml(eml, "ex.xml")
-testthat::expect_true(eml_validate("ex.xml") )
+ex.xml <- tempfile("ex", fileext = ".xml") # use your preferred file path
+
+as_xml(eml, ex.xml)
+eml_validate(ex.xml)
+#> [1] TRUE
+#> attr(,"errors")
+#> character(0)
 ```
 
 Note that we don’t have to worry about the order of the elements here,
@@ -176,9 +181,10 @@ a WHERE block to define how these variables relate to each other.
 
 ``` r
 f <- system.file("extdata/hf205.xml", package="emld")
+hf205.json <- tempfile("hf205", fileext = ".json") # Use your preferred filepath
 
 as_emld(f) %>%
-  as_json("hf205.json")
+  as_json(hf205.json)
 
 prefix <- paste0("PREFIX eml: <eml://ecoinformatics.org/", eml_version(), "/>\n")
 sparql <- paste0(prefix, '
@@ -198,7 +204,7 @@ sparql <- paste0(prefix, '
   }
 ')
   
-rdf <- rdf_parse("hf205.json", "jsonld")
+rdf <- rdf_parse(hf205.json, "jsonld")
 df <- rdf_query(rdf, sparql)
 df
 #> # A tibble: 1 x 6
