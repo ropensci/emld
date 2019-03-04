@@ -83,8 +83,10 @@ eml <- list(dataset = list(
               system = "doi",
               packageId = "10.xxx")
 
-as_xml(eml, "ex.xml")
-testthat::expect_true(eml_validate("ex.xml") )
+ex.xml <- tempfile("ex", fileext = ".xml") # use your preferred file path
+
+as_xml(eml, ex.xml)
+testthat::expect_true(eml_validate(ex.xml) )
 ```
 
 Note that we don't have to worry about the order of the elements here, `as_xml` will re-order if necessary to validate. (For instance, in valid EML the `creator` becomes listed before `contact`.)   Of course this is a very low-level interface that does not help the user know what an EML looks like. Creating EML from scratch without knowledge of the schema is a job for the `EML` package and beyond the scope of the lightweight `emld`.  
@@ -130,12 +132,13 @@ library(rdflib)
 
 ```{r}
 f <- system.file("extdata/hf205.xml", package="emld")
+hf205.json <- tempfile("hf205", fileext = ".json") # Use your preferred filepath
 
 as_emld(f) %>%
-as_json("hf205.json")
+as_json(hf205.json)
 
-sparql <- 
-  'PREFIX eml: <eml://ecoinformatics.org/eml-2.2.0/>
+prefix <- paste0("PREFIX eml: <eml://ecoinformatics.org/", eml_version(), "/>\n")
+sparql <- paste0(prefix, '
 
   SELECT ?genus ?species ?northLat ?southLat ?eastLong ?westLong 
 
@@ -150,22 +153,14 @@ sparql <-
     ?x eml:eastBoundingCoordinate ?eastLong .
     ?x eml:westBoundingCoordinate ?westLong .
   }
-'
+')
+
   
-rdf <- rdf_parse("hf205.json", "jsonld")
+rdf <- rdf_parse(hf205.json, "jsonld")
 df <- rdf_query(rdf, sparql)
 df
 ```
 
 
 
-
-
-
-```{r include=FALSE}
-unlink("eml.xml")
-unlink("test.xml")
-unlink("ex.xml")
-unlink("hf205.json")
-```
 

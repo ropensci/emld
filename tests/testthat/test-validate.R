@@ -20,7 +20,8 @@ test_roundtrip <- function(f, schema = NULL, check_lengths = TRUE){
   ## guess root and ns for sub-modules
   ns <- guess_ns(f)
 
-  out <- basename(f)
+  out <- tempfile(basename(f), fileext = ".xml")
+
   emld <- as_emld(f)
   as_xml(emld, out, ns$root, ns$ns)
 
@@ -33,7 +34,6 @@ test_roundtrip <- function(f, schema = NULL, check_lengths = TRUE){
     elements_at_start <- sort(names(unlist(emld, recursive = TRUE)))
     testthat::expect_equal(elements_at_start, elements_at_end)
   }
-  unlink(out)
   })
 }
 
@@ -81,7 +81,7 @@ testthat::test_that("unitDictionary", {
   f <- system.file(file.path("tests", getOption("emld_db", "2.2.0"),
                              "eml-unitDictionary.xml"), package="emld")
   schema <- system.file("xsd/eml-2.1.1/stmml.xsd", package = "emld")
-  out <- basename(f)
+  out <- tempfile(basename(f), fileext = ".xml")
   emld <- as_emld(f)
   elements_at_start <- names(unlist(emld, recursive = TRUE))
 
@@ -107,7 +107,6 @@ testthat::test_that("unitDictionary", {
   elements_at_end <- names(unlist(as_emld(out), recursive = TRUE))
   testthat::expect_equal(elements_at_start, elements_at_end)
 
-  unlink(out)
 })
 
 

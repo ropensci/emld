@@ -6,18 +6,18 @@ Authors@R: person("Carl", "Boettiger",
                   role = c("aut", "cre", "cph"),
                   comment=c(ORCID = "http://orcid.org/0000-0002-1642-628X"))
 Description: This is a utility for transforming Ecological Metadata Language
-        (EML) files into JSON-LD and back into EML.  Doing so creates a
-        list-based representation of EML in R, so that EML data can easily
-        be manipulated using standard R tools. This makes this package an
-        effective backend for other R-based tools  working with EML. By
-        abstracting away the complexity of EML's XML Schema, developers can
-        build around native R list objects and not have to worry about satisfying
+        ('EML') files into 'JSON-LD' and back into 'EML.'  Doing so creates a
+        list-based representation of 'EML' in R, so that 'EML' data can easily
+        be manipulated using standard 'R' tools. This makes this package an
+        effective backend for other 'R'-based tools  working with 'EML.' By
+        abstracting away the complexity of 'XML' Schema, developers can
+        build around native 'R' list objects and not have to worry about satisfying
         many of the additional constraints of set by the schema (such as element
-        ordering, which is handled automatically). Additionally, the JSON-LD 
-        representation enables the use of developer-friendly JSON parsing and
-        serialization that may facilitate the use of EML in contexts outside of R,
-        as well as the informatics-friendly serializations such as RDF and
-        SPARQL queries.
+        ordering, which is handled automatically). Additionally, the 'JSON-LD' 
+        representation enables the use of developer-friendly 'JSON' parsing and
+        serialization that may facilitate the use of 'EML' in contexts outside of 'R,'
+        as well as the informatics-friendly serializations such as 'RDF' and
+        'SPARQL' queries.
 URL: https://github.com/ropensci/emld
 BugReports: https://github.com/ropensci/emld/issues
 Depends: R (>= 3.1.0)

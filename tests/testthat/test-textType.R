@@ -10,18 +10,22 @@ eml <- list(dataset = list(
   system = "doi",
   packageId = "10.xxx")
 
+ex.xml <- tempfile("ex", fileext = ".xml")
+text.xml <- tempfile("text", fileext = ".xml")
+text.json <- tempfile("text", fileext = ".json")
+
+
 testthat::test_that("We have created a minimal, valid EML file", {
-  as_xml(eml, "ex.xml")
-  testthat::expect_true( eml_validate("ex.xml") )
-  unlink("ex.xml")
+  as_xml(eml, ex.xml)
+  testthat::expect_true( eml_validate(ex.xml) )
+  unlink(ex.xml)
 })
 
 
 testthat::test_that("We can add abstract as text string", {
   eml$dataset$abstract <- "This is a short abstract for this dataset."
-  as_xml(eml, "ex.xml")
-  testthat::expect_true( eml_validate("ex.xml") )
-  unlink("ex.xml")
+  as_xml(eml, ex.xml)
+  testthat::expect_true( eml_validate(ex.xml) )
 })
 
 testthat::test_that("We can add abstract with multiple paragraphs", {
@@ -29,9 +33,8 @@ testthat::test_that("We can add abstract with multiple paragraphs", {
     list(para = list(
       "This is a short abstract for this dataset.",
       "This is the second paragraph"))
-  as_xml(eml, "ex.xml")
-  testthat::expect_true( eml_validate("ex.xml") )
-  unlink("ex.xml")
+  as_xml(eml, ex.xml)
+  testthat::expect_true( eml_validate(ex.xml) )
 })
 
 
@@ -39,18 +42,17 @@ testthat::test_that("We can round-trip text test file", {
   f <- system.file(file.path("tests", eml_version()),
                    "eml-text.xml", package = "emld")
   text <- as_emld(f)
-  as_xml(text, "text.xml", "text", "txt") # Note custom root & ns
-  testthat::expect_true(eml_validate("text.xml") )
+
+  as_xml(text, text.xml, "text", "txt") # Note custom root & ns
+  testthat::expect_true(eml_validate(text.xml) )
 
   ## same number of XML elements before and after
   start <- length(unlist(as_list(read_xml(f)), recursive = TRUE))
-  end <- length(unlist(as_list(read_xml("text.xml")), recursive = TRUE))
+  end <- length(unlist(as_list(read_xml(text.xml)), recursive = TRUE))
   testthat::expect_equal(start, end)
-  unlink("text.xml")
 
 
-  as_json(text, "text.json")
-  unlink("text.json")
+  as_json(text, text.json)
 })
 
 
