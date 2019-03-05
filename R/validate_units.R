@@ -20,20 +20,14 @@ validate_units <- function(eml,
 
   standard_defs <- xml_attr(
     xml2::xml_find_all(standard,
-                       "//stmml:unitList/stmml:unit"),
+                       "//*[local-name()='unitList']/*[local-name()='unit']"),
     "id"
   )
 
-  custom_defs <- c(
-    xml2::xml_attr(xml2::xml_find_all(
-      doc,
-      "//stmml:unitList/stmml:unit"
-    ), "id"),
-    xml2::xml_attr(
-      xml2::xml_find_all(doc, "//unitList/unit"),
-      "id"
-    )
-  )
+  custom_defs <- xml2::xml_attr(xml2::xml_find_all(
+    doc,
+    "//*[local-name()='unitList']/*[local-name()='unit']"
+  ), "id")
 
   error_log <- character()
   if(!all(standard_units %in% standard_defs))
