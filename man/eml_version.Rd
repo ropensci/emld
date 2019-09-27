@@ -4,11 +4,11 @@
 \alias{eml_version}
 \title{Set or check the EML version default}
 \usage{
-eml_version(version = getOption("emld_db", "eml-2.1.1"))
+eml_version(version = getOption("emld_db", "eml-2.2.0"))
 }
 \arguments{
-\item{version}{EML version, currently either eml-2.2.0 (release candidate),
-or eml-2.1.1 (current version, 2011 - 2019)}
+\item{version}{EML version, currently either eml-2.2.0 (current version), or
+eml-2.1.1}
 }
 \value{
 returns the EML version string. As a side-effect, sets the

@@ -118,8 +118,8 @@ as_emld(f) %>%
 We can now construct a SPARQL query. SPARQL queries look like SQL queries in that we name the columns we want with a `SELECT` command. Unlike SQL, SPARQL allows us to walk the graph by treating these names as variables, indicated by prefixing a `?` to the variable name.  We then use a WHERE block to define how these variables relate to each other.  In this case, we ask for the genus and species name and bounding box found in the EML file.  
 
 ```{r}
-sparql <- 
-  'PREFIX eml: <eml://ecoinformatics.org/eml-2.2.0/>
+sparql <-
+  'PREFIX eml: <https://eml.ecoinformatics.org/eml-2.2.0/>
 
   SELECT ?genus ?species ?northLat ?southLat ?eastLong ?westLong 
 

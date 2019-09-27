@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xml="http://www.w3.org/XML/1998/namespace" xmlns:doc="eml://ecoinformatics.org/documentation-2.2.0" xmlns:txt="eml://ecoinformatics.org/text-2.2.0" xmlns:rp="eml://ecoinformatics.org/party-2.2.0" xmlns:cov="eml://ecoinformatics.org/coverage-2.2.0" xmlns:sem="eml://ecoinformatics.org/semantics-2.2.0" xmlns="eml://ecoinformatics.org/resource-2.2.0" targetNamespace="eml://ecoinformatics.org/resource-2.2.0">
-  <xs:import namespace="eml://ecoinformatics.org/documentation-2.2.0" schemaLocation="eml-documentation.xsd"/>
-  <xs:import namespace="eml://ecoinformatics.org/party-2.2.0" schemaLocation="eml-party.xsd"/>
-  <xs:import namespace="eml://ecoinformatics.org/coverage-2.2.0" schemaLocation="eml-coverage.xsd"/>
-  <xs:import namespace="eml://ecoinformatics.org/text-2.2.0" schemaLocation="eml-text.xsd"/>
-  <xs:import namespace="eml://ecoinformatics.org/semantics-2.2.0" schemaLocation="eml-semantics.xsd"/>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xml="http://www.w3.org/XML/1998/namespace" xmlns:doc="https://eml.ecoinformatics.org/documentation-2.2.0" xmlns:txt="https://eml.ecoinformatics.org/text-2.2.0" xmlns:rp="https://eml.ecoinformatics.org/party-2.2.0" xmlns:cov="https://eml.ecoinformatics.org/coverage-2.2.0" xmlns:sem="https://eml.ecoinformatics.org/semantics-2.2.0" xmlns="https://eml.ecoinformatics.org/resource-2.2.0" targetNamespace="https://eml.ecoinformatics.org/resource-2.2.0">
+    <xs:import namespace="https://eml.ecoinformatics.org/documentation-2.2.0" schemaLocation="eml-documentation.xsd"/>
+    <xs:import namespace="https://eml.ecoinformatics.org/party-2.2.0" schemaLocation="eml-party.xsd"/>
+    <xs:import namespace="https://eml.ecoinformatics.org/coverage-2.2.0" schemaLocation="eml-coverage.xsd"/>
+    <xs:import namespace="https://eml.ecoinformatics.org/text-2.2.0" schemaLocation="eml-text.xsd"/>
+    <xs:import namespace="https://eml.ecoinformatics.org/semantics-2.2.0" schemaLocation="eml-semantics.xsd"/>
   <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="xml.xsd"/>
 
   <xs:annotation>
@@ -50,25 +50,6 @@
               The eml-resource module - Base information for
               all resources
             </title>
-            <para>
-              The eml-resource module contains general information that
-              describes dataset resources, literature resources, protocol
-              resources, and software resources. Each of the above four types of
-              resources share a common set of information, but also have
-              information that is unique to that particular resource type.  Each
-              resource type uses the eml-resource module to document the
-              information common to all resources, but then extend
-              eml-resource with modules that are specific to that particular
-              resource type.  For instance, all resources have creators,
-              titles, and perhaps keywords, but only the dataset resource would
-              have a "data table" within it.  Likewise, a literature
-              resource may have an "ISBN" number associated with it,
-              whereas the other resource types would not.
-            </para>
-            <para>
-              The eml-resource module is exclusively used by other modules, and is
-              therefore not a stand-alone module.
-            </para>
           </section>
         </doc:moduleDescription>
         <doc:recommendedUsage>all datasets</doc:recommendedUsage>
@@ -136,11 +117,26 @@
             <doc:description>The 'title' field provides a description of the
             resource that is being documented that is long enough to
             differentiate it from other similar resources. Multiple titles may
-            be provided, particularly when trying to express the title in more
-            than one language (use the "xml:lang" attribute to indicate the
-            language if not English/en).</doc:description>
+            be provided to indicate alternate titles for the resource. When
+            specifying translations of the resource's title, it is recommended
+            that translations be provided in one or more 'value' child elements
+            rather than with repeated 'title' elements. See
+            'i18nNonEmptyStringType' for more information on providing
+            translations.
+            </doc:description>
             <doc:example>Vernal pool amphibian density data, Isla Vista,
             1990-1996.</doc:example>
+            <doc:example><![CDATA[To indicate a translation of a title, add
+              value child elements inside the title field:
+
+              <title>
+                Vernal pool amphibian density data, Isla Vista, 1990-1996.
+                <value xml:lang="es">
+                  Données de densité d'amphibiens de la piscine vernale, Isla
+                  Vista, 1990-1996.
+                </value>
+              </title>
+            ]]></doc:example>
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
@@ -489,7 +485,7 @@
         <xs:complexType>
           <xs:simpleContent>
             <xs:extension base="xs:string">
-              <xs:attribute name="system" type="SystemType" use="optional" default="document"/>
+              <xs:attribute name="system" type="SystemType" use="optional" />
             </xs:extension>
           </xs:simpleContent>
         </xs:complexType>

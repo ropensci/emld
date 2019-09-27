@@ -2,26 +2,26 @@
 <xs:schema
 	xmlns:xs="http://www.w3.org/2001/XMLSchema"
 	xmlns:xml="http://www.w3.org/XML/1998/namespace"
-	xmlns="eml://ecoinformatics.org/eml-2.2.0"
-	xmlns:res="eml://ecoinformatics.org/resource-2.2.0"
-	xmlns:acc="eml://ecoinformatics.org/access-2.2.0"
-	xmlns:eml="eml://ecoinformatics.org/eml-2.2.0"
-	xmlns:doc="eml://ecoinformatics.org/documentation-2.2.0"
-	xmlns:pro="eml://ecoinformatics.org/protocol-2.2.0"
-	xmlns:ds="eml://ecoinformatics.org/dataset-2.2.0"
-	xmlns:cit="eml://ecoinformatics.org/literature-2.2.0"
-	xmlns:sw="eml://ecoinformatics.org/software-2.2.0"
-	xmlns:sem="eml://ecoinformatics.org/semantics-2.2.0"
-	targetNamespace="eml://ecoinformatics.org/eml-2.2.0">
-  <xs:import namespace="eml://ecoinformatics.org/documentation-2.2.0" schemaLocation="eml-documentation.xsd"/>
-  <xs:import namespace="eml://ecoinformatics.org/dataset-2.2.0" schemaLocation="eml-dataset.xsd"/>
-  <xs:import namespace="eml://ecoinformatics.org/literature-2.2.0" schemaLocation="eml-literature.xsd"/>
-  <xs:import namespace="eml://ecoinformatics.org/software-2.2.0" schemaLocation="eml-software.xsd"/>
-  <xs:import namespace="eml://ecoinformatics.org/protocol-2.2.0" schemaLocation="eml-protocol.xsd"/>
-  <xs:import namespace="eml://ecoinformatics.org/resource-2.2.0" schemaLocation="eml-resource.xsd"/>
-  <xs:import namespace="eml://ecoinformatics.org/access-2.2.0" schemaLocation="eml-access.xsd"/>
-  <xs:import namespace="eml://ecoinformatics.org/semantics-2.2.0" schemaLocation="eml-semantics.xsd"/>
-  <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="xml.xsd"/>
+    xmlns="https://eml.ecoinformatics.org/eml-2.2.0"
+    xmlns:res="https://eml.ecoinformatics.org/resource-2.2.0"
+    xmlns:acc="https://eml.ecoinformatics.org/access-2.2.0"
+    xmlns:eml="https://eml.ecoinformatics.org/eml-2.2.0"
+    xmlns:doc="https://eml.ecoinformatics.org/documentation-2.2.0"
+    xmlns:pro="https://eml.ecoinformatics.org/protocol-2.2.0"
+    xmlns:ds="https://eml.ecoinformatics.org/dataset-2.2.0"
+    xmlns:cit="https://eml.ecoinformatics.org/literature-2.2.0"
+    xmlns:sw="https://eml.ecoinformatics.org/software-2.2.0"
+    xmlns:sem="https://eml.ecoinformatics.org/semantics-2.2.0"
+    targetNamespace="https://eml.ecoinformatics.org/eml-2.2.0">
+    <xs:import namespace="https://eml.ecoinformatics.org/documentation-2.2.0" schemaLocation="eml-documentation.xsd"/>
+    <xs:import namespace="https://eml.ecoinformatics.org/dataset-2.2.0" schemaLocation="eml-dataset.xsd"/>
+    <xs:import namespace="https://eml.ecoinformatics.org/literature-2.2.0" schemaLocation="eml-literature.xsd"/>
+    <xs:import namespace="https://eml.ecoinformatics.org/software-2.2.0" schemaLocation="eml-software.xsd"/>
+    <xs:import namespace="https://eml.ecoinformatics.org/protocol-2.2.0" schemaLocation="eml-protocol.xsd"/>
+    <xs:import namespace="https://eml.ecoinformatics.org/resource-2.2.0" schemaLocation="eml-resource.xsd"/>
+    <xs:import namespace="https://eml.ecoinformatics.org/access-2.2.0" schemaLocation="eml-access.xsd"/>
+    <xs:import namespace="https://eml.ecoinformatics.org/semantics-2.2.0" schemaLocation="eml-semantics.xsd"/>
+    <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="xml.xsd"/>
   <xs:annotation>
     <xs:documentation> '$RCSfile: eml.xsd,v $' Copyright: 1997-2002 Regents of the University of
       California, University of New Mexico, and Arizona State University Sponsors: National Center
@@ -320,15 +320,17 @@
         <xs:annotation>
           <xs:appinfo>
             <doc:tooltip>Package Identifer</doc:tooltip>
-            <doc:summary>A unique identifier for this entire EML metadata document that can be used
-              to reference it elsewhere. </doc:summary>
-            <doc:description>A unique identifier for this entire EML metadata document that can be
-              used to reference it elsewhere. This identifier can be interpreted as the formal
-              accession number for this EML package, and is therefore required. It must be unique
-              within a particular data management system (see the "system" attribute). </doc:description>
+            <doc:summary>A globally unique identifier for the data package described by this EML metadata document that can be used
+              to cite it elsewhere.</doc:summary>
+            <doc:description>A globally unique identifier for the data package described by this EML metadata document
+              that can be used to cite it elsewhere. This identifier can be interpreted as the formal
+              accession number for the data package, and is therefore required. It must be globally unique
+              within a particular data management system, which should be specified in the system
+              attribute as a URI. Typically a DOI or other identifier that is both citable and
+              resolvable is used for published data packages.</doc:description>
             <doc:example>doi:10.5063/F17P8WGK</doc:example>
+            <doc:example>https://doi.org/10.5063/F17P8WGK</doc:example>
             <doc:example>urn:uuid:04cd34fd-25d4-447f-ab6e-73a572c5d383</doc:example>
-            <doc:example>knb.343.22</doc:example>
           </xs:appinfo>
         </xs:annotation>
       </xs:attribute>

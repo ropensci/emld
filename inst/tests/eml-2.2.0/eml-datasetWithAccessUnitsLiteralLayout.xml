@@ -1,16 +1,16 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="foo.xsl"?>
-<eml:eml xmlns:ds="eml://ecoinformatics.org/dataset-2.2.0" 
-xmlns:xs="http://www.w3.org/2001/XMLSchema" 
-xmlns:eml="eml://ecoinformatics.org/eml-2.2.0" 
-xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-xmlns:res="eml://ecoinformatics.org/resource-2.2.0" 
-xmlns:doc="eml://ecoinformatics.org/documentation-2.2.0" 
-xmlns:stmml="http://www.xml-cml.org/schema/stmml" 
-xmlns:sw="eml://ecoinformatics.org/software-2.2.0" 
-xmlns:prot="eml://ecoinformatics.org/protocol-2.2.0" 
-xmlns:cit="eml://ecoinformatics.org/literature-2.2.0" 
-xsi:schemaLocation="eml://ecoinformatics.org/eml-2.2.0 xsd/eml.xsd" 
+<eml:eml xmlns:ds="https://eml.ecoinformatics.org/dataset-2.2.0"
+xmlns:xs="http://www.w3.org/2001/XMLSchema"
+xmlns:eml="https://eml.ecoinformatics.org/eml-2.2.0"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:res="https://eml.ecoinformatics.org/resource-2.2.0"
+xmlns:doc="https://eml.ecoinformatics.org/documentation-2.2.0"
+xmlns:stmml="http://www.xml-cml.org/schema/stmml"
+xmlns:sw="https://eml.ecoinformatics.org/software-2.2.0"
+xmlns:prot="https://eml.ecoinformatics.org/protocol-2.2.0"
+xmlns:cit="eml://ecoinformatics.org/literature-2.2.0"
+xsi:schemaLocation="https://eml.ecoinformatics.org/eml-2.2.0 eml.xsd"
 packageId="knb-lter-cdr.958608.1" system="knb" scope="system">
 
 <access scope="document" order="allowFirst" authSystem="knb">
@@ -227,9 +227,9 @@ rp86e08</shortName>
 
   &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd&quot;&gt;
 
- Object not found! 
+ Object not found!
 
-&lt;link rev=&quot;made&quot; 
+&lt;link rev=&quot;made&quot;
                          </literalLayout>
                  </para>
          </section>
@@ -238,13 +238,13 @@ rp86e08</shortName>
 <methodStep>
      <description>
          <section>
-                 <title>Field Operations  
+                 <title>Field Operations
 </title>
                  <para>
                          <literalLayout>
 	 Fertilization:   Fertilizer is mixed and spread by hand twice a year, once in early May and once in late June.  Each plot gets the fertilizer mixture specified by its fertilizer treatment code.  For a list of fertilizer treatments for each plot, see file  trmte08 .
 
-  &lt;A 
+  &lt;A
                          </literalLayout>
                  </para>
          </section>
@@ -253,48 +253,48 @@ rp86e08</shortName>
 <methodStep>
      <description>
          <section>
-                 <title>Treatment layout :  trmte08 
+                 <title>Treatment layout :  trmte08
 </title>
                  <para>
                          <literalLayout>
-  Field Identification   Experiment Number   Plot Number   Nitrogen Treatment   Ammonium Nitrate (34-0-0) addition (g/m2/yr)  
-  E  8  41  6  28  
+  Field Identification   Experiment Number   Plot Number   Nitrogen Treatment   Ammonium Nitrate (34-0-0) addition (g/m2/yr)
+  E  8  41  6  28
 
-  E  8  42  3  6  
+  E  8  42  3  6
 
-  E  8  43  8  80  
+  E  8  43  8  80
 
-  E  8  44  3  6  
+  E  8  44  3  6
 
-  E  8  45  1  0  
+  E  8  45  1  0
 
-  E  8  46  1  0  
+  E  8  46  1  0
 
-  E  8  47  1  0  
+  E  8  47  1  0
 
-   E  8  60  8  80  
+   E  8  60  8  80
 
-  E  8  61  1  0  
+  E  8  61  1  0
 
-  E  8  62  8  80  
+  E  8  62  8  80
 
-  E  8  63  3  6  
+  E  8  63  3  6
 
-  E  8  64  6  28  
+  E  8  64  6  28
 
-  Color codes of rebars used to mark treatments in E008:   
+  Color codes of rebars used to mark treatments in E008:
 
-  Experiment   	  Color      	  Treatment  
+  Experiment   	  Color      	  Treatment
 
-  E008           	  White         	  A = 1  
+  E008           	  White         	  A = 1
 
-  E008          	  Yellow       	  C = 3  
+  E008          	  Yellow       	  C = 3
 
-  E008          	  Red            	  F = 6  
+  E008          	  Red            	  F = 6
 
-  E008          	  Green         	  H = 8  
+  E008          	  Green         	  H = 8
 
-  &lt;A 
+  &lt;A
                          </literalLayout>
                  </para>
          </section>
@@ -303,35 +303,35 @@ rp86e08</shortName>
 <methodStep>
      <description>
          <section>
-                 <title>Sampling Map  
+                 <title>Sampling Map
 </title>
                  <para>
                          <literalLayout>
-  Sampling map for e008 is not currently available.   
+  Sampling map for e008 is not currently available.
 
 Clip strips are 10cm wide and 3m long.
 
- 1983:  Clipped at ? 
+ 1983:  Clipped at ?
 
- 1985:  Clipped 50cm from right side 
+ 1985:  Clipped 50cm from right side
 
- 1986:  Clipped 75cm from right side 
+ 1986:  Clipped 75cm from right side
 
- 1994:  get info from Richard Inouye 
+ 1994:  get info from Richard Inouye
 
-  Sampling Problems in E008:   
+  Sampling Problems in E008:
 
- 1983:  ? 
+ 1983:  ?
 
- 1985:  none 
+ 1985:  none
 
- 1986:  none 
+ 1986:  none
 
-  Other Notes:   
+  Other Notes:
 
           E008 was clipped in 1983,  but there is no documentation as to
 
-          where in the plots it was clipped. 
+          where in the plots it was clipped.
                          </literalLayout>
                  </para>
          </section>

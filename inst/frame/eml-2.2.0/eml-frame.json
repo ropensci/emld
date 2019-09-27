@@ -1,10 +1,10 @@
 {
   "@context": {
-    "@vocab": "eml://ecoinformatics.org/eml-2.2.0/",
-    "eml": "eml://ecoinformatics.org/eml-2.2.0/",
+    "@vocab": "https://eml.ecoinformatics.org/eml-2.2.0/",
+    "eml": "https://eml.ecoinformatics.org/eml-2.2.0/",
     "xsi": "http://www.w3.org/2001/XMLSchema-instance/",
     "xml": "http://www.w3.org/XML/1998/namespace",
-    "stmml": "http://www.xml-cml.org/schema/stmml-1.1/",
+    "stmml": "http://www.xml-cml.org/schema/stmml-1.2/",
     "id": "@id"
   },
   "@type": "EML",

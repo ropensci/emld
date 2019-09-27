@@ -3060,7 +3060,7 @@ Transcribed from IUPAC website
         <xsd:annotation>
           <xsd:documentation>
             <div class="summary">
-              <p>a synonym of this unit that from the dictionary used by the package udunits, 
+              <p>a synonym of this unit that from the dictionary used by the package udunits,
                 written by unidata for conversions. See  http://unidata.ucar.edu
                 Should not be used on a unit that is deprecated. </p>
             </div>
