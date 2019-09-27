@@ -8,21 +8,25 @@
 
 <title>Coerce an EML file or object into an emld object. — as_emld • emld</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -30,10 +34,11 @@
 
 
 
-<meta property="og:title" content="Coerce an EML file or object into an emld object. — as_emld" />
 
+<meta property="og:title" content="Coerce an EML file or object into an emld object. — as_emld" />
 <meta property="og:description" content="Coerce an EML file or object into an emld object." />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -45,6 +50,7 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
 
 
   </head>
@@ -71,7 +77,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -94,11 +100,10 @@
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/ropensci/emld">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -109,6 +114,7 @@
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -120,13 +126,11 @@
     </div>
 
     <div class="ref-description">
-    
     <p>Coerce an EML file or object into an emld object.</p>
-    
     </div>
 
-    <pre class="usage"><span class='fu'>as_emld</span>(<span class='no'>x</span>, <span class='kw'>from</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"guess"</span>, <span class='st'>"xml"</span>, <span class='st'>"json"</span>, <span class='st'>"list"</span>))</pre>
-    
+    <pre class="usage"><span class='fu'>as_emld</span>(<span class='no'>x</span>, <span class='kw'>from</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"guess"</span>, <span class='st'>"xml"</span>, <span class='st'>"json"</span>, <span class='st'>"list"</span>))</pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -143,14 +147,13 @@ vectors where the type cannot be guessed by the R object class
 or file extension of the input.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>an emld object</p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'> <span class='no'>hf205</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"extdata/hf205.xml"</span>, <span class='kw'>package</span><span class='kw'>=</span><span class='st'>"emld"</span>)
+    <pre class="examples"><div class='input'> <span class='no'>hf205</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata/hf205.xml"</span>, <span class='kw'>package</span><span class='kw'>=</span><span class='st'>"emld"</span>)
  <span class='fu'>as_emld</span>(<span class='no'>hf205</span>)</div><div class='output co'>#&gt; access:
 #&gt;   authSystem: knb
 #&gt;   order: allowFirst
@@ -283,19 +286,137 @@ or file extension of the input.</p></td>
 #&gt;     methodStep:
 #&gt;       description:
 #&gt;         section:
-#&gt;         - |-
-#&gt;           &lt;title&gt;General Protocols&lt;/title&gt;
-#&gt;           &lt;para&gt;1. Field methods. All experiments will be carried out in the greenhouse at Harvard Forest. We have developed an instrumentation system that allows us to collect continuous dissolved [O2] measurements: dedicated micro-probes (DO-166MT; Lazar Research Laboratories: http://www.shelfscientific.com/) connected to multiplexers and data loggers (AM16/32B multiplexer, CR-1000 datalogger and control system [Campbell Scientific: http://www.cambellsci.com]). The initial ecosystem composition in all experimental plants will be standardized by seeding each pitcher with a 10-ml inoculum of liquid collected from pitchers growing at Tom Swamp.  In all experiments, prey will be supplied to pitchers as standardized aliquots of dried and finely ground bald-faced hornets (Dolichovespula maculata; Hymenoptera: Vespidae), which we collect in quantity throughout New England. Both hornets and ants (the latter are the dominant prey of S. purpurea) are hymenoptera, and have nearly identical C:N ratios (hornets: 3.97; common bog-dwelling ants [Tapinoma sessile and Myrmica lobifrons]: 3.37), but on average hornets have greater than 100 times the dry mass of these ants, and are easier to collect and process as a standardized food source. Additions of prey, either as large "pulses" or chronic "presses" are analogous to the enrichment and eutrophication that occur in aquatic "green" food webs in which phytoplankton abundance is boosted through addition of limiting nutrients. In "brown" food webs such as the Sarracenia microecosystem, detritus - not primary production - is at the base of the web, and our treatments boost this material as would happen through increases in arthropod prey capture78 or through nitrogen-enriched precipitation.&lt;/para&gt;
-#&gt;           &lt;para&gt;2. Proteomic analysis. Proteomic profiles of microbial communities are determined after separating the microbial fraction from the pitcher fluid, prey, and other detritus. The microbial "pellet" is subjected to SDS-PAGE (sodium dodecyl sulfate polyacrylamide gel) electrophoresis; bands are cut out and digested in-gel with trypsin. Tryptic peptides are subjected to LC-MS/MS (liquid chromatography tandem mass spectrometry) for peptide and protein identification. Absolute abundance of peptides and proteins are quantified using AQUA (Absolute QUAntification) analysis109.&lt;/para&gt;
-#&gt;         - |-
-#&gt;           &lt;title&gt;Specific Experiments&lt;/title&gt;
-#&gt;           &lt;para&gt;Experiment #1. Effects of nutrient enrichment on state changes and [O2] profiles. This experiment alters nutrient enrichment rates to characterize the [O2] profile and the transition to the anaerobic state. The experimental design is a one-way layout with 5 treatment groups: one control (no enrichment) and 4 enrichment levels (0.125, 0.25, 0.5, 1.0 mg prey added ml-1 d-1). One plant is assigned to each treatment group, and the entire set is replicated 6 times over successive weeks. [O2] is monitored continuously for 4 days to characterize state changes and tipping points under different enrichment rates. This experiment tracks a continuous [O2] profile but does not include proteomic analysis. The purpose of Experiment #1 is to identify an enrichment rate E that generates a long pre-tipping period before transition time T to the anaerobic state. This enrichment rate will be used in Experiments #2 - #4.&lt;/para&gt;
-#&gt;           &lt;para&gt;Experiment #2. Identification of early intervention time and characterization of aerobic and anaerobic proteomes. This experiment will use the single enrichment rate E determined from Experiment #1 and impose different intervention times I at which nutrient enrichment will be terminated. Thus, this experiment will identify the latest time I* at which it is possible to intervene and stop the transition to the anaerobic state by halting enrichment. The [O2] profile will again be monitored continuously over 10 days to measure the state of the system. From Experiment #1, the transition time T to the anaerobic state with no intervention will be known. We will use one control group (no prey addition) and ten levels of intervention time (all with the same enrichment rate E) as a proportion of T (0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0). Six plants will be assigned randomly to each of the 11 treatments in a randomized one-way layout and [O2] profiles will be monitored continuously. In addition to the [O2] profiles, we will also characterize the protein profiles of aerobic and anaerobic pitchers in all 11 treatment groups at the end of the experiment.&lt;/para&gt;
-#&gt;           &lt;para&gt;After the plants are harvested, we will create proteomic profiles of the predominantly bacterial portion (centrifuged pellet) of the pitcher fluid from each plant, as described in General Protocols. Thus, 66 separate pellet-fraction samples will be analyzed by SDS-PAGE. After examining the SDS-PAGE profiles, approximately ten proteins that show dynamic patterns consistent with state change and five that do not change will be cut from the gel, subjected to in-gel tryptic digestion and a portion of the tryptic peptides will be analyzed by LC-MS/MS. Using these data, we will choose three identified peptides from each protein for peptide synthesis such that each synthesized peptide contains stable isotope labels (AQUA peptides) to distinguish them by mass from the native peptides. We will then quantify all 45 of the native peptides from the original samples using a known amount of each AQUA peptide spiked into the tryptic digest. The AQUA analysis of proteins that do not show changes will be used for normalization between samples. These data will be used to independently identify the current state of the system and forecast the time-to-transition.&lt;/para&gt;
-#&gt;           &lt;para&gt;We will use Sequest searches for initial identification of peptides; relevant scores including Xcorr and Delta Cn values will be given for each peptide. Other peptides will be identified by de novo sequencing using PepNovo; all PepNovo scores will likewise be given including any N- or C-terminal gaps. Mass error in ppm will be reported for each precursor ion. We will use standard multivariate analysis to search for distinctive proteomic profiles114 that characterize aerobic and anaerobic ecosystems, as well as ecosystems that developed with and without inputs of photosynthetic O2 and plant metabolites.&lt;/para&gt;
-#&gt;           &lt;para&gt;Experiment #3. Identification of diagnostic proteins. Using Experiments #1 and 2, we will have identified an enrichment rate E with a long pre-tipping period and an intervention time I* before which mitigation and termination of enrichment will prevent eutrophication. Experiment #3 will characterize the mean and variance of the protein profile before and after I*. We are especially interested in identifying proteins that increase rapidly in abundance (or variance) well before the onset of flickering in [O2] and before the transition time T from the aerobic to the anaerobic state.&lt;/para&gt;
-#&gt;           &lt;para&gt;A cohort of 100 plants all will be fed at rate E (determined from Experiment #1), with intervention time I* determined from Experiment #2, although no intervention will be used in this "press" experiment so that we can contrast proteins before and after the state change. At seven times before I* and three times after I*, we will harvest 10 randomly chosen plants. At each prescribed harvest time, we will measure [O2] and collect samples from each plant for proteomic screening using both SDS-PAGE and AQUA analysis. This experiment will identify proteins that rise quickly in abundance during the pre- I* period and can be used as early indicators of a future tipping point. Because different plants will be harvested at each time period, this is a one-way ANOVA design, with pre-and post- I* a priori contrasts. A randomization test will be used to determine whether variances in protein expression differ through time. During these analyses we will use the data from the AQUA peptides and from known amounts of protein standards, such as bovine serum albumin, to approximate the amount of protein in a given coomassie-stained SDS-PAGE gel band. The reason for doing this is to provide a fast "real-time" assay based just on expression in the SDS-PAGE. This rapid assay will be used in Experiment #4.&lt;/para&gt;
-#&gt;           &lt;para&gt;Experiment # 4. Proof-of-application. This experiment will provide a benchmark test of our methods and their ability to correctly identify tipping points. A cohort of 100 plants will each be fitted with [O2] probes and started on the enrichment regime. Two times per day, we will collect 3 plants each, pool their contents, and conduct a rapid screen in the lab with SDS-PAGE for the diagnostic proteins that were identified in Experiment #3. We will use the protein expression in the gel to delineate an "early" and a "late" mitigation strategy. As soon as diagnostic proteins measured in the SDS-gels are at abundances that signal we are at 0.5×I* - approximately one-half of the way to the latest intervention time - we will randomly select one third of the remaining plants for mitigation and termination of enrichment (the "early" mitigation strategy). We will continue to harvest plants from the remainder of the cohort and monitor proteins. As soon as diagnostic proteins signal we are at 0.75 times I*, we will randomly select one half of the remaining plants for mitigation and termination of enrichment (the "late" mitigation strategy). The remaining plants (approximately one sixth to one third of the original cohort) will continue to be enriched. We will monitor [O2] in all 3 groups (no-mitigation control, early mitigation, late mitigation) until all plants reach a new [O2] equilibrium. If the protein markers are successful, the proportion of food webs that remain aerobic will be significantly higher in the two mitigation treatments than in the no-mitigation control.&lt;/para&gt;
+#&gt;         - '&lt;title&gt;General Protocols&lt;/title&gt;&lt;para&gt;1. Field methods. All experiments
+#&gt;           will be carried out in the greenhouse at Harvard Forest. We have developed
+#&gt;           an instrumentation system that allows us to collect continuous dissolved
+#&gt;           [O2] measurements: dedicated micro-probes (DO-166MT; Lazar Research Laboratories:
+#&gt;           http://www.shelfscientific.com/) connected to multiplexers and data loggers
+#&gt;           (AM16/32B multiplexer, CR-1000 datalogger and control system [Campbell Scientific:
+#&gt;           http://www.cambellsci.com]). The initial ecosystem composition in all experimental
+#&gt;           plants will be standardized by seeding each pitcher with a 10-ml inoculum
+#&gt;           of liquid collected from pitchers growing at Tom Swamp.  In all experiments,
+#&gt;           prey will be supplied to pitchers as standardized aliquots of dried and
+#&gt;           finely ground bald-faced hornets (Dolichovespula maculata; Hymenoptera:
+#&gt;           Vespidae), which we collect in quantity throughout New England. Both hornets
+#&gt;           and ants (the latter are the dominant prey of S. purpurea) are hymenoptera,
+#&gt;           and have nearly identical C:N ratios (hornets: 3.97; common bog-dwelling
+#&gt;           ants [Tapinoma sessile and Myrmica lobifrons]: 3.37), but on average hornets
+#&gt;           have greater than 100 times the dry mass of these ants, and are easier to
+#&gt;           collect and process as a standardized food source. Additions of prey, either
+#&gt;           as large "pulses" or chronic "presses" are analogous to the enrichment and
+#&gt;           eutrophication that occur in aquatic "green" food webs in which phytoplankton
+#&gt;           abundance is boosted through addition of limiting nutrients. In "brown"
+#&gt;           food webs such as the Sarracenia microecosystem, detritus - not primary
+#&gt;           production - is at the base of the web, and our treatments boost this material
+#&gt;           as would happen through increases in arthropod prey capture78 or through
+#&gt;           nitrogen-enriched precipitation.&lt;/para&gt;&lt;para&gt;2. Proteomic analysis. Proteomic
+#&gt;           profiles of microbial communities are determined after separating the microbial
+#&gt;           fraction from the pitcher fluid, prey, and other detritus. The microbial
+#&gt;           "pellet" is subjected to SDS-PAGE (sodium dodecyl sulfate polyacrylamide
+#&gt;           gel) electrophoresis; bands are cut out and digested in-gel with trypsin.
+#&gt;           Tryptic peptides are subjected to LC-MS/MS (liquid chromatography tandem
+#&gt;           mass spectrometry) for peptide and protein identification. Absolute abundance
+#&gt;           of peptides and proteins are quantified using AQUA (Absolute QUAntification)
+#&gt;           analysis109.&lt;/para&gt;'
+#&gt;         - '&lt;title&gt;Specific Experiments&lt;/title&gt;&lt;para&gt;Experiment #1. Effects of nutrient
+#&gt;           enrichment on state changes and [O2] profiles. This experiment alters nutrient
+#&gt;           enrichment rates to characterize the [O2] profile and the transition to
+#&gt;           the anaerobic state. The experimental design is a one-way layout with 5
+#&gt;           treatment groups: one control (no enrichment) and 4 enrichment levels (0.125,
+#&gt;           0.25, 0.5, 1.0 mg prey added ml-1 d-1). One plant is assigned to each treatment
+#&gt;           group, and the entire set is replicated 6 times over successive weeks. [O2]
+#&gt;           is monitored continuously for 4 days to characterize state changes and tipping
+#&gt;           points under different enrichment rates. This experiment tracks a continuous
+#&gt;           [O2] profile but does not include proteomic analysis. The purpose of Experiment
+#&gt;           #1 is to identify an enrichment rate E that generates a long pre-tipping
+#&gt;           period before transition time T to the anaerobic state. This enrichment
+#&gt;           rate will be used in Experiments #2 - #4.&lt;/para&gt;&lt;para&gt;Experiment #2. Identification
+#&gt;           of early intervention time and characterization of aerobic and anaerobic
+#&gt;           proteomes. This experiment will use the single enrichment rate E determined
+#&gt;           from Experiment #1 and impose different intervention times I at which nutrient
+#&gt;           enrichment will be terminated. Thus, this experiment will identify the latest
+#&gt;           time I* at which it is possible to intervene and stop the transition to
+#&gt;           the anaerobic state by halting enrichment. The [O2] profile will again be
+#&gt;           monitored continuously over 10 days to measure the state of the system.
+#&gt;           From Experiment #1, the transition time T to the anaerobic state with no
+#&gt;           intervention will be known. We will use one control group (no prey addition)
+#&gt;           and ten levels of intervention time (all with the same enrichment rate E)
+#&gt;           as a proportion of T (0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0).
+#&gt;           Six plants will be assigned randomly to each of the 11 treatments in a randomized
+#&gt;           one-way layout and [O2] profiles will be monitored continuously. In addition
+#&gt;           to the [O2] profiles, we will also characterize the protein profiles of
+#&gt;           aerobic and anaerobic pitchers in all 11 treatment groups at the end of
+#&gt;           the experiment.&lt;/para&gt;&lt;para&gt;After the plants are harvested, we will create
+#&gt;           proteomic profiles of the predominantly bacterial portion (centrifuged pellet)
+#&gt;           of the pitcher fluid from each plant, as described in General Protocols.
+#&gt;           Thus, 66 separate pellet-fraction samples will be analyzed by SDS-PAGE.
+#&gt;           After examining the SDS-PAGE profiles, approximately ten proteins that show
+#&gt;           dynamic patterns consistent with state change and five that do not change
+#&gt;           will be cut from the gel, subjected to in-gel tryptic digestion and a portion
+#&gt;           of the tryptic peptides will be analyzed by LC-MS/MS. Using these data,
+#&gt;           we will choose three identified peptides from each protein for peptide synthesis
+#&gt;           such that each synthesized peptide contains stable isotope labels (AQUA
+#&gt;           peptides) to distinguish them by mass from the native peptides. We will
+#&gt;           then quantify all 45 of the native peptides from the original samples using
+#&gt;           a known amount of each AQUA peptide spiked into the tryptic digest. The
+#&gt;           AQUA analysis of proteins that do not show changes will be used for normalization
+#&gt;           between samples. These data will be used to independently identify the current
+#&gt;           state of the system and forecast the time-to-transition.&lt;/para&gt;&lt;para&gt;We
+#&gt;           will use Sequest searches for initial identification of peptides; relevant
+#&gt;           scores including Xcorr and Delta Cn values will be given for each peptide.
+#&gt;           Other peptides will be identified by de novo sequencing using PepNovo; all
+#&gt;           PepNovo scores will likewise be given including any N- or C-terminal gaps.
+#&gt;           Mass error in ppm will be reported for each precursor ion. We will use standard
+#&gt;           multivariate analysis to search for distinctive proteomic profiles114 that
+#&gt;           characterize aerobic and anaerobic ecosystems, as well as ecosystems that
+#&gt;           developed with and without inputs of photosynthetic O2 and plant metabolites.&lt;/para&gt;&lt;para&gt;Experiment
+#&gt;           #3. Identification of diagnostic proteins. Using Experiments #1 and 2, we
+#&gt;           will have identified an enrichment rate E with a long pre-tipping period
+#&gt;           and an intervention time I* before which mitigation and termination of enrichment
+#&gt;           will prevent eutrophication. Experiment #3 will characterize the mean and
+#&gt;           variance of the protein profile before and after I*. We are especially interested
+#&gt;           in identifying proteins that increase rapidly in abundance (or variance)
+#&gt;           well before the onset of flickering in [O2] and before the transition time
+#&gt;           T from the aerobic to the anaerobic state.&lt;/para&gt;&lt;para&gt;A cohort of 100 plants
+#&gt;           all will be fed at rate E (determined from Experiment #1), with intervention
+#&gt;           time I* determined from Experiment #2, although no intervention will be
+#&gt;           used in this "press" experiment so that we can contrast proteins before
+#&gt;           and after the state change. At seven times before I* and three times after
+#&gt;           I*, we will harvest 10 randomly chosen plants. At each prescribed harvest
+#&gt;           time, we will measure [O2] and collect samples from each plant for proteomic
+#&gt;           screening using both SDS-PAGE and AQUA analysis. This experiment will identify
+#&gt;           proteins that rise quickly in abundance during the pre- I* period and can
+#&gt;           be used as early indicators of a future tipping point. Because different
+#&gt;           plants will be harvested at each time period, this is a one-way ANOVA design,
+#&gt;           with pre-and post- I* a priori contrasts. A randomization test will be used
+#&gt;           to determine whether variances in protein expression differ through time.
+#&gt;           During these analyses we will use the data from the AQUA peptides and from
+#&gt;           known amounts of protein standards, such as bovine serum albumin, to approximate
+#&gt;           the amount of protein in a given coomassie-stained SDS-PAGE gel band. The
+#&gt;           reason for doing this is to provide a fast "real-time" assay based just
+#&gt;           on expression in the SDS-PAGE. This rapid assay will be used in Experiment
+#&gt;           #4.&lt;/para&gt;&lt;para&gt;Experiment # 4. Proof-of-application. This experiment will
+#&gt;           provide a benchmark test of our methods and their ability to correctly identify
+#&gt;           tipping points. A cohort of 100 plants will each be fitted with [O2] probes
+#&gt;           and started on the enrichment regime. Two times per day, we will collect
+#&gt;           3 plants each, pool their contents, and conduct a rapid screen in the lab
+#&gt;           with SDS-PAGE for the diagnostic proteins that were identified in Experiment
+#&gt;           #3. We will use the protein expression in the gel to delineate an "early"
+#&gt;           and a "late" mitigation strategy. As soon as diagnostic proteins measured
+#&gt;           in the SDS-gels are at abundances that signal we are at 0.5×I* - approximately
+#&gt;           one-half of the way to the latest intervention time - we will randomly select
+#&gt;           one third of the remaining plants for mitigation and termination of enrichment
+#&gt;           (the "early" mitigation strategy). We will continue to harvest plants from
+#&gt;           the remainder of the cohort and monitor proteins. As soon as diagnostic
+#&gt;           proteins signal we are at 0.75 times I*, we will randomly select one half
+#&gt;           of the remaining plants for mitigation and termination of enrichment (the
+#&gt;           "late" mitigation strategy). The remaining plants (approximately one sixth
+#&gt;           to one third of the original cohort) will continue to be enriched. We will
+#&gt;           monitor [O2] in all 3 groups (no-mitigation control, early mitigation, late
+#&gt;           mitigation) until all plants reach a new [O2] equilibrium. If the protein
+#&gt;           markers are successful, the proportion of food webs that remain aerobic
+#&gt;           will be significantly higher in the two mitigation treatments than in the
+#&gt;           no-mitigation control.&lt;/para&gt;'
 #&gt;   dataTable:
 #&gt;     id: hf205-01
 #&gt;     entityName: hf205-01-TPexp1.csv
@@ -479,14 +600,13 @@ or file extension of the input.</p></td>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
 </div>
+
 
       <footer>
       <div class="copyright">
@@ -494,13 +614,16 @@ or file extension of the input.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 
