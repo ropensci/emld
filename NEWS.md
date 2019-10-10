@@ -1,3 +1,8 @@
+# emld 0.3.0
+
+- Updated package to support version 2.2.0 of EML. [#40](https://github.com/ropensci/emld/pull/40). See the [EML website](https://eml.ecoinformatics.org/whats-new-in-eml-2-2-0.html) for more information on the 2.2.0 release.
+- Fixed a minor XML serialization issue with `TextType` nodes where extra whitespace was being added. [#37](https://github.com/ropensci/emld/pull/37).
+- Relaxed `eml_validate`'s behavior when validating custom units. [#35](https://github.com/ropensci/emld/pull/35).
 
 # emld 0.2.0
 
