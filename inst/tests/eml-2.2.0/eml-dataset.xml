@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ds:dataset system="KNB" 
-         xmlns:ds="eml://ecoinformatics.org/dataset-2.2.0" 
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-         xsi:schemaLocation="eml://ecoinformatics.org/dataset-2.2.0 
-         xsd/eml-dataset.xsd">
+<ds:dataset system="KNB"
+         xmlns:ds="https://eml.ecoinformatics.org/dataset-2.2.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://eml.ecoinformatics.org/dataset-2.2.0
+         eml-dataset.xsd">
     <title>Sample datset Description</title>
     <creator id="23445" scope="document">
       <individualName>
@@ -44,11 +44,11 @@
           <parameter>
             <name>databaseName</name>
             <value>landuse95</value>
-          </parameter>      
+          </parameter>
           <parameter>
             <name>owner</name>
             <value>sde</value>
-          </parameter>      
+          </parameter>
         </connection>
       </online>
     </distribution>

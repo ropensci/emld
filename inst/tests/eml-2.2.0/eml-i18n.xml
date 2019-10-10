@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
-<eml:eml xmlns:eml="eml://ecoinformatics.org/eml-2.2.0"
+<eml:eml xmlns:eml="https://eml.ecoinformatics.org/eml-2.2.0"
 	xmlns:stmml="http://www.xml-cml.org/schema/stmml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:ds="eml://ecoinformatics.org/dataset-2.2.0" 
+	xmlns:ds="https://eml.ecoinformatics.org/dataset-2.2.0"
 	xmlns:xml="http://www.w3.org/XML/1998/namespace"
 	packageId="knb-lter-sbc.14.9"
-    scope="system" system="knb" xsi:schemaLocation="eml://ecoinformatics.org/eml-2.2.0 xsd/eml.xsd" xml:lang="en">
+    scope="system" system="knb" xsi:schemaLocation="https://eml.ecoinformatics.org/eml-2.2.0 eml.xsd" xml:lang="en">
 	<dataset scope="document">
 		<shortName>Historical Kelp Database</shortName>
 		<title xml:lang="es">
@@ -64,7 +64,7 @@
 			<role>pointOfContact</role>
 		</associatedParty>
 		<pubDate>2007</pubDate>
-		<abstract xml:lang="es"> 
+		<abstract xml:lang="es">
 			<para xml:lang="es">
 				<value xml:lang="es">something in Spanish</value>
 				<value xml:lang="jp">something in Japanese</value>
@@ -73,7 +73,7 @@
                 giant kelp (
                 <emphasis xml:lang="en">
                 	Macrocystis pyrifera
-                	<value xml:lang="es">something in Spanish</value>                	
+                	<value xml:lang="es">something in Spanish</value>
                 </emphasis>
                 ) in California and Mexico from routine aerial
                 surveys since 1957. The standard protocol consists of an observer visually
@@ -82,13 +82,13 @@
                 the field and archived in notebooks housed at ISP Alginates. With cooperation from
                 ISP Alginates, the SBCLTER converted ISP Alginates long-term records of giant kelp
                 biomass into a digital format. The database consists of a data table containing kelp
-                biomass, a catalog of maps. The format ISP Alginates used to report kelp abundance 
-                data changed periodically over the course of the collecting period. 
+                biomass, a catalog of maps. The format ISP Alginates used to report kelp abundance
+                data changed periodically over the course of the collecting period.
                 These details, pus descriptions of designated kelp beds
                 are described in the protocol document.
                 <literalLayout>
                 	something something something
-                	<value xml:lang="es">something in another language</value>                	
+                	<value xml:lang="es">something in another language</value>
                 </literalLayout>
                 <orderedlist>
                 	<listitem><para>item 1<value xml:lang="en">translation item 1</value></para></listitem>
@@ -202,9 +202,9 @@
 										<taxonomicClassification id="taxon_MAPY">
 											<taxonRankName>species</taxonRankName>
 											<taxonRankValue>Macrocystis pyrifera</taxonRankValue>
-											<commonName>Giant Kelp</commonName>								
-											<taxonId provider="ITIS">11274</taxonId> 
-											<taxonId provider="https://www.ncbi.nlm.nih.gov/taxonomy">35122</taxonId>   
+											<commonName>Giant Kelp</commonName>
+											<taxonId provider="ITIS">11274</taxonId>
+											<taxonId provider="https://www.ncbi.nlm.nih.gov/taxonomy">35122</taxonId>
 										</taxonomicClassification>
 									</taxonomicClassification>
 								</taxonomicClassification>
@@ -298,7 +298,7 @@
                     kelp biomass into a consistent format.</para>
  </abstract>
 		</project>
-		
+
 		<dataTable scope="document">
 			<entityName>Historical_Kelp_Data.csv</entityName>
 			<entityDescription>Time series of giant kelp biomass along the
@@ -437,7 +437,7 @@
 						<code>-99999</code>
 						<codeExplanation>not available, or not collected</codeExplanation>
 					</missingValueCode>
-					
+
 				</attribute>
 				<attribute scope="document">
 					<attributeName>bed_name</attributeName>

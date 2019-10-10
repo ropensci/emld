@@ -23,4 +23,5 @@ LICENSE.md
 ^CONTRIBUTING\.md$
 ^\.github$
 .*-review.md$
-
+Dockerfile
+test.R

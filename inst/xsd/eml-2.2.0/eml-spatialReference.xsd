@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    xmlns:res="eml://ecoinformatics.org/resource-2.2.0"
-    xmlns="eml://ecoinformatics.org/spatialReference-2.2.0"
-    xmlns:doc="eml://ecoinformatics.org/documentation-2.2.0"
-    targetNamespace="eml://ecoinformatics.org/spatialReference-2.2.0"
+    xmlns:res="https://eml.ecoinformatics.org/resource-2.2.0"
+    xmlns="https://eml.ecoinformatics.org/spatialReference-2.2.0"
+    xmlns:doc="https://eml.ecoinformatics.org/documentation-2.2.0"
+    targetNamespace="https://eml.ecoinformatics.org/spatialReference-2.2.0"
     elementFormDefault="unqualified">
-  <xs:import namespace="eml://ecoinformatics.org/documentation-2.2.0"
-  schemaLocation="eml-documentation.xsd"/>
-  <xs:import namespace="eml://ecoinformatics.org/resource-2.2.0"
-  schemaLocation="eml-resource.xsd"/>
+    <xs:import namespace="https://eml.ecoinformatics.org/documentation-2.2.0" schemaLocation="eml-documentation.xsd"/>
+    <xs:import namespace="https://eml.ecoinformatics.org/resource-2.2.0" schemaLocation="eml-resource.xsd"/>
   <xs:annotation>
     <xs:documentation>
        '$RCSfile: eml-spatialReference.xsd,v $'
@@ -52,14 +50,6 @@
             <title>
               Schema for validating spatial referencing descriptions.
             </title>
-            <para>
-             This module defines both projected and unprojected coordinate systems for
-             referencing the spatial coordinates of a dataset to the earth. The schema is based on
-             that used by Environmental Systems Research Inc (ESRI) for its .prj file format. EML provides a library of
-             pre-defined coordinate systems that may be referred to by name in the horizCoordSysName element. A
-             custom projection may be defined using this schema for any projection that does not appear in this
-             dictionary.
-            </para>
           </section>
         </doc:moduleDescription>
         <doc:recommendedUsage>all spatial entities</doc:recommendedUsage>
@@ -90,7 +80,7 @@
                 <doc:tooltip>Horizonal Coordinate System Name</doc:tooltip>
                 <doc:summary>The name of a predefined coordinate system</doc:summary>
                 <doc:description>The name of a coordinate system for which a definition has been
-                provided in the eml-spatialReferenceDictionary.xsl file.</doc:description>
+                provided in the eml-spatialReferenceDictionary.xml file.</doc:description>
                 <doc:example>NAD_1927_StatePlane_Arizona_Central_FIPS_0202</doc:example>
               </xs:appinfo>
             </xs:annotation>

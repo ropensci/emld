@@ -32,11 +32,11 @@
     along with this program; if not, write to the Free Software
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 -->
-<stmml:unitList xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.1"
+<stmml:unitList xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.2"
                 xmlns:sch="http://www.ascc.net/xml/schematron"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xmlns="http://www.xml-cml.org/schema/stmml-1.1"
-                xsi:schemaLocation="http://www.xml-cml.org/schema/stmml-1.1 xsd/stmml.xsd">
+                xmlns="http://www.xml-cml.org/schema/stmml-1.2"
+                xsi:schemaLocation="http://www.xml-cml.org/schema/stmml-1.2 xsd/stmml.xsd">
 <!-- ======================================================================= -->
 <!-- ========================= fundamental types =========================== -->
 <!-- ======================================================================= -->
@@ -1020,11 +1020,11 @@
   <unit id="numberPerMeterCubed" name="numberPerMeterCubed" unitType="volumetricDensity" multiplierToSI="1">
     <description>number per meter cubed</description>
   </unit>
-  
+
   <unit id="numberPerLiter" name="numberPerLiter" unitType="volumetricDensity" parentSI="numberPerMeterCubed" multiplierToSI="0.001">
     <description>number of entities per liter</description>
   </unit>
-  
+
   <unit id="numberPerMilliliter" name="numberPerMilliliter" unitType="volumetricDensity" parentSI="numberPerMeterCubed" multiplierToSI="0.000001">
     <description>number of entities per milliliter</description>
   </unit>
@@ -1051,7 +1051,7 @@
   <unit id="cubicCentimetersPerCubicCentimeters" name="cubicCentimetersPerCubicCentimeters" unitType="volumePerVolume" multiplierToSI="1">
     <description>cubic centimeters per cubic centimeter</description>
   </unit>
-  
- 
+
+
 
 </stmml:unitList>

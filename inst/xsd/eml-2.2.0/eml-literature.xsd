@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:doc="eml://ecoinformatics.org/documentation-2.2.0" xmlns:rp="eml://ecoinformatics.org/party-2.2.0" xmlns:cov="eml://ecoinformatics.org/coverage-2.2.0" xmlns:res="eml://ecoinformatics.org/resource-2.2.0" xmlns:acc="eml://ecoinformatics.org/access-2.2.0" xmlns:proj="eml://ecoinformatics.org/project-2.2.0" xmlns="eml://ecoinformatics.org/literature-2.2.0" targetNamespace="eml://ecoinformatics.org/literature-2.2.0">
-  <xs:import namespace="eml://ecoinformatics.org/documentation-2.2.0" schemaLocation="eml-documentation.xsd"/>
-  <xs:import namespace="eml://ecoinformatics.org/resource-2.2.0" schemaLocation="eml-resource.xsd"/>
-  <xs:import namespace="eml://ecoinformatics.org/coverage-2.2.0" schemaLocation="eml-coverage.xsd"/>
-  <xs:import namespace="eml://ecoinformatics.org/party-2.2.0" schemaLocation="eml-party.xsd"/>
-  <xs:import namespace="eml://ecoinformatics.org/access-2.2.0" schemaLocation="eml-access.xsd"/>
-  <xs:import namespace="eml://ecoinformatics.org/project-2.2.0" schemaLocation="eml-project.xsd"/>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:doc="https://eml.ecoinformatics.org/documentation-2.2.0" xmlns:rp="https://eml.ecoinformatics.org/party-2.2.0" xmlns:cov="https://eml.ecoinformatics.org/coverage-2.2.0" xmlns:res="https://eml.ecoinformatics.org/resource-2.2.0" xmlns:acc="https://eml.ecoinformatics.org/access-2.2.0" xmlns:proj="https://eml.ecoinformatics.org/project-2.2.0" xmlns="https://eml.ecoinformatics.org/literature-2.2.0" targetNamespace="https://eml.ecoinformatics.org/literature-2.2.0">
+    <xs:import namespace="https://eml.ecoinformatics.org/documentation-2.2.0" schemaLocation="eml-documentation.xsd"/>
+    <xs:import namespace="https://eml.ecoinformatics.org/resource-2.2.0" schemaLocation="eml-resource.xsd"/>
+    <xs:import namespace="https://eml.ecoinformatics.org/coverage-2.2.0" schemaLocation="eml-coverage.xsd"/>
+    <xs:import namespace="https://eml.ecoinformatics.org/party-2.2.0" schemaLocation="eml-party.xsd"/>
+    <xs:import namespace="https://eml.ecoinformatics.org/access-2.2.0" schemaLocation="eml-access.xsd"/>
+    <xs:import namespace="https://eml.ecoinformatics.org/project-2.2.0" schemaLocation="eml-project.xsd"/>
   <xs:annotation>
     <xs:documentation>
       '$RCSfile: eml-literature.xsd,v $'
@@ -49,27 +49,6 @@
               The eml-literature module - Citation specific
               information
             </title>
-            <para>
-              The eml-literature module contains information that describes
-              literature resources. It is intended to provide overview
-              information about the literature citation, including title,
-              abstract, keywords, and contacts. Citation types follow the
-              conventions laid out by
-              <ulink url="http://www.endnote.com">EndNote</ulink>,
-              and there is an attempt to
-              represent a compatible subset of the EndNote citation types.
-              These citation types include: article, book, chapter, edited
-              book, manuscript, report, thesis, conference proceedings,
-              personal communication, map, generic, audio visual, and
-              presentation.  The "generic" citation type would be
-              used when one of the other types will not work.
-            </para>
-            <para>
-              The eml-literature module, like other modules, may be
-              "referenced" via the &lt;references&gt; tag.  This
-              allows a citation to be described once, and then used as a
-              reference in other locations within the EML document via its ID.
-            </para>
           </section>
         </doc:moduleDescription>
         <doc:recommendedUsage>All datasets with literary
