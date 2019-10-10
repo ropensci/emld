@@ -121,7 +121,7 @@ testthat::test_that("unitDictionary", {
 
 ##########
 
-## Enforce testing on 2.1.1 for this
+## Enforce testing on 2.2.0 for this
 options("emld_db" = "eml-2.2.0")
 
 ## Test all citation-* examples:
@@ -156,5 +156,3 @@ partial_test <- basename(suite) %in%
     "eml-literatureInPress.xml",
     "eml-citationWithContact.xml")
 lapply(suite[partial_test], test_roundtrip, check_lengths = FALSE)
-
-
