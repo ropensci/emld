@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Working with EML as JSON-LD • emld</title>
+<title>Ecological Metadata as Linked Data • emld</title>
 
 
 <!-- jquery -->
@@ -35,7 +35,7 @@
 
 
 
-<meta property="og:title" content="Working with EML as JSON-LD" />
+<meta property="og:title" content="Ecological Metadata as Linked Data" />
 
 
 
@@ -118,24 +118,13 @@
 <div class="row">
   <div class="contents col-md-9">
     <div class="page-header">
-      <h1>Working with EML as JSON-LD</h1>
+      <h1>Ecological Metadata as Linked Data</h1>
     </div>
 
 
-<hr>
-<p>title: ‘Ecological Metadata as Linked Data’ tags:</p>
-<ul>
-<li>linked data</li>
-<li>EML</li>
-<li>JSON-LD</li>
-<li>RDF</li>
-<li>Ecology</li>
-</ul>
-<p>authors:</p>
-<ul>
-<li>name: Carl Boettiger orcid: 0000-0002-1642-628X affiliation: 1 affiliations:</li>
-<li>name: University of California, Berkeley index: 1 date: 2019-01-25 bibliography: paper.bib —</li>
-</ul>
+<div id="ecological-metadata-as-linked-data" class="section level1">
+
+<p>2019-01-25</p>
 <p>The Ecological Metadata Language, (EML), is a widely used metadata standard in the ecological and environmental sciences [@Michener1997; @Jones2006; @Leinfelder2010]. Efforts such as the Long Term Ecological Research (LTER) and the National Center for Ecological Analysis and Synthesis (NCEAS) have used and driven the development of EML over the past two decades, and now major efforts such as the NSF-sponsored National Ecological Observatory Network (NEON), the DataONE Network, are making an unprecedented amount of ecological data available with rich, machine-readable metadata descriptions using EML [@NEON; @Keller2008; @Overpeck2011]. EML defines a strict XML schema that ensures metadata are machine readable and inter-operable through an XML-schema validation process.</p>
 <p>While this provides a predictable but extensible format, it also poses a significant technical barrier to many researchers seeking to analyze existing EML documents or create their own. The creation of EML in the late 1990s also pre-dated the advent of more developer-friendly and user-friendly technologies such as the popular JSON serialization, as well as the advent of semantic or linked data model and it’s application in ecoinformatics [@Michener2012]. More recently still, the creation of the W3C JSON-LD [@jsonld-w3c] has brought combined the developer-friendly JSON format with the powerful semantics of the Resource Description Format (RDF) popular in informatics [@rdf-w3c]. This package seeks to bring both of these advantages to bear on the rich-but-clunky XML structure used by EML. By automatically mapping EML into JSON-LD, we are able to realize the benefits easier creation and manipulation of EML structures as JSON objects or R list objects, while relying on the power of JSON-LD semantics (in particular, context, compaction and framing, [@jsonld]) to transform that data to and from EML-schema-compliant XML. This approach opens numerous research applications, ranging from the simple parsing or creation of EML files as R list objects to complex queries and semantic reasoning over large numbers of EML documents with semantic SPARQL queries [@sparql-w3c]. The package vignette provides scripted examples of each of these.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(emld)</span>
@@ -174,8 +163,10 @@
 <span id="cb4-11"><a href="#cb4-11"></a>testthat<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/testthat/man/logical-expectations.html">expect_true</a></span>(<span class="kw"><a href="reference/eml_validate.html">eml_validate</a></span>(<span class="st">"ex.xml"</span>) )</span></code></pre></div>
 <p>Note that we don’t have to worry about the order of the elements here, <code>as_xml</code> will re-order if necessary to validate. (For instance, in valid EML the <code>creator</code> becomes listed before <code>contact</code>. Of course this is a very low-level interface that does not help the user know what an EML looks like. Creating EML from scratch without knowledge of the schema is a job for the <code>EML</code> package and beyond the scope of the lightweight <code>emld</code>.</p>
 </div>
+</div>
 <div id="working-with-eml-as-json-ld" class="section level1">
-
+<h1 class="hasAnchor">
+<a href="#working-with-eml-as-json-ld" class="anchor"></a>Working with EML as JSON-LD</h1>
 <p>For many applications, it is useful to merely treat EML as a list object, as seen above, allowing the R user to leverage a standard tools and intuition in working with these files. However, <code>emld</code> also opens the door to new possible directions by thinking of EML data in terms of a JSON-LD serialization rather than an XML serialization. First, owing to it’s comparative simplicity and native data typing (e.g. of Boolean/string/numeric data), JSON is often easier for many developers to work with than EML’s native XML format.</p>
 <div id="as-json-query-with-jq" class="section level2">
 <h2 class="hasAnchor">
@@ -183,15 +174,15 @@
 <p>For example, JSON can be queried with with JQ, a <a href="https://stedolan.github.io/jq/manual/">simple and powerful query language</a> that also gives us a lot of flexibility over the return structure of our results. JQ syntax is both intuitive and well documented, and often easier than the typical munging of JSON/list data using <code>purrr</code>. Here’s an example query that turns EML to JSON and then extracts the north and south bounding coordinates:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>hf205 &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata/hf205.xml"</span>, <span class="dt">package=</span><span class="st">"emld"</span>)</span>
 <span id="cb5-2"><a href="#cb5-2"></a></span>
-<span id="cb5-3"><a href="#cb5-3"></a><span class="kw"><a href="reference/as_emld.html">as_emld</a></span>(hf205) <span class="op">%&gt;%</span></span>
-<span id="cb5-4"><a href="#cb5-4"></a><span class="st">  </span><span class="kw"><a href="reference/as_json.html">as_json</a></span>() <span class="op">%&gt;%</span></span>
-<span id="cb5-5"><a href="#cb5-5"></a><span class="st">  </span><span class="kw"><a href="https://docs.ropensci.org/jqr/reference/jq.html">jq</a></span>(<span class="st">'.dataset.coverage.geographicCoverage.boundingCoordinates |</span></span>
-<span id="cb5-6"><a href="#cb5-6"></a><span class="st">       { northLat: .northBoundingCoordinate,</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="kw"><a href="reference/as_emld.html">as_emld</a></span>(hf205) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="st">  </span><span class="kw"><a href="reference/as_json.html">as_json</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb5-5"><a href="#cb5-5"></a><span class="st">  </span><span class="kw"><a href="https://docs.ropensci.org/jqr/reference/jq.html">jq</a></span>(<span class="st">'.dataset.coverage.geographicCoverage.boundingCoordinates | </span></span>
+<span id="cb5-6"><a href="#cb5-6"></a><span class="st">       { northLat: .northBoundingCoordinate, </span></span>
 <span id="cb5-7"><a href="#cb5-7"></a><span class="st">         southLat: .southBoundingCoordinate }'</span>) <span class="op">%&gt;%</span></span>
 <span id="cb5-8"><a href="#cb5-8"></a><span class="st">  </span><span class="kw"><a href="https://rdrr.io/pkg/jsonlite/man/fromJSON.html">fromJSON</a></span>()</span></code></pre></div>
 <div class="sourceCode" id="cb6"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="co">## $northLat</span></span>
 <span id="cb6-2"><a href="#cb6-2"></a><span class="co">## [1] "+42.55"</span></span>
-<span id="cb6-3"><a href="#cb6-3"></a><span class="co">##</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a><span class="co">## </span></span>
 <span id="cb6-4"><a href="#cb6-4"></a><span class="co">## $southLat</span></span>
 <span id="cb6-5"><a href="#cb6-5"></a><span class="co">## [1] "+42.42"</span></span></code></pre></div>
 <p>Nice features of JQ include the ability to do recursive descent (common to XPATH but not possible in <code>purrr</code>) and specify the shape and names of the return object (e.g. as a list with elements named <code>northLat</code> and <code>southLat</code> in this case.)</p>
@@ -208,9 +199,9 @@
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>sparql &lt;-</span>
 <span id="cb8-2"><a href="#cb8-2"></a><span class="st">  'PREFIX eml: &lt;https://eml.ecoinformatics.org/eml-2.2.0/&gt;</span></span>
 <span id="cb8-3"><a href="#cb8-3"></a></span>
-<span id="cb8-4"><a href="#cb8-4"></a><span class="st">  SELECT ?genus ?species ?northLat ?southLat ?eastLong ?westLong</span></span>
+<span id="cb8-4"><a href="#cb8-4"></a><span class="st">  SELECT ?genus ?species ?northLat ?southLat ?eastLong ?westLong </span></span>
 <span id="cb8-5"><a href="#cb8-5"></a></span>
-<span id="cb8-6"><a href="#cb8-6"></a><span class="st">  WHERE {</span></span>
+<span id="cb8-6"><a href="#cb8-6"></a><span class="st">  WHERE { </span></span>
 <span id="cb8-7"><a href="#cb8-7"></a><span class="st">    ?y eml:taxonRankName "genus" .</span></span>
 <span id="cb8-8"><a href="#cb8-8"></a><span class="st">    ?y eml:taxonRankValue ?genus .</span></span>
 <span id="cb8-9"><a href="#cb8-9"></a><span class="st">    ?y eml:taxonomicClassification ?s .</span></span>

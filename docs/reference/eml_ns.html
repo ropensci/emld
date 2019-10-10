@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Coerce an emld object into XML (EML's standard format) — as_xml • emld</title>
+<title>Get the XML namespace for a version of EML — eml_ns • emld</title>
 
 
 <!-- jquery -->
@@ -35,8 +35,11 @@
 
 
 
-<meta property="og:title" content="Coerce an emld object into XML (EML's standard format) — as_xml" />
-<meta property="og:description" content="Coerce an emld object into XML (EML's standard format)" />
+<meta property="og:title" content="Get the XML namespace for a version of EML — eml_ns" />
+<meta property="og:description" content="Utility function for use when filling in xmlns, schemaLocation, or
+vocab in various representations of EML. This is a little more future-proof
+than keeping a dictionary for each version since this won't break on the next
+release." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -120,74 +123,41 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Coerce an emld object into XML (EML's standard format)</h1>
-    <small class="dont-index">Source: <a href='https://github.com/ropensci/emld/blob/master/R/as_xml.R'><code>R/as_xml.R</code></a></small>
-    <div class="hidden name"><code>as_xml.Rd</code></div>
+    <h1>Get the XML namespace for a version of EML</h1>
+    <small class="dont-index">Source: <a href='https://github.com/ropensci/emld/blob/master/R/eml_version.R'><code>R/eml_version.R</code></a></small>
+    <div class="hidden name"><code>eml_ns.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Coerce an emld object into XML (EML's standard format)</p>
+    <p>Utility function for use when filling in <code>xmlns</code>, <code>schemaLocation</code>, or
+<code>vocab</code> in various representations of EML. This is a little more future-proof
+than keeping a dictionary for each version since this won't break on the next
+release.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>as_xml</span>(<span class='no'>x</span>, <span class='kw'>file</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>root</span> <span class='kw'>=</span> <span class='st'>"eml"</span>, <span class='kw'>ns</span> <span class='kw'>=</span> <span class='st'>"eml"</span>,
-  <span class='kw'>schemaLocation</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='fu'><a href='eml_ns.html'>eml_ns</a></span>(), <span class='st'>"/ eml.xsd"</span>))</pre>
+    <pre class="usage"><span class='fu'>eml_ns</span>(<span class='kw'>version</span> <span class='kw'>=</span> <span class='fu'><a href='eml_version.html'>eml_version</a></span>())</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>an emld object</p></td>
-    </tr>
-    <tr>
-      <th>file</th>
-      <td><p>optional path to write out to file.
-Otherwise, defaults to NULL and will return an xml_document object.</p></td>
-    </tr>
-    <tr>
-      <th>root</th>
-      <td><p>name for the root node; default to 'eml'</p></td>
-    </tr>
-    <tr>
-      <th>ns</th>
-      <td><p>namespace abbreviation on root node, default 'eml'</p></td>
-    </tr>
-    <tr>
-      <th>schemaLocation</th>
-      <td><p>default to set schemaLocation if not already defined in emld object</p></td>
+      <th>version</th>
+      <td><p>EML version, currently either eml-2.2.0 (current version) or
+eml-2.1.1. Defaults to current version.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a xml_document object. Or if a file path is provided, the metadata
-is written out in XML file and the function returns <code>NULL</code> invisibly.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+    <p>returns the full XML namespace URI for the specified version of the
+schema</p>
 
-    <p>Unlike as_json, this function cannot rely on the existing
-convention of serializing a list to xml, eg, as defined by xml2::as_xml_document()
-Instead, this relies on a modified version, as_eml_document.  In addition
-further steps must be taken when working with JSON-LD to deal with
-different possible framings and namespaces from the JSON-LD context
-element. Thus this <code>as_xml</code> function is particular to EML and <code>emld</code>
-objects alone.</p>
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>f</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata/example.xml"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"emld"</span>)
-<span class='no'>emld</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='as_emld.html'>as_emld</a></span>(<span class='no'>f</span>)
-<span class='no'>xml</span> <span class='kw'>&lt;-</span> <span class='fu'>as_xml</span>(<span class='no'>emld</span>)
-
-<span class='co'>## can also write directly to a file:</span>
-<span class='no'>xml_file</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempfile</a></span>()
-<span class='fu'>as_xml</span>(<span class='no'>emld</span>, <span class='no'>xml_file</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
-      <li><a href="#details">Details</a></li>
-      <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
