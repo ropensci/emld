@@ -48,8 +48,8 @@ linked data through the JSON-LD format. This package is not meant to
 replace `EML`, as it does not support the more complex operations found
 in that package. Rather, it provides a minimalist but powerful way of
 working with EML documents that can be used by itself or as a backend
-for those complex operations. The next release of the EML R package will
-use `emld` under the hood.
+for those complex operations. Version 2.0 of the EML R package uses
+`emld` under the hood.
 
 Note that the JSON-LD format is considerably less rigid than the EML
 schema. This means that there are many valid, semantically equivalent
