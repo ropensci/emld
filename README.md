@@ -40,7 +40,7 @@ devtools::install_github("ropensci/emld")
 ## Motivation
 
 In contrast to the existing [EML
-package](https://ropensci.github.io/EML), this package aims to a very
+package](https://docs.ropensci.org/EML), this package aims to a very
 light-weight implementation that seeks to provide both an intuitive data
 format and make maximum use of existing technology to work with that
 format. In particular, this package emphasizes tools for working with
