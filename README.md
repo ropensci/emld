@@ -40,7 +40,7 @@ devtools::install_github("ropensci/emld")
 ## Motivation
 
 In contrast to the existing [EML
-package](https://ropensci.github.io/EML), this package aims to a very
+package](https://docs.ropensci.org/EML), this package aims to a very
 light-weight implementation that seeks to provide both an intuitive data
 format and make maximum use of existing technology to work with that
 format. In particular, this package emphasizes tools for working with
@@ -48,8 +48,8 @@ linked data through the JSON-LD format. This package is not meant to
 replace `EML`, as it does not support the more complex operations found
 in that package. Rather, it provides a minimalist but powerful way of
 working with EML documents that can be used by itself or as a backend
-for those complex operations. The next release of the EML R package will
-use `emld` under the hood.
+for those complex operations. Version 2.0 of the EML R package uses
+`emld` under the hood.
 
 Note that the JSON-LD format is considerably less rigid than the EML
 schema. This means that there are many valid, semantically equivalent
@@ -216,8 +216,8 @@ df
 -----
 
 Please note that the `emld` project is released with a [Contributor Code
-of Conduct](CODE_OF_CONDUCT.md). By contributing to this project, you
-agree to abide by its
+of Conduct](https://docs.ropensci.org/emld/CODE_OF_CONDUCT.html). By
+contributing to this project, you agree to abide by its
 terms.
 
 [![ropensci\_footer](https://ropensci.org/public_images/ropensci_footer.png)](https://ropensci.org)

@@ -181,8 +181,8 @@ this case, we ask for the genus and species name and bounding box found
 in the EML file.
 
 ``` r
-sparql <- 
-  'PREFIX eml: <eml://ecoinformatics.org/eml-2.2.0/>
+sparql <-
+  'PREFIX eml: <https://eml.ecoinformatics.org/eml-2.2.0/>
 
   SELECT ?genus ?species ?northLat ?southLat ?eastLong ?westLong 
 

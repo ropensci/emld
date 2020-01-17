@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:v="eml://ecoinformatics.org/view-2.2.0" xmlns:sp="eml://ecoinformatics.org/storedProcedure-2.2.0" xmlns:sv="eml://ecoinformatics.org/spatialVector-2.2.0" xmlns:md="eml://ecoinformatics.org/methods-2.2.0" xmlns:sr="eml://ecoinformatics.org/spatialRaster-2.2.0" xmlns:proj="eml://ecoinformatics.org/project-2.2.0" xmlns:dat="eml://ecoinformatics.org/dataTable-2.2.0" xmlns:ent="eml://ecoinformatics.org/entity-2.2.0" xmlns:acc="eml://ecoinformatics.org/access-2.2.0" xmlns="eml://ecoinformatics.org/dataset-2.2.0" xmlns:res="eml://ecoinformatics.org/resource-2.2.0" xmlns:rp="eml://ecoinformatics.org/party-2.2.0" xmlns:txt="eml://ecoinformatics.org/text-2.2.0" xmlns:doc="eml://ecoinformatics.org/documentation-2.2.0" xmlns:cit="eml://ecoinformatics.org/literature-2.2.0" targetNamespace="eml://ecoinformatics.org/dataset-2.2.0">
-  <xs:import namespace="eml://ecoinformatics.org/documentation-2.2.0" schemaLocation="eml-documentation.xsd"/>
-  <xs:import namespace="eml://ecoinformatics.org/resource-2.2.0" schemaLocation="eml-resource.xsd"/>
-  <xs:import namespace="eml://ecoinformatics.org/party-2.2.0" schemaLocation="eml-party.xsd"/>
-  <xs:import namespace="eml://ecoinformatics.org/access-2.2.0" schemaLocation="eml-access.xsd"/>
-  <xs:import namespace="eml://ecoinformatics.org/entity-2.2.0" schemaLocation="eml-entity.xsd"/>
-  <xs:import namespace="eml://ecoinformatics.org/dataTable-2.2.0" schemaLocation="eml-dataTable.xsd"/>
-  <xs:import namespace="eml://ecoinformatics.org/project-2.2.0" schemaLocation="eml-project.xsd"/>
-  <xs:import namespace="eml://ecoinformatics.org/methods-2.2.0" schemaLocation="eml-methods.xsd"/>
-  <xs:import namespace="eml://ecoinformatics.org/spatialRaster-2.2.0" schemaLocation="eml-spatialRaster.xsd"/>
-  <xs:import namespace="eml://ecoinformatics.org/spatialVector-2.2.0" schemaLocation="eml-spatialVector.xsd"/>
-  <xs:import namespace="eml://ecoinformatics.org/storedProcedure-2.2.0" schemaLocation="eml-storedProcedure.xsd"/>
-  <xs:import namespace="eml://ecoinformatics.org/text-2.2.0" schemaLocation="eml-text.xsd"/>
-  <xs:import namespace="eml://ecoinformatics.org/view-2.2.0" schemaLocation="eml-view.xsd"/>
-  <xs:import namespace="eml://ecoinformatics.org/literature-2.2.0" schemaLocation="eml-literature.xsd"/>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:v="https://eml.ecoinformatics.org/view-2.2.0" xmlns:sp="https://eml.ecoinformatics.org/storedProcedure-2.2.0" xmlns:sv="https://eml.ecoinformatics.org/spatialVector-2.2.0" xmlns:md="https://eml.ecoinformatics.org/methods-2.2.0" xmlns:sr="https://eml.ecoinformatics.org/spatialRaster-2.2.0" xmlns:proj="https://eml.ecoinformatics.org/project-2.2.0" xmlns:dat="https://eml.ecoinformatics.org/dataTable-2.2.0" xmlns:ent="https://eml.ecoinformatics.org/entity-2.2.0" xmlns:acc="https://eml.ecoinformatics.org/access-2.2.0" xmlns="https://eml.ecoinformatics.org/dataset-2.2.0" xmlns:res="https://eml.ecoinformatics.org/resource-2.2.0" xmlns:rp="https://eml.ecoinformatics.org/party-2.2.0" xmlns:txt="https://eml.ecoinformatics.org/text-2.2.0" xmlns:doc="https://eml.ecoinformatics.org/documentation-2.2.0" xmlns:cit="https://eml.ecoinformatics.org/literature-2.2.0" targetNamespace="https://eml.ecoinformatics.org/dataset-2.2.0">
+    <xs:import namespace="https://eml.ecoinformatics.org/documentation-2.2.0" schemaLocation="eml-documentation.xsd"/>
+    <xs:import namespace="https://eml.ecoinformatics.org/resource-2.2.0" schemaLocation="eml-resource.xsd"/>
+    <xs:import namespace="https://eml.ecoinformatics.org/party-2.2.0" schemaLocation="eml-party.xsd"/>
+    <xs:import namespace="https://eml.ecoinformatics.org/access-2.2.0" schemaLocation="eml-access.xsd"/>
+    <xs:import namespace="https://eml.ecoinformatics.org/entity-2.2.0" schemaLocation="eml-entity.xsd"/>
+    <xs:import namespace="https://eml.ecoinformatics.org/dataTable-2.2.0" schemaLocation="eml-dataTable.xsd"/>
+    <xs:import namespace="https://eml.ecoinformatics.org/project-2.2.0" schemaLocation="eml-project.xsd"/>
+    <xs:import namespace="https://eml.ecoinformatics.org/methods-2.2.0" schemaLocation="eml-methods.xsd"/>
+    <xs:import namespace="https://eml.ecoinformatics.org/spatialRaster-2.2.0" schemaLocation="eml-spatialRaster.xsd"/>
+    <xs:import namespace="https://eml.ecoinformatics.org/spatialVector-2.2.0" schemaLocation="eml-spatialVector.xsd"/>
+    <xs:import namespace="https://eml.ecoinformatics.org/storedProcedure-2.2.0" schemaLocation="eml-storedProcedure.xsd"/>
+    <xs:import namespace="https://eml.ecoinformatics.org/text-2.2.0" schemaLocation="eml-text.xsd"/>
+    <xs:import namespace="https://eml.ecoinformatics.org/view-2.2.0" schemaLocation="eml-view.xsd"/>
+    <xs:import namespace="https://eml.ecoinformatics.org/literature-2.2.0" schemaLocation="eml-literature.xsd"/>
   <xs:annotation>
     <xs:documentation>
        '$RCSfile: eml-dataset.xsd,v $'
@@ -57,29 +57,6 @@
               The eml-dataset module - Dataset specific
               information
             </title>
-            <para>
-              The eml-dataset module contains general information that describes
-              dataset resources. It is intended to provide overview information
-              about the dataset: broad information such as the title, abstract,
-              keywords, contacts, maintenance history, purpose, and distribution
-              of the data themselves. The eml-dataset module also imports many
-              other modules that are used to describe the dataset in fine
-              detail.  Specifically, it uses the eml-methods module to
-              describe methodology used in collecting or processing the
-              dataset, the eml-project module to describe the overarching
-              research context and experimental design, the eml-access module
-              to define access control rules for the data and metadata, and
-              the eml-entity module to provide detailed information about the
-              logical structure of the dataset. A dataset can be (and often is)
-              composed of a series of data entities (tables) that are linked
-              together by particular integrity constraints.
-            </para>
-            <para>
-              The eml-dataset module, like other modules, may be
-              "referenced" via the &lt;references&gt; tag.  This
-              allows a dataset to be described once, and then used as a
-              reference in other locations within the EML document via its ID.
-            </para>
           </section>
         </doc:moduleDescription>
         <doc:recommendedUsage>all datasets</doc:recommendedUsage>

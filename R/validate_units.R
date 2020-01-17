@@ -21,11 +21,14 @@ validate_units <- function(eml,
     package = "emld"
   ))
 
+
   standard_defs <- xml_attr(
     xml2::xml_find_all(standard,
                        "//stmml:unitList/stmml:unit", ns = ns),
     "id"
   )
+  ## alternately to appending stmml namespace for search we could use xpath as:
+  ##    "//*[local-name()='unitList']/*[local-name()='unit']"),
 
   custom_defs <- c(
     xml2::xml_attr(
@@ -36,6 +39,11 @@ validate_units <- function(eml,
       "id"
     )
   )
+
+
+
+
+
 
   error_log <- character()
   if(!all(standard_units %in% standard_defs))

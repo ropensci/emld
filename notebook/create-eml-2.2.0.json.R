@@ -220,11 +220,13 @@ function(xsd_files){
 ####### HERE WE GO
 
 eml_def <-
-list.files("inst/xsd/eml-2.2.0", pattern = "[.]xsd", full.names = TRUE) %>%
+list.files("inst/xsd/eml-2.2.0", pattern = "eml-?\\w*\\.xsd", full.names = TRUE) %>%
+  print() %>%
   classes_from_schema()
 
 
-stmml <- "inst/xsd/eml-2.2.0/stmml.xsd" %>% classes_from_schema()
+# This doesn't work, so manually define below
+#stmml <- "inst/xsd/eml-2.2.0/stmml.xsd" %>% classes_from_schema()
 
 ## Ugh, manually define stmml type
 stmml <-

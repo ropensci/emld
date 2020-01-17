@@ -25,27 +25,21 @@
 #' @return a xml_document object. Or if a file path is provided, the metadata
 #' is written out in XML file and the function returns `NULL` invisibly.
 as_xml <- function(x, file=NULL, root = "eml", ns = "eml",
-  schemaLocation = paste0("eml://ecoinformatics.org/",
-  eml_version(), "/ eml.xsd"))
+  schemaLocation = paste0(eml_ns(), "/ eml.xsd"))
   {
     UseMethod("as_xml")
   }
 
 #' @export
 as_xml.list <- function(x, file=NULL, root = "eml", ns = "eml",
-                        schemaLocation = paste0("eml://ecoinformatics.org/",
-                          eml_version(),
-                          "/ eml.xsd")){
+                        schemaLocation = paste0(eml_ns(), "/ eml.xsd")){
   x <- as_emld.list(x)
   as_xml.emld(x, file)
 }
 
 #' @export
 as_xml.emld <- function(x, file=NULL, root = "eml", ns = "eml",
-                        schemaLocation = paste0("eml://ecoinformatics.org/",
-                          eml_version(),
-                          "/ eml.xsd")){
-
+                        schemaLocation = paste0(eml_ns(), "/ eml.xsd")){
   ## Frame/compact into original context for a standardized structure
   x <- eml_frame(x)
 
@@ -102,8 +96,7 @@ eml_frame <- function(x){
   ## set a context for framing if we've gotten just a plain json/list
   if(!is_jsonld.list(x)){
     x[["@context"]] <-
-      list("@vocab" = paste0("eml://ecoinformatics.org/",
-                             eml_version(),"/"))
+      list("@vocab" = paste0(eml_ns(), "/"))
   }
 
   ## set a type for framing
