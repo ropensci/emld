@@ -9,6 +9,7 @@
 #' @param encoding optional encoding for files, default UTF-8.
 #' @param ... additional arguments to eml_write, such as namespaces
 #' @param schema path to schema
+#' @param eml_version the version of the EML to validate against, see [eml_version()]
 #' @return Whether the document is valid (logical)
 #'
 #' @examples \donttest{
@@ -29,22 +30,21 @@
 #' @importFrom methods is
 eml_validate <- function(eml,
                          encoding = "UTF-8",
-                         schema = NULL) {
+                         schema = NULL,
+                         version = eml_version()) {
 
   doc <- generalized_parser(eml, encoding = encoding)
 
 
   # Use the EML namespace to find the EML version and the schema location
   if (is.null(schema)) {
-    try(schema <- eml_locate_schema(doc))
+    try(schema <- eml_locate_schema(doc, version = version))
   }
   schema_doc <- xml2::read_xml(schema)
 
-  ## Only do full validation if schemaLocation is eml.xml and not
+  ## Only do full validation if schemaLocation is eml.xsd and not
   ## merely a subclass
-  full <- grepl(".*eml.xsd$", paste0(strsplit(
-    xml2::xml_attr(xml2::xml_root(doc),
-    "schemaLocation"), "\\s+")[[1]], collapse = " "))
+  full <- grepl(".*eml.xsd$", schema)
 
   ## defaults
   id_valid <- TRUE
@@ -165,31 +165,17 @@ eml_additional_validation <- function(eml,
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 #' eml_locate_schema
 #'
 #' eml_locate_schema returns the location of the XSD schema file for a given
 #' EML document, as shipped with the EML R package.
 #'
-#' @details The schema location is based on the last path component from the EML
-#' namespace (e.g., eml-2.1.1), which corresponds to the directory containing xsd
-#' files that ship with the EML package. Schema files are copies of the schemas
-#' from the EML versioned releases. If an appropriate schema is not found,
-#' the function returns FALSE.
+#' @details The schema version must be given as an argument, or will be inferred
+#' from [eml_version()].
 #'
 #' @param eml an xml2::xml_document instance for an EML document
 #' @param ns the namespace URI for the top (root) element
+#' @param version the version of the EML to validate against, see [eml_version()]
 #' @return fully qualified path to the XSD schema for the appropriate version of EML
 #'
 #' @examples \donttest{
@@ -199,7 +185,7 @@ eml_additional_validation <- function(eml,
 #' }
 #' @importFrom xml2 xml_ns xml_attr xml_root
 #' @noRd
-eml_locate_schema <- function(eml, ns = NA) {
+eml_locate_schema <- function(eml, ns = NA, version = eml_version()) {
 
 
   if (!is(eml, 'xml_document')) {
@@ -209,26 +195,28 @@ eml_locate_schema <- function(eml, ns = NA) {
   namespace <- xml2::xml_ns(eml)
   stopifnot(is(namespace, 'xml_namespace'))
 
-  schemaLocation <- strsplit(
-    xml2::xml_attr(xml2::xml_root(eml),
-                   "schemaLocation"),
-    "\\s+")[[1]]
-  schema_file <- basename(schemaLocation[2])
+  ## If we have a schemaLocation element, we parse it only to see
+  ## if we're using the full eml.xsd or a submodule (e.g. dataset.xml)
+  ## Otherwise, we default to full `emld.xsd`
+  schemaLocation <- xml2::xml_attr(xml2::xml_root(eml),
+                 "schemaLocation")
 
-  ##
-  if (is.na(ns)) {
-    i <- grep(schemaLocation[1], namespace)
-    if (length(i) == 0)
-      i <- 1
-    ns <- namespace[i]
+  if(is.na(schemaLocation)){
+    schema_file <- "eml.xsd"
+  } else {
+    schemaLocation <- strsplit(schemaLocation,"\\s+")[[1]]
+    schema_file <- basename(schemaLocation[2])
   }
+  if(is.na(schema_file))
+    schema_file <- "eml.xsd"
 
-  eml_version <- strsplit(ns, "-")[[1]][2]
+
+
+  ## We alays validate against the package's local copies of the schema and not
+  ## the one that is given in schemaLocation attribute
   schema <-
-    system.file(paste0("xsd/eml-", eml_version, "/", schema_file),
+    system.file(paste0("xsd/", version, "/", schema_file),
                 package = 'emld')
-  if (schema == '') {
-    stop(paste("No schema found for namespace: ", ns))
-  }
-  return(schema)
+
+  schema
 }

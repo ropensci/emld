@@ -5,6 +5,9 @@ validate_units <- function(eml,
 
   doc <- generalized_parser(eml, encoding = encoding)
   ns <- xml_ns(doc)
+  if(!("stmml" %in% names(ns)))
+    ns <- c(ns, "stmml" = "http://www.xml-cml.org/schema/stmml-1.1")
+
   standard_units <- unique(xml2::xml_text(
     xml2::xml_find_all(doc, "//standardUnit", ns = ns),
     trim = TRUE))
@@ -20,15 +23,14 @@ validate_units <- function(eml,
 
   standard_defs <- xml_attr(
     xml2::xml_find_all(standard,
-                       "//stmml:unitList/stmml:unit"),
+                       "//stmml:unitList/stmml:unit", ns = ns),
     "id"
   )
 
   custom_defs <- c(
-    xml2::xml_attr(xml2::xml_find_all(
-      doc,
-      "//stmml:unitList/stmml:unit"
-    ), "id"),
+    xml2::xml_attr(
+      xml2::xml_find_all(doc, "//stmml:unitList/stmml:unit", ns = ns),
+      "id"),
     xml2::xml_attr(
       xml2::xml_find_all(doc, "//unitList/unit"),
       "id"

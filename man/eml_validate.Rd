@@ -4,7 +4,7 @@
 \alias{eml_validate}
 \title{eml_validate}
 \usage{
-eml_validate(eml, encoding = "UTF-8", schema = NULL)
+eml_validate(eml, encoding = "UTF-8", schema = NULL, version = eml_version())
 }
 \arguments{
 \item{eml}{file path, xml_document,}
@@ -14,6 +14,8 @@ eml_validate(eml, encoding = "UTF-8", schema = NULL)
 \item{schema}{path to schema}
 
 \item{...}{additional arguments to eml_write, such as namespaces}
+
+\item{eml_version}{the version of the EML to validate against, see \code{\link[=eml_version]{eml_version()}}}
 }
 \value{
 Whether the document is valid (logical)

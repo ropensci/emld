@@ -4,9 +4,13 @@
 \alias{as_xml}
 \title{Coerce an emld object into XML (EML's standard format)}
 \usage{
-as_xml(x, file = NULL, root = "eml", ns = "eml",
-  schemaLocation = paste0("eml://ecoinformatics.org/", eml_version(),
-  "/ eml.xsd"))
+as_xml(
+  x,
+  file = NULL,
+  root = "eml",
+  ns = "eml",
+  schemaLocation = paste0("eml://ecoinformatics.org/", eml_version(), "/ eml.xsd")
+)
 }
 \arguments{
 \item{x}{an emld object}

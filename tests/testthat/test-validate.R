@@ -7,6 +7,8 @@ guess_ns <- function(file){
   root <- xml2::xml_name(x)
   ns <- xml2::xml_ns(x)
   i <- grep(strsplit(xml2::xml_attr(x, "schemaLocation"), "\\s+")[[1]][1], ns)
+  if(length(i)<1)
+    i <- grepl("ecoinformatics.org/eml", ns)
   ns <- names(ns[i])[[1]]
   list(root=root, ns=ns)
 }

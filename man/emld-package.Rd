@@ -32,6 +32,6 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Carl Boettiger \email{cboettig@gmail.com} (http://orcid.org/0000-0002-1642-628X) [copyright holder]
+\strong{Maintainer}: Carl Boettiger \email{cboettig@gmail.com} (\href{https://orcid.org/http://orcid.org/0000-0002-1642-628X}{ORCID}) [copyright holder]
 
 }
