@@ -25,21 +25,21 @@
 #' @return a xml_document object. Or if a file path is provided, the metadata
 #' is written out in XML file and the function returns `NULL` invisibly.
 as_xml <- function(x, file=NULL, root = "eml", ns = "eml",
-  schemaLocation = paste0(eml_ns(), "/ eml.xsd"))
+  schemaLocation = eml_schema_location())
   {
     UseMethod("as_xml")
   }
 
 #' @export
 as_xml.list <- function(x, file=NULL, root = "eml", ns = "eml",
-                        schemaLocation = paste0(eml_ns(), "/ eml.xsd")){
+                        schemaLocation = eml_schema_location()){
   x <- as_emld.list(x)
   as_xml.emld(x, file)
 }
 
 #' @export
 as_xml.emld <- function(x, file=NULL, root = "eml", ns = "eml",
-                        schemaLocation = paste0(eml_ns(), "/ eml.xsd")){
+                        schemaLocation = eml_schema_location()){
   ## Frame/compact into original context for a standardized structure
   x <- eml_frame(x)
 
