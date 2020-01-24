@@ -116,7 +116,7 @@ eml_additional_validation <- function(eml,
 
   # Elements which contain an annotation child element MUST contain an id attribute,
   # unless the containing annotation element contains a references attribute
-  annot_without_ref <- xml2::xml_find_all(doc, "//annotation[not(references)]/..")
+  annot_without_ref <- xml2::xml_find_all(doc, "//annotation[not(@references)]/..")
   if(any(lapply(xml_attrs(annot_without_ref, "id"), length) == 0))
     error_log <- c(error_log,
                    paste("parent of any annotation must have id",
