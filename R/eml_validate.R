@@ -129,7 +129,8 @@ eml_additional_validation <- function(eml,
     error_log <- c(error_log, "Annotation elements with ids cannot contain references elements")
 
   # ID attributes must be unique
-  id <- xml_attr(xml2::xml_find_all(doc, "//*[@id]"), "id")
+  id <- c(xml_attr(xml2::xml_find_all(doc, "//*[@id]"), "id"),
+          xml_attr(xml2::xml_find_all(doc, "//*[@packageId]"), "packageId"))
   if(any(duplicated(id)))
     error_log <- c(error_log, "all id attributes must be unique")
 
@@ -154,9 +155,9 @@ eml_additional_validation <- function(eml,
      error_log <- c(error_log, "not all 'references' values match defined id attributes")
 
   # If no validity errors are found above or by the parser, then the document is valid
-  if(length(error_log) == 0)
+  if(length(error_log) == 0) {
     result <- TRUE
-  else {
+  } else {
     warning(paste("Document is invalid. Found the following errors:\n", error_log))
     result <- FALSE
   }
