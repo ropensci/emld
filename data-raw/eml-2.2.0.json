@@ -19,7 +19,7 @@
   "accuracy": ["attributeAccuracyReport", "quantitativeAttributeAccuracyAssessment"],
   "coverage": ["geographicCoverage", "temporalCoverage", "taxonomicCoverage", "references", "@id", "#system", "#scope"],
   "methods": ["methodStep", "sampling", "qualityControl"],
-  "annotation": ["propertyURI", "valueURI", "@id", "#system", "#scope"],
+  "annotation": ["propertyURI", "valueURI", "@id", "#system", "#scope", "#references"],
   "quantitativeAttributeAccuracyAssessment": ["attributeAccuracyValue", "attributeAccuracyExplanation"],
   "attributeList": ["attribute", "references", "@id"],
   "enumeratedDomain": ["codeDefinition", "externalCodeSet", "entityCodeList", "#enforced"],

@@ -3,10 +3,10 @@
     packageId="doi:10.xxxx/eml.1.1" system="knb"
     xmlns:eml="https://eml.ecoinformatics.org/eml-2.2.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.2"
-    xsi:schemaLocation="https://eml.ecoinformatics.org/eml-2.2.0 eml.xsd">
+    xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.1"
+    xsi:schemaLocation="https://eml.ecoinformatics.org/eml-2.2.0 xsd/eml.xsd">
 
-<dataset id="doi:10.xxxx/eml.1.1">
+<dataset id="dataset-01">
   <title>Data from Cedar Creek LTER on productivity and species richness
   for use in a workshop titled "An Analysis of the Relationship between
   Productivity and Diversity using Experimental Results from the Long-Term
@@ -62,6 +62,36 @@
     <keyword>species-area</keyword>
     <keyword>species richness</keyword>
   </keywordSet>
+  <coverage scope="document">
+		<geographicCoverage scope="document">
+			<geographicDescription>California, USA</geographicDescription>
+			<boundingCoordinates>
+				<westBoundingCoordinate>-122.44</westBoundingCoordinate>
+				<eastBoundingCoordinate>-117.15</eastBoundingCoordinate>
+				<northBoundingCoordinate>37.38</northBoundingCoordinate>
+				<southBoundingCoordinate>30.00</southBoundingCoordinate>
+			</boundingCoordinates>
+		</geographicCoverage>
+	  <temporalCoverage scope="document">
+			<rangeOfDates>
+				<beginDate>
+					<calendarDate>1957-08-13</calendarDate>
+				</beginDate>
+				<endDate>
+					<calendarDate>2006-02-18</calendarDate>
+				</endDate>
+			</rangeOfDates>
+		</temporalCoverage>
+		<taxonomicCoverage scope="document">
+			<taxonomicClassification id="taxon_MAPY">
+				<taxonRankName>species</taxonRankName>
+				<taxonRankValue>Macrocystis pyrifera</taxonRankValue>
+				<commonName>Giant Kelp</commonName>
+				<taxonId provider="https://itis.gov">11274</taxonId>
+				<taxonId provider="https://www.ncbi.nlm.nih.gov/taxonomy">35122</taxonId>
+			</taxonomicClassification>
+		</taxonomicCoverage>
+	</coverage>
   <annotation>
       <propertyURI label="Subject">http://purl.org/dc/elements/1.1/subject</propertyURI>
       <valueURI label="grassland biome">http://purl.obolibrary.org/obo/ENVO_01000177</valueURI>
@@ -370,6 +400,14 @@
   </dataTable>
 </dataset>
 <annotations>
+    <annotation references="doi:10.xxxx/eml.1.1">
+        <propertyURI label="Subject">http://purl.org/dc/elements/1.1/subject</propertyURI>
+        <valueURI label="terrestrial biome">http://purl.obolibrary.org/obo/ENVO_00000446</valueURI>
+    </annotation>
+    <annotation references="dataset-01">
+        <propertyURI label="Subject">http://purl.org/dc/elements/1.1/subject</propertyURI>
+        <valueURI label="grassland biome">http://purl.obolibrary.org/obo/ENVO_01000177</valueURI>
+    </annotation>
     <annotation references="CDR-biodiv-table">
         <propertyURI label="Subject">http://purl.org/dc/elements/1.1/subject</propertyURI>
         <valueURI label="grassland biome">http://purl.obolibrary.org/obo/ENVO_01000177</valueURI>
@@ -385,8 +423,8 @@
 </annotations>
 <additionalMetadata>
 <metadata>
-<stmml:unitList xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.2"
-    xsi:schemaLocation="http://www.xml-cml.org/schema/stmml-1.2 ../../../xsd/stmml.xsd">
+<stmml:unitList xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.1"
+    xsi:schemaLocation="http://www.xml-cml.org/schema/stmml-1.1 ../../../xsd/stmml.xsd">
     <!--note that the unitTypes here are taken from the eml-unitDictionary.xml-->
     <stmml:unit name="gramsPerSquareMeter" unitType="arealMassDensity" id="gramsPerSquareMeter" parentSI="kilogramsPerSquareMeter" multiplierToSI=".001"/>
     <stmml:unit name="speciesPerSquareMeter" unitType="arealDensity" id="speciesPerSquareMeter" parentSI="numberPerSquareMeter" multiplierToSI="1"/>
