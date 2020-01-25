@@ -152,7 +152,8 @@ eml_additional_validation <- function(eml,
      error_log <- c(error_log, "not all 'describes' values match defined id attributes")
 
    # ids given by references must be defined in doc
-   references <- xml2::xml_text(xml2::xml_find_all(doc, "//references"), trim = TRUE)
+   references <- c(xml2::xml_text(xml2::xml_find_all(doc, "//references"), trim = TRUE),
+                                  xml_attr(xml2::xml_find_all(doc, "//*[@references]"), "references"))
    if(!all(references %in% id))
      error_log <- c(error_log, "not all 'references' values match defined id attributes")
 
