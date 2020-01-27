@@ -143,8 +143,7 @@ drop <- basename(suite) %in% c("eml-datasetWithNonwordCharacters.xml",
                                "eml-literatureInPress.xml",
                                "eml-unitDictionary.xml",
                                "eml-units.xml",
-                               "eml-citationWithContact.xml",
-                               "eml-sample.xml")
+                               "eml-citationWithContact.xml")
 test_suite <- suite[!drop]
 lapply(test_suite, test_roundtrip)
 

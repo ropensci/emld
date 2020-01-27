@@ -115,12 +115,14 @@ eml_additional_validation <- function(eml,
     error_log <- c(error_log, ("root element is not named 'eml'"))
 
   # Elements which contain an annotation child element MUST contain an id attribute,
-  # unless the containing annotation element contains a references attribute
-  annot_without_ref <- xml2::xml_find_all(doc, "//annotation[not(@references)]/..")
+  # unless the containing annotation element contains a references attribute, or it
+  # is within a containing additionalMetadata element that contains a describes element
+  annot_without_ref <- xml2::xml_find_all(doc, "//annotation[not(@references) and not(ancestor::additionalMetadata/describes)]/..")
   if(any(lapply(xml_attrs(annot_without_ref, "id"), length) == 0))
     error_log <- c(error_log,
                    paste("parent of any annotation must have id",
-                         "unless annotation contains a references attribute"))
+                         "unless annotation contains a references attribute",
+                         "or has an ancestor additionalMetadata with a describes child"))
 
   ## If annotation has a references, parent cannot have ID
   id_and_annotation <- xml2::xml_find_all(doc, "//*[@id]/annotation")
@@ -129,7 +131,8 @@ eml_additional_validation <- function(eml,
     error_log <- c(error_log, "Annotation elements with ids cannot contain references elements")
 
   # ID attributes must be unique
-  id <- xml_attr(xml2::xml_find_all(doc, "//*[@id]"), "id")
+  id <- c(xml_attr(xml2::xml_find_all(doc, "//*[@id]"), "id"),
+          xml_attr(xml2::xml_find_all(doc, "//*[@packageId]"), "packageId"))
   if(any(duplicated(id)))
     error_log <- c(error_log, "all id attributes must be unique")
 
@@ -149,14 +152,15 @@ eml_additional_validation <- function(eml,
      error_log <- c(error_log, "not all 'describes' values match defined id attributes")
 
    # ids given by references must be defined in doc
-   references <- xml2::xml_text(xml2::xml_find_all(doc, "//references"), trim = TRUE)
+   references <- c(xml2::xml_text(xml2::xml_find_all(doc, "//references"), trim = TRUE),
+                                  xml_attr(xml2::xml_find_all(doc, "//*[@references]"), "references"))
    if(!all(references %in% id))
      error_log <- c(error_log, "not all 'references' values match defined id attributes")
 
   # If no validity errors are found above or by the parser, then the document is valid
-  if(length(error_log) == 0)
+  if(length(error_log) == 0) {
     result <- TRUE
-  else {
+  } else {
     warning(paste("Document is invalid. Found the following errors:\n", error_log))
     result <- FALSE
   }
