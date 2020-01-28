@@ -1,10 +1,20 @@
 Package: emld
 Title: Ecological Metadata as Linked Data
-Version: 0.3.0
-Authors@R: person("Carl", "Boettiger", 
+Version: 0.4.0
+Authors@R: c(
+                person("Carl", "Boettiger", 
                   email = "cboettig@gmail.com", 
                   role = c("aut", "cre", "cph"),
-                  comment=c(ORCID = "http://orcid.org/0000-0002-1642-628X"))
+                  comment=c(ORCID = "http://orcid.org/0000-0002-1642-628X")),
+                person("Matthew B.", "Jones", 
+                  email = "jones@nceas.ucsb.edu", 
+                  role = c("aut", "cph"),
+                  comment=c(ORCID = "http://orcid.org/0000-0003-0077-4738")),
+                person("Bryce", "Mecum", 
+                  email = "mecum@nceas.ucsb.edu", 
+                  role = c("aut", "cph"),
+                  comment=c(ORCID = "http://orcid.org/0000-0002-0381-3766"))     
+            )
 Description: This is a utility for transforming Ecological Metadata Language
         ('EML') files into 'JSON-LD' and back into 'EML.'  Doing so creates a
         list-based representation of 'EML' in R, so that 'EML' data can easily
