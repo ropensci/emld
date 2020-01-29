@@ -102,3 +102,37 @@ test_that("raw files can be parsed", {
   expect_equal(emld, emld_raw)
   expect_warning(emld_raw <- as_emld(ex_raw), "assuming raw vector is xml")
 })
+
+test_that("a schemaLocation can be guessed", {
+  emld <- as_emld(ex)
+  emld$schemaLocation <- NULL
+  doc <- as_xml(emld)
+  expect_true("xsi:schemaLocation" %in% names(xml_attrs(xml_root(doc))))
+})
+
+test_that("schemaLocation=FALSE produces a message when already set on the document", {
+  emld <- as_emld(ex)
+  emld$schemaLocation <- "FOO BAR"
+
+  expect_true("schemaLocation" %in% names(emld))
+  expect_message(doc <- as_xml(emld, schemaLocation = FALSE))
+})
+
+test_that("schemaLocation=FALSE doesn't nuke the already set value on the document", {
+  emld <- as_emld(ex)
+  emld$schemaLocation <- "FOO BAR"
+
+  doc <- suppressMessages({as_xml(emld, schemaLocation = FALSE)})
+  doc_attrs <- xml_attrs(xml_root(doc))
+  expect_equal(doc_attrs["xsi:schemaLocation"][[1]], "FOO BAR")
+})
+
+test_that("a custom schemaLocation can be given at serialization-time", {
+  emld <- as_emld(ex)
+  emld$schemaLocation <- NULL
+  doc <- as_xml(emld, schemaLocation = "FOO BAR")
+  doc_attrs <- xml_attrs(xml_root(doc))
+
+  expect_true("xsi:schemaLocation" %in% names(doc_attrs))
+  expect_equal(doc_attrs["xsi:schemaLocation"][[1]], "FOO BAR")
+})
