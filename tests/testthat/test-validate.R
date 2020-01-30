@@ -155,3 +155,58 @@ partial_test <- basename(suite) %in%
     "eml-literatureInPress.xml",
     "eml-citationWithContact.xml")
 lapply(suite[partial_test], test_roundtrip, check_lengths = FALSE)
+
+
+
+######### Helper methods
+test_that("get_root_ns works for a variety of cases", {
+  testthat::expect_equal(
+    find_real_root_name(
+      xml2::read_xml("<dictionary
+                        xmlns=\"http://www.xml-cml.org/schema/stmml-1.1\">
+                     </dictionary>")),
+    list(prefix = NULL, name = "dictionary"))
+
+  testthat::expect_equal(
+    find_real_root_name(
+      xml2::read_xml("<eml:eml
+                        xmlns:eml=\"https://eml.ecoinformatics.org/eml-2.2.0\">
+                     </eml:eml>")),
+    list(prefix = "eml", name = "eml"))
+
+  testthat::expect_equal(
+    find_real_root_name(
+      xml2::read_xml("<cit:citation
+                        xmlns:cit=\"https://eml.ecoinformatics.org/literature-2.2.0\">
+                     </cit:citation>")),
+    list(prefix = "cit", name = "citation"))
+})
+
+test_that("get_root_ns works for a variety of cases", {
+  testthat::expect_equal(
+    guess_root_schema(
+      xml2::read_xml("<dictionary
+                        xmlns=\"http://www.xml-cml.org/schema/stmml-1.1\">
+                     </dictionary>")),
+    list(module = "stmml",
+         version = "1.1",
+         namespace = "http://www.xml-cml.org/schema/stmml-1.1"))
+
+  testthat::expect_equal(
+    guess_root_schema(
+      xml2::read_xml("<eml:eml
+                        xmlns:eml=\"https://eml.ecoinformatics.org/eml-2.2.0\">
+                     </eml:eml>")),
+    list(module = "eml",
+         version = "2.2.0",
+         namespace = "https://eml.ecoinformatics.org/eml-2.2.0"))
+
+  testthat::expect_equal(
+    guess_root_schema(
+      xml2::read_xml("<cit:citation
+                        xmlns:cit=\"https://eml.ecoinformatics.org/literature-2.2.0\">
+                     </cit:citation>")),
+    list(module = "literature",
+         version = "2.2.0",
+         namespace = "https://eml.ecoinformatics.org/literature-2.2.0"))
+})
