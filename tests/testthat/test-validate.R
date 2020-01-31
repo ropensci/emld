@@ -25,13 +25,28 @@ test_roundtrip <- function(f, schema = NULL, check_lengths = TRUE){
   emld <- as_emld(f)
   as_xml(emld, out, ns$root, ns$ns)
 
-  ## Make sure output xml is still valid
-  testthat::expect_true( eml_validate(out, schema = schema) )
+  ## Make sure output xml is still valid unless it's supposed to be invalid
+  if (!grepl("invalid", f, ignore.case = TRUE)) {
+    testthat::expect_true( eml_validate(out, schema = schema) )
+
+  } else {
+    testthat::expect_false( eml_validate(out, schema = schema) )
+  }
 
   ## Make sure we have the same number & names of elements as we started with
   if(check_lengths){
     elements_at_end <- sort(names(unlist(as_emld(out), recursive = TRUE)))
     elements_at_start <- sort(names(unlist(emld, recursive = TRUE)))
+
+    # Filter out schemaLocation since it can be absent at start and added at end
+    elements_at_start <- Filter(
+      function (e) { e != "schemaLocation"},
+      elements_at_start)
+
+    elements_at_end <- Filter(
+      function (e) { e != "schemaLocation"},
+      elements_at_end)
+
     testthat::expect_equal(elements_at_start, elements_at_end)
   }
   })
@@ -156,6 +171,28 @@ partial_test <- basename(suite) %in%
     "eml-citationWithContact.xml")
 lapply(suite[partial_test], test_roundtrip, check_lengths = FALSE)
 
+
+######## Test that new schema validation logic that doesn't use schemaLocation
+######## still validates
+test_that("we can still validate XML docs without schemaLocation set on them", {
+  testthat::expect_true(
+    eml_validate(
+      system.file(
+        file.path("tests",
+                  "eml-2.2.0",
+                  "eml-datasetNoSchemaLocation.xml"),
+        package="emld")
+    ))
+
+  testthat::expect_false(
+    eml_validate(
+      system.file(
+        file.path("tests",
+                  "eml-2.2.0",
+                  "eml-datasetNoSchemaLocationInvalid.xml"),
+        package="emld")
+    ))
+})
 
 
 ######### Helper methods
