@@ -3,12 +3,10 @@ testthat::context("Test round trip validation")
 library(xml2)
 
 guess_ns <- function(file){
-  x <- xml2::xml_root(xml2::read_xml(file))
-  root <- xml2::xml_name(x)
-  ns <- xml2::xml_ns(x)
-  i <- grep(strsplit(xml2::xml_attr(x, "schemaLocation"), "\\s+")[[1]][1], ns)
-  ns <- names(ns[i])[[1]]
-  list(root=root, ns=ns)
+  doc <- xml2::read_xml(file)
+  root <- find_real_root_name(doc)
+
+  list(root = root$name, ns = root$prefix)
 }
 
 
