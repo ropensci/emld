@@ -4,8 +4,7 @@
 \alias{as_xml}
 \title{Coerce an emld object into XML (EML's standard format)}
 \usage{
-as_xml(x, file = NULL, root = "eml", ns = "eml",
-  schemaLocation = paste0(eml_ns(), "/ eml.xsd"))
+as_xml(x, file = NULL, root = "eml", ns = "eml", schemaLocation = TRUE)
 }
 \arguments{
 \item{x}{an emld object}
@@ -17,7 +16,10 @@ Otherwise, defaults to NULL and will return an xml_document object.}
 
 \item{ns}{namespace abbreviation on root node, default 'eml'}
 
-\item{schemaLocation}{default to set schemaLocation if not already defined in emld object}
+\item{schemaLocation}{If not explicitly set on \code{x}, automatically set
+\code{xsi:schemaLocation} based upon the root namespace (\code{TRUE}, default), do not
+set a \code{xsi:schemaLocation} (\code{FALSE}), or set a specific \code{xsi:schemaLocation}
+value (\code{"Your value here..."}). See Examples.}
 }
 \value{
 a xml_document object. Or if a file path is provided, the metadata
@@ -43,4 +45,12 @@ xml <- as_xml(emld)
 ## can also write directly to a file:
 xml_file <- tempfile()
 as_xml(emld, xml_file)
+
+## if you don't want the `xsi:schemaLocation` attribute set
+as_xml(emld, schemaLocation = FALSE)
+
+## or if you want to set your own value
+as_xml(emld, schemaLocation = "https://eml.ecoinformatics.org/eml-2.2.0
+http://example.com/eml-2.2.0/eml.xsd")
+
 }
