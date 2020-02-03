@@ -2,26 +2,19 @@ testthat::context("Test round trip validation")
 
 library(xml2)
 
-guess_ns <- function(file){
-  doc <- xml2::read_xml(file)
-  root <- find_real_root_name(doc)
-
-  list(root = root$name, ns = root$prefix)
-}
-
-
 test_roundtrip <- function(f, schema = NULL, check_lengths = TRUE){
   testthat::test_that(paste(
     "testing that", basename(f), "can roundtrip & validate"),
   {
 
   ## guess root and ns for sub-modules
-  ns <- guess_ns(f)
+  doc <- xml2::read_xml(f)
+  ns <- find_real_root_name(doc)
 
   out <- tempfile(basename(f), fileext = ".xml")
 
   emld <- as_emld(f)
-  as_xml(emld, out, ns$root, ns$ns)
+  as_xml(emld, out, ns$name, ns$prefix)
 
   ## Make sure output xml is still valid unless it's supposed to be invalid
   if (!grepl("invalid", f, ignore.case = TRUE)) {
@@ -200,7 +193,7 @@ test_that("get_root_ns works for a variety of cases", {
       xml2::read_xml("<dictionary
                         xmlns=\"http://www.xml-cml.org/schema/stmml-1.1\">
                      </dictionary>")),
-    list(prefix = NULL, name = "dictionary"))
+    list(prefix = "d1", name = "dictionary"))
 
   testthat::expect_equal(
     find_real_root_name(

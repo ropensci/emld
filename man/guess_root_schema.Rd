@@ -14,17 +14,5 @@ If found, a list with names 'version', 'module', and `namespace. If
 not found, throws an error.
 }
 \description{
-This is a workaround for a limitation in the \code{xml2} package where it's not
-possible to get the QName of an XML document. For example, if you read in a
-document that has a root of https://example.com/foo but is prefixed as
-ex:foo, \code{xml2::get_name()} on the root only returns \code{foo} and not \code{ex:foo} or
-\verb{https://example.com/foo} which would be super helpful here.
-}
-\details{
-Instead, we assume we're talking about an EML document and scan the list of
-defined namespaces for a pattern like {scheme}://{host}/{module}-{version}
-and match when the name (local) of the root is found at the {module}
-position.
-
-This is rigid and a bit hacky but it should work.
+Find the root schema module and version
 }

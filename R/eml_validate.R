@@ -169,11 +169,9 @@ eml_additional_validation <- function(eml,
 
 
 
-#' Get the real `QName` for the root element
+#' Get the real `QName` for the root element, including its prefix
 #'
-#' If the root element uses a prefix (e.g., foo:bar), `xml2` doesn't support
-#' getting that prefix after the document has been read into R though it does
-#' retain it internally which is good.
+#' Note that if a default namespace is used, the prefix will be `d1`.
 #'
 #' @param doc An `xml_document`
 #'
@@ -181,51 +179,26 @@ eml_additional_validation <- function(eml,
 #' if the element has no namespace prefix but `name` will always be a
 #' `character`.
 find_real_root_name <- function(doc) {
-  contents <- paste0(as.character(doc), collapse = "")
-  match <- regexpr("<[A-Za-z\\d][\\:A-Za-z\\d]+", contents)
+  name <- xml2::xml_name(xml2::xml_root(doc), xml2::xml_ns(doc))
 
-  if (match == -1) {
-    return(FALSE)
-  }
+  if (grepl(":", name)) {
+    tokens <- strsplit(name, ":")[[1]]
 
-  # Grab the match and clean it up so it's just `prefix:name`
-  root_name <- substr(contents, match, match + attr(match, "match.length") - 1)
-  root_name <- gsub("^<", "", root_name)
-
-  if (!grepl(":", root_name)) {
-    return(list(prefix = NULL, name = root_name))
-  } else{
-    tokens <- strsplit(root_name, ":")[[1]]
     return(list(prefix = tokens[1], name = tokens[2]))
+  } else {
+    return(list(prefix = NULL, name = name))
   }
 }
 
 #' Find the root schema module and version
-#'
-#' This is a workaround for a limitation in the `xml2` package where it's not
-#' possible to get the QName of an XML document. For example, if you read in a
-#' document that has a root of https://example.com/foo but is prefixed as
-#' ex:foo, `xml2::get_name()` on the root only returns `foo` and not `ex:foo` or
-#' `https://example.com/foo` which would be super helpful here.
-#'
-#' Instead, we assume we're talking about an EML document and scan the list of
-#' defined namespaces for a pattern like {scheme}://{host}/{module}-{version}
-#' and match when the name (local) of the root is found at the {module}
-#' position.
-#'
-#' This is rigid and a bit hacky but it should work.
 #'
 #' @param doc An `xml_document`
 #'
 #' @return If found, a list with names 'version', 'module', and `namespace. If
 #' not found, throws an error.
 guess_root_schema <- function(doc) {
-  namespaces <- as.list(xml_ns(doc))
+  namespaces <- as.list(xml2::xml_ns(doc))
   root <- find_real_root_name(doc)
-
-  if (isFALSE(root)) {
-    stop("Unhandled error: Couldn't determine schema to validate with.")
-  }
 
   # Handle case like <citation .... xmlns="..."> (no prefix). Not sure if this
   # code ever gets called, see next condition.

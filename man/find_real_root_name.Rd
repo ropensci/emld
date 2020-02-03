@@ -2,7 +2,7 @@
 % Please edit documentation in R/eml_validate.R
 \name{find_real_root_name}
 \alias{find_real_root_name}
-\title{Get the real \code{QName} for the root element}
+\title{Get the real \code{QName} for the root element, including its prefix}
 \usage{
 find_real_root_name(doc)
 }
@@ -15,7 +15,5 @@ if the element has no namespace prefix but \code{name} will always be a
 \code{character}.
 }
 \description{
-If the root element uses a prefix (e.g., foo:bar), \code{xml2} doesn't support
-getting that prefix after the document has been read into R though it does
-retain it internally which is good.
+Note that if a default namespace is used, the prefix will be \code{d1}.
 }
