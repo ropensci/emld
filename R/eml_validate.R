@@ -40,11 +40,10 @@ eml_validate <- function(eml,
   }
   schema_doc <- xml2::read_xml(schema)
 
-  ## Only do full validation if schemaLocation is eml.xml and not
+  ## Only do full validation if root element's namespace is EML and not
   ## merely a subclass
-  full <- grepl(".*eml.xsd$", paste0(strsplit(
-    xml2::xml_attr(xml2::xml_root(doc),
-    "schemaLocation"), "\\s+")[[1]], collapse = " "))
+  info <- guess_root_schema(doc)
+  full <- info$module == "eml"
 
   ## defaults
   id_valid <- TRUE
@@ -170,15 +169,63 @@ eml_additional_validation <- function(eml,
 
 
 
+#' Get the real `QName` for the root element, including its prefix
+#'
+#' Note that if a default namespace is used, the prefix will be `d1`.
+#'
+#' @param doc An `xml_document`
+#'
+#' @return A `list` with elements `prefix` and `name`. `prefix` will be `NULL`
+#' if the element has no namespace prefix but `name` will always be a
+#' `character`.
+find_real_root_name <- function(doc) {
+  name <- xml2::xml_name(xml2::xml_root(doc), xml2::xml_ns(doc))
 
+  if (grepl(":", name)) {
+    tokens <- strsplit(name, ":")[[1]]
 
+    return(list(prefix = tokens[1], name = tokens[2]))
+  } else {
+    return(list(prefix = NULL, name = name))
+  }
+}
 
+#' Find the root schema module and version
+#'
+#' @param doc An `xml_document`
+#'
+#' @return If found, a list with names 'version', 'module', and `namespace. If
+#' not found, throws an error.
+guess_root_schema <- function(doc) {
+  namespaces <- as.list(xml2::xml_ns(doc))
+  root <- find_real_root_name(doc)
 
+  # Handle case like <citation .... xmlns="..."> (no prefix). Not sure if this
+  # code ever gets called, see next condition.
+  if (is.null(root$prefix) && "xmlns" %in% names(namespaces)) {
+    match <- namespaces[["xmlns"]]
+  # Handle weird case where `xml2` treats `xmlns=` on the root as being for
+  # prefix `d1` which seems dynamically generated.
+  } else if (is.null(root$prefix) && "d1" %in% names(namespaces)) {
+    match <- namespaces[["d1"]]
+  # Handle case where a prefix is used (eml:eml) and the `eml` namespace is
+  # defined on the root. This is the common case for EML documents.
+  } else if (!is.null(root$prefix) && root$prefix %in% names(namespaces)) {
+    match <- namespaces[[root$prefix]]
+  } else {
+    stop("Unhandled error: Couldn't determine schema to validate with.")
+  }
 
+  # Hackily parse the xmlns value to get the final path part in order to get
+  # the module and version string
+  tokens <- unname(strsplit(match, "/"))[[1]]
+  last <- strsplit(tokens[length(tokens)], "-")[[1]]
 
+  retval <- list(last[1], last[2], match)
+  names(retval) <- c("module", "version", "namespace")
 
-
-
+  retval
+}
 
 
 #' eml_locate_schema
@@ -187,10 +234,10 @@ eml_additional_validation <- function(eml,
 #' EML document, as shipped with the EML R package.
 #'
 #' @details The schema location is based on the last path component from the EML
-#' namespace (e.g., eml-2.1.1), which corresponds to the directory containing xsd
-#' files that ship with the EML package. Schema files are copies of the schemas
-#' from the EML versioned releases. If an appropriate schema is not found,
-#' the function returns FALSE.
+#' namespace (e.g., eml-2.1.1), which corresponds to the directory containing
+#' xsd files that ship with the EML package. Schema files are copies of the
+#' schemas from the EML versioned releases. If an appropriate schema is not
+#' found, the function returns FALSE.
 #'
 #' @param eml an xml2::xml_document instance for an EML document
 #' @param ns the namespace URI for the top (root) element
@@ -205,7 +252,6 @@ eml_additional_validation <- function(eml,
 #' @noRd
 eml_locate_schema <- function(eml, ns = NA) {
 
-
   if (!is(eml, 'xml_document')) {
     stop("Argument is not an instance of an
          XML document (xml2::xml_document)")
@@ -213,24 +259,25 @@ eml_locate_schema <- function(eml, ns = NA) {
   namespace <- xml2::xml_ns(eml)
   stopifnot(is(namespace, 'xml_namespace'))
 
-  schemaLocation <- strsplit(
-    xml2::xml_attr(xml2::xml_root(eml),
-                   "schemaLocation"),
-    "\\s+")[[1]]
-  schema_file <- basename(schemaLocation[2])
+  root_schema <- guess_root_schema(eml)
 
-  ##
-  if (is.na(ns)) {
-    i <- grep(schemaLocation[1], namespace)
-    if (length(i) == 0)
-      i <- 1
-    ns <- namespace[i]
+  # Handle special case where root schema is stmml
+  if (root_schema$module == "stmml") {
+    schema <-
+      system.file(paste0("xsd/stmml/", root_schema$module, "-", root_schema$version, ".xsd"),
+                  package = 'emld')
+  # Handle sub-module case
+  } else if (root_schema$module != "eml") {
+    schema <-
+      system.file(paste0("xsd/eml-", root_schema$version, "/eml-", root_schema$module, ".xsd"),
+                  package = 'emld')
+  # Handle EML documents themselves
+  } else {
+    schema <-
+      system.file(paste0("xsd/eml-", root_schema$version, "/", root_schema$module, ".xsd"),
+                  package = 'emld')
   }
 
-  eml_version <- strsplit(ns, "-")[[1]][2]
-  schema <-
-    system.file(paste0("xsd/eml-", eml_version, "/", schema_file),
-                package = 'emld')
   if (schema == '') {
     stop(paste("No schema found for namespace: ", ns))
   }
