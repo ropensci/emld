@@ -33,12 +33,12 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Carl Boettiger \email{cboettig@gmail.com} (\href{https://orcid.org/http://orcid.org/0000-0002-1642-628X}{ORCID}) [copyright holder]
+\strong{Maintainer}: Carl Boettiger \email{cboettig@gmail.com} (\href{https://orcid.org/0000-0002-1642-628X}{ORCID}) [copyright holder]
 
 Authors:
 \itemize{
-  \item Matthew B. Jones \email{jones@nceas.ucsb.edu} (\href{https://orcid.org/http://orcid.org/0000-0003-0077-4738}{ORCID}) [copyright holder]
-  \item Bryce Mecum \email{mecum@nceas.ucsb.edu} (\href{https://orcid.org/http://orcid.org/0000-0002-0381-3766}{ORCID}) [copyright holder]
+  \item Matthew B. Jones \email{jones@nceas.ucsb.edu} (\href{https://orcid.org/0000-0003-0077-4738}{ORCID}) [copyright holder]
+  \item Bryce Mecum \email{mecum@nceas.ucsb.edu} (\href{https://orcid.org/0000-0002-0381-3766}{ORCID}) [copyright holder]
 }
 
 }
