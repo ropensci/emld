@@ -1,6 +1,7 @@
 Dear CRAN,
 
-This release updates the package to the newly released EML 2.2.0 schema, as documented in NEWS.
+This release provides the requested documentation fix in use of `...`, and addresses several 
+unrelated bugs, as documented in NEWS.
 
 Cheers,
 
