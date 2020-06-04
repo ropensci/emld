@@ -3,12 +3,14 @@
 #' Set or check the EML version default
 #'
 #' @param version EML version, currently either eml-2.2.0 (current version), or
-#' eml-2.1.1
+#' eml-2.1.1. The 'eml-' prefix can be omitted.
 #' @return returns the EML version string. As a side-effect, sets the
 #' requested version as the default version by setting the `emld_db`
 #' variable in [options()].
 #' @examples
 #' eml_version()
+#' eml_version("2.1.1")
+#' eml_version("eml-2.1.1")
 #'
 #' @export
 eml_version <- function(version = getOption("emld_db", "eml-2.2.0")){
@@ -16,15 +18,24 @@ eml_version <- function(version = getOption("emld_db", "eml-2.2.0")){
     version <- ask_eml_version()
   }
 
-  # Warn if the user provides a version that doesn't follow the form eml-x.y.z
-  if(!grepl("eml\\-[\\d\\.]+", version, perl = TRUE)) {
-    warning("Your provided version of '", version, "' does not look like a valid ",
-            "version string. Be sure it starts with 'eml-' and ends with the ",
-            "schema version. e.g., for EML 2.1.1, use 'eml-2.1.1'.")
+  out <- version
+
+  # Add eml- prefix if necessary so the user can just provide "2.1.1" to get
+  # eml-2.1.1 back
+  if (!grepl("^eml-", out)) {
+    out <- paste0("eml-", out)
   }
 
-  options(emld_db = version)
-  version
+  # Warn if the user provides a version that doesn't follow the form x[.y.z]
+  if(!grepl("eml-[\\d\\.]+", out, perl = TRUE)) {
+    warning("Your provided version of '", version, "' does not look like a ",
+            "valid version string. Be sure you specify a value like '2.1.1' ",
+            "or 'eml-2.1.1'. The 'eml-' is optional.")
+  }
+
+
+  options(emld_db = out)
+  out
 }
 
 
@@ -41,7 +52,7 @@ ask_eml_version <- function() {
          " Your EML version has not been changed.")
   }
 
-  paste0("eml-", options[choice])
+  options[choice]
 }
 
 #' Get the XML namespace for a version of EML

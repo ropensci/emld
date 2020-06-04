@@ -17,7 +17,9 @@ User-facing changes:
   See [#44](https://github.com/ropensci/emld/issues/44) & [#45](https://github.com/ropensci/emld/issues/45).
 
 - `emld::eml_validate` no longer depends on `schemaLocation` to determine the correct XSD to use during schema validation and now uses two helpers (See below) to find the correct schema file. See [#52](https://github.com/ropensci/emld/issues/44) & [#45](https://github.com/ropensci/emld/issues/53).
-      
+- `eml_version` now allows specifying the version without the `eml-` prefix, like `eml_version("2.1.1"), and will throw a warning when it gets output that doesn't 'look right rather than silently failing.
+- `eml_version` now shows an interactive menu when called with no arguments (`eml_version()`) from which you can choose your desired version. Note that, when used non-interactively (i.e., in scripts), calling `eml_version()` will just return the current value of the `emld_db` option or `eml-2.2.0` when that option is not set.
+
 Developer-facing (non-exported) changes:
 
 - Added two new helper methods:
