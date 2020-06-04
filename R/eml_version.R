@@ -12,8 +12,36 @@
 #'
 #' @export
 eml_version <- function(version = getOption("emld_db", "eml-2.2.0")){
- options(emld_db = version)
- version
+  if (missing(version) && interactive()) {
+    version <- ask_eml_version()
+  }
+
+  # Warn if the user provides a version that doesn't follow the form eml-x.y.z
+  if(!grepl("eml\\-[\\d\\.]+", version, perl = TRUE)) {
+    warning("Your provided version of '", version, "' does not look like a valid ",
+            "version string. Be sure it starts with 'eml-' and ends with the ",
+            "schema version. e.g., for EML 2.1.1, use 'eml-2.1.1'.")
+  }
+
+  options(emld_db = version)
+  version
+}
+
+
+#' Ask the user to choose an EML version
+#'
+#' @return An EML version string suitable for `options(emld_db)`
+ask_eml_version <- function() {
+  options <- c("2.1.1", "2.2.0")
+  cat("Choose an EML version from the options below:\n")
+  choice <- utils::menu(options)
+
+  if (!choice %in% seq_along(options)) {
+    stop("Invalid choice. Please choose one of the available options.",
+         " Your EML version has not been changed.")
+  }
+
+  paste0("eml-", options[choice])
 }
 
 #' Get the XML namespace for a version of EML
