@@ -8,7 +8,7 @@ eml_version(version = getOption("emld_db", "eml-2.2.0"))
 }
 \arguments{
 \item{version}{EML version, currently either eml-2.2.0 (current version), or
-eml-2.1.1}
+eml-2.1.1. The 'eml-' prefix can be omitted.}
 }
 \value{
 returns the EML version string. As a side-effect, sets the
@@ -20,5 +20,7 @@ Set or check the EML version default
 }
 \examples{
 eml_version()
+eml_version("2.1.1")
+eml_version("eml-2.1.1")
 
 }
