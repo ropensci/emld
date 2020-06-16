@@ -12,8 +12,12 @@ validate_units <- function(eml,
     xml2::xml_find_all(doc, "//customUnit", ns = ns),
     trim = TRUE))
 
+  # Read in the version of eml-unitDictionary.xml to match this document's
+  # schema version
+  root_schema <- guess_root_schema(eml)
+
   standard <- xml2::read_xml(system.file("tests",
-    getOption("emld_db"),
+    paste(root_schema$module, root_schema$version, sep = "-"),
     "eml-unitDictionary.xml",
     package = "emld"
   ))
