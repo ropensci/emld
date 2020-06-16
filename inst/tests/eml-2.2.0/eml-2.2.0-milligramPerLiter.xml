@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<eml:eml packageId="eml.1.1" system="knb" xmlns:eml="https://eml.ecoinformatics.org/eml-2.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.1">
+  <dataset>
+    <title>EML 2.2.0 milligramPerLiter test</title>
+    <creator id="example.user">
+      <individualName>
+        <givenName>Example</givenName>
+        <surName>User</surName>
+      </individualName>
+    </creator>
+    <contact>
+      <references>example.user</references>
+    </contact>
+    <dataTable id="xyz">
+      <entityName>entity</entityName>
+      <entityDescription>entity description</entityDescription>
+      <attributeList id="at.1">
+        <attribute id="att.1">
+          <attributeName>attribute1</attributeName>
+          <attributeDefinition>attribute1definition</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>milligramPerLiter</standardUnit>
+              </unit>
+              <precision>0.1</precision>
+              <numericDomain id="nd.5">
+                <numberType>real</numberType>
+                <bounds>
+                  <minimum exclusive="true">0</minimum>
+                </bounds>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+        </attribute>
+      </attributeList>
+    </dataTable>
+  </dataset>
+</eml:eml>
