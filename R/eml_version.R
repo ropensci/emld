@@ -14,10 +14,6 @@
 #'
 #' @export
 eml_version <- function(version = getOption("emld_db", "eml-2.2.0")){
-  if (missing(version) && interactive()) {
-    version <- ask_eml_version()
-  }
-
   out <- version
 
   # Add eml- prefix if necessary so the user can just provide "2.1.1" to get
@@ -38,22 +34,6 @@ eml_version <- function(version = getOption("emld_db", "eml-2.2.0")){
   out
 }
 
-
-#' Ask the user to choose an EML version
-#'
-#' @return An EML version string suitable for `options(emld_db)`
-ask_eml_version <- function() {
-  options <- c("2.1.1", "2.2.0")
-  cat("Choose an EML version from the options below:\n")
-  choice <- utils::menu(options)
-
-  if (!choice %in% seq_along(options)) {
-    stop("Invalid choice. Please choose one of the available options.",
-         " Your EML version has not been changed.")
-  }
-
-  options[choice]
-}
 
 #' Get the XML namespace for a version of EML
 #'
