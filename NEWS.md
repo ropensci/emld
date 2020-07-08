@@ -17,7 +17,8 @@ User-facing changes:
   See [#44](https://github.com/ropensci/emld/issues/44) & [#45](https://github.com/ropensci/emld/issues/45).
 
 - `emld::eml_validate` no longer depends on `schemaLocation` to determine the correct XSD to use during schema validation and now uses two helpers (See below) to find the correct schema file. See [#52](https://github.com/ropensci/emld/issues/44) & [#45](https://github.com/ropensci/emld/issues/53).
-- `eml_version` now allows specifying the version without the `eml-` prefix, like `eml_version("2.1.1"), and will throw a warning when it gets output that doesn't 'look right rather than silently failing.
+- `emld::eml_version` now allows specifying the version without the `eml-` prefix, like `eml_version("2.1.1"), and will throw a warning when it gets output that doesn't 'look right rather than silently failing.
+- Fixed a bug where the EML 2.1.1 units dictionary was being used for EML 2.2.0 docs which would cause spurious validation errors. See [#56](https://github.com/ropensci/emld/issues/56).
 
 Developer-facing (non-exported) changes:
 
@@ -26,6 +27,10 @@ Developer-facing (non-exported) changes:
   2. `guess_root_schema(doc : xml_document) : list(module : character, version : character, namespace : character)` which returns the module, schema version, and namespace URI of the root element on an `xml_document`.
 - `schemaLocation` is now ignored during roundtrip testing because of the new (above) behavior of `emld` with respect to `schemaLocation`.
 - Roundtrip testing can now handle documents that are supposed to be invalid but still roundtripped. Specify intentionally invalid files by adding "invalid" (case insensitive) to the filename in `inst/tests`.
+
+Other changes:
+
+- Minor tweaks to the README. Thanks @jeanetteclark
 
 # emld 0.4.0
 
