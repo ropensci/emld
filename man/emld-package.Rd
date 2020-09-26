@@ -26,7 +26,7 @@ XML-schema valid EML.
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://docs.ropensci.org/emld}
+  \item \url{https://docs.ropensci.org/emld/}
   \item \url{https://github.com/ropensci/emld}
   \item Report bugs at \url{https://github.com/ropensci/emld/issues}
 }

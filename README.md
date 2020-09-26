@@ -40,7 +40,7 @@ devtools::install_github("ropensci/emld")
 ## Motivation
 
 In contrast to the existing [EML
-package](https://docs.ropensci.org/EML), this package aims to a very
+package](https://docs.ropensci.org/EML/), this package aims to a very
 light-weight implementation that seeks to provide both an intuitive data
 format and make maximum use of existing technology to work with that
 format. In particular, this package emphasizes tools for working with
@@ -109,6 +109,7 @@ eml <- list(dataset = list(
 ex.xml <- tempfile("ex", fileext = ".xml") # use your preferred file path
 
 as_xml(eml, ex.xml)
+#> NULL
 eml_validate(ex.xml)
 #> [1] TRUE
 #> attr(,"errors")
@@ -163,8 +164,8 @@ as_emld(hf205) %>%
 Nice features of JQ include the ability to do recursive descent (common
 to XPATH but not possible in `purrr`) and specify the shape of the
 return object. Some prototype examples of how we can use this to
-translate between EML and <http://schema.org/Dataset> representations of
-the same metadata can be found in
+translate between EML and <https://schema.org/Dataset> representations
+of the same metadata can be found in
 <https://github.com/ropensci/emld/blob/master/notebook/jq_maps.md>
 
 ## As semantic data: SPARQL queries
@@ -207,17 +208,13 @@ sparql <- paste0(prefix, '
 rdf <- rdf_parse(hf205.json, "jsonld")
 df <- rdf_query(rdf, sparql)
 df
-#> # A tibble: 1 x 6
-#>   genus      species  northLat southLat eastLong westLong
-#>   <chr>      <chr>       <dbl>    <dbl>    <dbl>    <dbl>
-#> 1 Sarracenia purpurea     42.6     42.4    -72.1    -72.3
+#> # A tibble: 0 x 0
 ```
 
 -----
 
 Please note that the `emld` project is released with a [Contributor Code
 of Conduct](https://docs.ropensci.org/emld/CODE_OF_CONDUCT.html). By
-contributing to this project, you agree to abide by its
-terms.
+contributing to this project, you agree to abide by its terms.
 
 [![ropensci\_footer](https://ropensci.org/public_images/ropensci_footer.png)](https://ropensci.org)

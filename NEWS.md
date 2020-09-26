@@ -52,7 +52,7 @@ Other changes:
 # emld 0.2.0
 
 * Implemented changes requested by rOpenSci review, as detailed in 
-  [#30](https://github.com/cboettig/emld/pull/30)
+  [#30](https://github.com/ropensci/emld/pull/30)
 
 # emld 0.1.1
 
