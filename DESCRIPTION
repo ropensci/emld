@@ -1,6 +1,6 @@
 Package: emld
 Title: Ecological Metadata as Linked Data
-Version: 0.5.0
+Version: 0.5.1
 Authors@R: c(
                 person("Carl", "Boettiger", 
                   email = "cboettig@gmail.com", 

@@ -1,3 +1,8 @@
+# emld 0.5.1
+
+- don't build vignette on machines that don't have packages listed in Suggests
+  (these packages must only be used conditionally)
+
 # emld 0.5.0
 
 User-facing changes:

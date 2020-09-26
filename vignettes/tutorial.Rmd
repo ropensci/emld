@@ -12,7 +12,8 @@ vignette: >
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  eval = (require("jqr") && require("rdflib"))
 )
 ```
 
@@ -103,7 +104,9 @@ For example, JSON can be queried with with JQ, a [simple and powerful query lang
 
 
 ```{r}
-library(jqr)
+
+if(require(jqr) && require(magrittr)){
+  
 hf205 <- system.file("extdata/hf205.xml", package="emld")
 
 as_emld(hf205) %>% 
@@ -112,6 +115,8 @@ as_emld(hf205) %>%
        { northLat: .northBoundingCoordinate, 
          southLat: .southBoundingCoordinate }') %>%
   fromJSON()
+
+}
 ```
 
 Nice features of JQ include the ability to do recursive descent (common to XPATH but not possible in `purrr`) and specify the shape of the return object.  Some prototype examples of how we can use this to translate between EML and <http://schema.org/Dataset> representations of the same metadata can be found in <https://github.com/cboettig/emld/blob/master/notebook/jq_maps.md>
@@ -126,11 +131,8 @@ Another side-effect of the JSON-LD representation is that we can treat EML as "s
 
 
 ```{r}
-library(rdflib)
-```
-
-
-```{r}
+if(require(rdflib) && require(magrittr)){
+  
 f <- system.file("extdata/hf205.xml", package="emld")
 hf205.json <- tempfile("hf205", fileext = ".json") # Use your preferred filepath
 
@@ -159,6 +161,8 @@ sparql <- paste0(prefix, '
 rdf <- rdf_parse(hf205.json, "jsonld")
 df <- rdf_query(rdf, sparql)
 df
+
+}
 ```
 
 
