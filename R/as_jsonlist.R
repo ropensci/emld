@@ -28,7 +28,7 @@ as_jsonlist.xml_node <- function(x, ns = character()) {
   key <- xml_name(x)
   ## Treat <para> and <section> as literals
   if(key %in% c("para", "section")){
-    return(paste(unescape_xml(as.character(xml_contents(x)), collapse = "")))
+    return(paste(unescape_xml(as.character(xml_contents(x))), collapse = ""))
   }
 
   contents <- xml2::xml_contents(x)
