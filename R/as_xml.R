@@ -90,7 +90,7 @@ as_xml.emld <- function(x, file=NULL, root = "eml", ns = "eml",
 
   ## Serialize to file if desired
   if(!is.null(file)){
-    xml2::write_xml(xml, file)
+    invisible(xml2::write_xml(xml, file))
   } else {
     xml
   }
