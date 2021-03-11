@@ -164,8 +164,10 @@ context_namespaces <- function(context, xml){
   xml2::as_xml_document(xml)
 }
 
-
-
+# avialble only in R >= 3.5
+isFALSE <- function (x) {
+  is.logical(x) && length(x) == 1L && !is.na(x) && !x
+}
 
 
 drop_nulls <- function(x){
