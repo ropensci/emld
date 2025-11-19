@@ -1,6 +1,6 @@
 
-citEntry(
-  entry = 'article',
+bibentry(
+  bibtype = 'article',
   title = 'Ecological Metadata as Linked Data. Journal of Open Source Software',
   author = c(
     person( "Carl",
