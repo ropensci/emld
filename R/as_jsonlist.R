@@ -20,6 +20,7 @@ attributes_to_json <- function(x, ns = character(), prefix = "", out = list()){
 
 ## override xml2 method
 #' @importFrom xml2 xml_contents xml_name xml_attrs xml_type xml_text
+#' @exportS3Method
 as_jsonlist.xml_node <- function(x, ns = character()) {
   key <- xml_name(x)
   ## Treat <para> and <section> as literals
@@ -56,6 +57,7 @@ as_jsonlist.xml_node <- function(x, ns = character()) {
 }
 
 ## override xml2 method
+#' @exportS3Method
 as_jsonlist.xml_nodeset <- function(x, ns = character(), ...) {
   lapply_nodes(x, as_jsonlist, ns = ns, ...)
 }
