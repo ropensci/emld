@@ -1,6 +1,6 @@
 Package: emld
 Title: Ecological Metadata as Linked Data
-Version: 0.5.1
+Version: 0.5.2
 Authors@R: c(
                 person("Carl", "Boettiger", 
                   email = "cboettig@gmail.com", 
@@ -33,8 +33,7 @@ BugReports: https://github.com/ropensci/emld/issues
 Depends: R (>= 3.1.0)
 License: MIT + file LICENSE
 Encoding: UTF-8
-LazyData: true
-RoxygenNote: 7.1.1
+RoxygenNote: 7.3.3
 Roxygen: list(markdown = TRUE)
 Suggests:
     spelling,
@@ -45,7 +44,8 @@ Suggests:
     knitr,
     rdflib,
     jqr
-Imports: xml2,
+Imports: 
+    xml2,
     jsonlite,
     jsonld,
     methods,

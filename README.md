@@ -1,12 +1,12 @@
 
-[![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
+[![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![Travis-CI Build
-Status](https://travis-ci.org/ropensci/emld.svg?branch=master)](https://travis-ci.org/ropensci/emld)
+Status](https://app.travis-ci.com/ropensci/emld.svg?branch=master)](https://app.travis-ci.com/ropensci/emld)
 [![AppVeyor build
 status](https://ci.appveyor.com/api/projects/status/github/cboettig/emld?branch=master&svg=true)](https://ci.appveyor.com/project/cboettig/emld)
 [![Coverage
-Status](https://img.shields.io/codecov/c/github/ropensci/emld/master.svg)](https://codecov.io/github/ropensci/emld?branch=master)
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/emld)](https://cran.r-project.org/package=emld)
+Status](https://img.shields.io/codecov/c/github/ropensci/emld/master.svg)](https://app.codecov.io/github/ropensci/emld?branch=master)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/emld)](https://cran.r-project.org/package=emld)
 [![](https://badges.ropensci.org/269_status.svg)](https://github.com/ropensci/software-review/issues/269)
 [![DOI](https://zenodo.org/badge/108223439.svg)](https://zenodo.org/badge/latestdoi/108223439)
 [![DOI](http://joss.theoj.org/papers/10.21105/joss.01276/status.svg)](https://doi.org/10.21105/joss.01276)
@@ -21,12 +21,12 @@ an EML XML document into JSON-LD and be able to reverse this so that any
 semantically equivalent JSON-LD file can be serialized into EML-schema
 valid XML. The package has only three core functions:
 
-  - `as_emld()` Convert EML’s `xml` files (or the `json` version created
-    by this package) into a native R object (an S3 class called `emld`,
-    essentially just a `list`).
-  - `as_xml()` Convert the native R format, `emld`, back into XML-schema
-    valid EML.
-  - `as_json()` Convert the native R format, `emld`, into `json`(LD).
+- `as_emld()` Convert EML’s `xml` files (or the `json` version created
+  by this package) into a native R object (an S3 class called `emld`,
+  essentially just a `list`).
+- `as_xml()` Convert the native R format, `emld`, back into XML-schema
+  valid EML.
+- `as_json()` Convert the native R format, `emld`, into `json`(LD).
 
 ## Installation
 
@@ -56,14 +56,14 @@ schema. This means that there are many valid, semantically equivalent
 representations on the JSON-LD side that must all map into the same or
 nearly the same XML format. At the extreme end, the JSON-LD format can
 be serialized into RDF, where everything is flat set of triples
-(e.g. essentially a tabular representation), which we can query
-directly with semantic tools like SPARQL, and also automatically coerce
-back into the rigid nesting and ordering structure required by EML. This
-ability to “flatten” EML files can be particularly convenient for
-applications consuming and parsing large numbers of EML files. This
-package may also make it easier for other developers to build on the
-EML, since the S3/list and JSON formats used here have proven more
-appealing to many R developers than S4 and XML serializations.
+(e.g. essentially a tabular representation), which we can query directly
+with semantic tools like SPARQL, and also automatically coerce back into
+the rigid nesting and ordering structure required by EML. This ability
+to “flatten” EML files can be particularly convenient for applications
+consuming and parsing large numbers of EML files. This package may also
+make it easier for other developers to build on the EML, since the
+S3/list and JSON formats used here have proven more appealing to many R
+developers than S4 and XML serializations.
 
 ``` r
 library(emld)
@@ -109,7 +109,6 @@ eml <- list(dataset = list(
 ex.xml <- tempfile("ex", fileext = ".xml") # use your preferred file path
 
 as_xml(eml, ex.xml)
-#> NULL
 eml_validate(ex.xml)
 #> [1] TRUE
 #> attr(,"errors")
@@ -208,13 +207,13 @@ sparql <- paste0(prefix, '
 rdf <- rdf_parse(hf205.json, "jsonld")
 df <- rdf_query(rdf, sparql)
 df
-#> # A tibble: 0 x 0
+#> # A tibble: 0 × 0
 ```
 
------
+------------------------------------------------------------------------
 
 Please note that the `emld` project is released with a [Contributor Code
 of Conduct](https://docs.ropensci.org/emld/CODE_OF_CONDUCT.html). By
 contributing to this project, you agree to abide by its terms.
 
-[![ropensci\_footer](https://ropensci.org/public_images/ropensci_footer.png)](https://ropensci.org)
+[![ropensci_footer](https://ropensci.org/public_images/ropensci_footer.png)](https://ropensci.org)
