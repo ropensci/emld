@@ -5,6 +5,8 @@ Patch release, no public API changes, but several compatibility changes for newe
 - Fixed README URL links
 - Fixed bibentry for CITATION (replaced `citEntry`)
 - Removed `LazyData: true` without a data directory
+- Fixed as_jsonlist.xml_node signature to match generic
+- Updated spelling wordlist to handle common technical terms
 
 # emld 0.5.1
 
