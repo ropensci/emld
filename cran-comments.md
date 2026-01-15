@@ -1,7 +1,8 @@
 Dear CRAN,
 
-This release provides the requested fix to use `xml2` 1.5.0, and addresses several 
-unrelated bugs, as documented in NEWS.
+This patch release skips roundtrip validation tests on ARM Macs (aarch64) 
+to address the test failures on M1mac. These tests encounter platform-specific 
+XML validation issues on Apple Silicon.
 
 Cheers,
 

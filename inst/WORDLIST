@@ -1,17 +1,22 @@
 AppVeyor
+DOI
 EML
 EML's
 EML’s
 JQ
+JSON
 LD
 ORCID
 RDF
 README
 Roundtrip
 SPARQL
+URI
+URIs
 XPATH
 XPath
 XSD
+aarch
 additionalMetadata
 bibentry
 eg
@@ -19,6 +24,7 @@ eml
 framings
 github
 json
+jsonlist
 jsonlite
 lifecycle
 packageId
@@ -26,3 +32,4 @@ rOpenSci
 ropensci
 roundtrip
 roundtripped
+wordlist

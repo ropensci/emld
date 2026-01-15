@@ -1,3 +1,8 @@
+# emld 0.5.3
+
+- Skip roundtrip validation tests on ARM Macs (aarch64) to fix CRAN check failures. 
+  These tests encounter platform-specific XML validation issues on Apple Silicon.
+
 # emld 0.5.2
 
 Patch release, no public API changes, but several compatibility changes for newer dependencies.
