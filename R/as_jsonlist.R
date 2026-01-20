@@ -17,6 +17,10 @@ attributes_to_json <- function(x, ns = character(), prefix = "", out = list()){
   out
 }
 
+unescape_xml <- function(str){
+  xml2::xml_text(xml2::read_xml(paste0("<x>", str, "</x>")))
+}
+
 ## override xml2 method
 #' @importFrom xml2 xml_contents xml_name xml_attrs xml_type xml_text
 #' @exportS3Method
@@ -24,7 +28,7 @@ as_jsonlist.xml_node <- function(x, ns = character(), ...) {
   key <- xml_name(x)
   ## Treat <para> and <section> as literals
   if(key %in% c("para", "section")){
-    return(paste(as.character(xml_contents(x)), collapse = ""))
+    return(paste(unescape_xml(as.character(xml_contents(x))), collapse = ""))
   }
 
   contents <- xml2::xml_contents(x)
